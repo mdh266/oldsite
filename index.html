@@ -1,1 +1,441 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Stylish Portfolio - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top" onclick=$("#menu-close").click();>Start Bootstrap</a>
+            </li>
+            <li>
+                <a href="#top" onclick=$("#menu-close").click();>Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick=$("#menu-close").click();>About</a>
+            </li>
+            <li>
+                <a href="#projects" onclick=$("#menu-close").click();>Projects</a>
+            </li>
+            <li>
+                <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header id="top" class="header">
+        <div class="text-vertical-center">
+            <h1> Michael Harmon </h1>
+            <h3> Computational Applied Mathematician &amp; Data Scientist</h3>
+            <br>
+            <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About Me!</h2>
+                    <p class="lead">I recently defended my Ph.D in Computational Applied
+										 Mathematics and am currently looking for employment as a Data
+										 Scientist in New York City.</p>
+
+										<p class="lead"> As a graduate student at the University of Texas at 
+										Austin my research focused on the intersection of math, programming 
+										and engineering. I developed high performance software in C++ for
+									  chemists to numerically model solar cells and optimize the cell design. 
+										This involved creating a mathematical model of the way solar cells
+									 	work and then writing code to make predictions from this model on 
+										efficiency of different designs. The bulk of this code and information
+										on the project can be found on at: 
+										<a href="https://mdh266.github.io/PECS/"> PECS </a> </p>
+										
+										<p class="lead">
+										As a data science fellow at Insight Data Science I built a Python 
+										based web application for exploring crime rates in New York City. 
+										This project involved extracting, cleaning and manipulating nine
+										years of geospatial data as well as looking into appropriate 
+										predictive models such as regression, random forests and time series 
+										methods. The web application can be found on the website: 
+										<a href="http://crimetime.online/"> CrimeTime</a>.
+										</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!-- Services -->
+    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+    <section id="projects" class="projects bg-primary">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>My Projects</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-user-secret fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>CrimeTime</strong>
+                                </h4>
+                                <p>This is a blog post about the project I completed at Insight Data Science.
+																 The goal of the project was to develop a predictive model for crime rates in 
+																Manhattan using historical data provided by the NYC Open Data Website. 
+																This project involved exploratory data analysis using Python, SQL, the Pandas 
+																library and time series analysis using StatsModels library.
+																This eventually lead me to create a Python web application, crimeTime.online,
+																where users can preform similar analysis in their neighborhood anywhere in New York City.</p>
+                                <a href="https://mdh266.github.io/CrimeTime/" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-medkit fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Classification Models For Cancer Detection</strong>
+                                </h4>
+                                <p>The purpose of this project was to look into using
+																classification methods to develop predictive models for 
+																cancer detection. To complete this project I used a Python, 
+																Pandas, seaborn, and Scikit-liearn libraries.</p>
+                                <a href="https://github.com/mdh266/Cancer_Detection/blob/master/Cancer_Classication.ipynb" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-money fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Predicting Stock Returns</strong>
+                                </h4>
+                                <p>In this project I wanted to look how to well we can
+															 predict the return on Goodyear (GT) stock based off of 
+															 the return on other companies stock using linear regression. 
+															 The predictors I used were the return on the S&P 500 (SPY), 
+															 Consumer Discretionary Select Sector (XLY), Ford (F), Toyota (T),
+															 and the exponentially weighted average of return on Ford and Toyota.
+															 To complete this project I used Python, Pandas, and Scikit-learn libraries.</p>
+                                <a href="https://github.com/mdh266/PredictingStocks/blob/master/Goodyear.ipynb" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rocket fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>deal.ii Finite Element Library</strong>
+                                </h4>
+                                <p>Contributed to the open source deal.ii C++ library by adding functionality 
+																to its interface with the Trilinos library. Specifically, 
+																I added the ability to use direct solvers for large-scale distributed linear 
+																systems (using MPI) without the need to re-factorize the matrix every time a solve is performed. 
+																This improved runtimes for codes where one is solving linear systems: Ax=b, where A is fixed, 
+																but there are multiple b's and in my case resulted in a 250x speed up. 
+																I also added unit test to test-suite for testing this functionality.</p>
+                                <a href="www.deal.org" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-flask fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>2D Photoelectrochemical Solar Cell Simulator</strong>
+                                </h4>
+                                <p>This code solves the coupled drift-diffusion-Poisson that model
+																 a photoelectrochemical solar cell in 2D using the deal.ii C++ library.
+																 I used a mixed finite element method to solve the Poisson equation and 
+																local discontinuous Galerkin method along with implicit-explicit time 
+																stepping method for the drift-diffusion equations.</p>
+                                <a href="https://mdh266.github.io/PECS/" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-flask fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>1D Photoelectrochemical Solar Cell Simulator</strong>
+                                </h4>
+                                <p>This C++ code solves the coupled drift-diffusion-Poisson that
+																 model a photoelectrochemical solar cell in 1D using the linear algebra 
+																library Eigen, Boost library, and OpenMP. I used a mixed finite element 
+																method to solve the Poisson equation and local discontinuous Galerkin method 
+																along with implicit-explicit time stepping method for the drift-diffusion equations.</p>
+                                <a href="https://github.com/mdh266/PECS-1D" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-laptop fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Semiconductor Device Simulator</strong>
+                                </h4>
+                                <p>This code is designed to numerically solve the drift-diffusion-Poisson 
+																equations for semiconductor devices in 2D and 3D using the deal.ii C++library. 
+																The code runs in parallel using multithreading through the Intel Thread Building Blocks. 
+																Poisson's equation is solved using the mixed finite element method. The drift-diffusion 
+																equations for electron and hole transport are discrititzed with the local discontinuous 
+																Galerkin method and time stepping is performed using implicit-explicit (IMEX) methods.</p>
+                                <a href="https://github.com/mdh266/Semiconductor_Device_Simulator" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+												<div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Large-Scale Distributed Poisson Equation Solver</strong>
+                                </h4>
+                                <p>A large-scale distributed solver for Poisson equation in 2D and 3D solver 
+																using the local discontinuous Galerkin method. It mainly uses the deal.ii C++ 
+																library and the Trilinos library for distributed linear algebra data structures 
+																and routines using MPI.</p>
+                                <a href="https://github.com/mdh266/Distributed_Poisson_Solver" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+												<div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Multithreaded Poisson Equation Solver</strong>
+                                </h4>
+                                <p>This code is designed to numerically solve the Poisson equation 
+																in 2D and 3D using the mixed finite element method and the deal.ii C++ library. 
+																The code runs in parallel using multithreading through the Intel Thread Building Blocks.</p>
+                                <a href="https://github.com/mdh266/Multithreaded_Poisson_Solver" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+												<div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Poisson Equation Solver</strong>
+                                </h4>
+                                <p>This code is designed to numerically solve the Poisson
+															 equation in 2D and 3D using the traditional Finite Element Method (FEM) 
+															 and the deal.ii C++ library.</p>
+                                <a href="https://github.com/mdh266/Poisson_Solver" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+												<div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Advection Equation Solver</strong>
+                                </h4>
+                                <p> This code is designed to numerically solve the steady-state advection equation in 2D and
+																 3D using the discontinuous Galerkin (DG) method and the deal.ii C++ library.</p>
+                                <a href="https://github.com/mdh266/Advection_Solver" class="btn btn-light">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!-- Callout -->
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <h1>More about me!</h1>
+        </div>
+    </aside>
+
+
+
+    <!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Info</h3>
+                    <a href="http://michael-harmon.elbowpatched.io/" class="btn btn-lg btn-light">Academic Website</a>
+                    <a href="http://d1tkp2k7ixwpmm.cloudfront.net/uploads/profiles/6/29ada09b5f5da0708d9482e1e3cf130ced2a8f87-original.pdf?1483119010" class="btn btn-lg btn-dark"> My Resume</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Michael Harmon</strong>
+                    </h4>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mdh266@gmail.com">name@example.com</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="https://www.linkedin.com/in/michaeldavidharmon"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/michaeldavidharmon"><i class="fa fa-github fa-fw fa-3x"></i></a>
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    //#to-top button appears after scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+        if ($(this).scrollTop() > 250) {
+            if (!fixed) {
+                fixed = true;
+                // $('#to-top').css({position:'fixed', display:'block'});
+                $('#to-top').show("slow", function() {
+                    $('#to-top').css({
+                        position: 'fixed',
+                        display: 'block'
+                    });
+                });
+            }
+        } else {
+            if (fixed) {
+                fixed = false;
+                $('#to-top').hide("slow", function() {
+                    $('#to-top').css({
+                        display: 'none'
+                    });
+                });
+            }
+        }
+    });
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+    </script>
+
+</body>
+
+</html>
