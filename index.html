@@ -49,9 +49,6 @@
             <li>
                 <a href="#projects" onclick=$("#menu-close").click();>Projects</a>
             </li>
-            <li>
-                <a href="#contact" onclick=$("#menu-close").click();>More Info</a>
-            </li>
         </ul>
     </nav>
 
@@ -70,30 +67,49 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About Me!</h2>
+                    <h2>About Me</h2>
                     <p class="lead">I recently defended my Ph.D in Computational Applied
-										 Mathematics and am currently looking for employment as a Data
-										 Scientist in New York City.</p>
+					Mathematics and am currently looking for employment as a Data Scientist in New York City.</p>
 
-										<p class="lead"> As a graduate student at the University of Texas at 
-										Austin my research focused on the intersection of math, programming 
-										and engineering. I developed high performance software in C++ for
-									  chemists to numerically model solar cells and optimize the cell design. 
-										This involved creating a mathematical model of the way solar cells
-									 	work and then writing code to make predictions from this model on 
-										efficiency of different designs. The bulk of this code and information
-										on the project can be found on at: 
-										<a href="https://mdh266.github.io/PECS/"> PECS </a> </p>
+					<p class="lead"> As a graduate student at the University of Texas at 
+					Austin my research focused on the intersection of math, programming 
+					and engineering. I developed high performance software in C++ for
+					chemists to numerically model solar cells and optimize the cell design. 
+					This involved creating a mathematical model of the way solar cells
+					work and then writing code to make predictions from this model on 
+					efficiency of different designs. The bulk of this code and information
+					on the project can be found on at: 
+					<a href="https://mdh266.github.io/PECS/"> PECS </a> </p>
 										
-										<p class="lead">
-										As a data science fellow at Insight Data Science I built a Python 
-										based web application for exploring historical crime rates and forecasting
-										future crime rates in New York City. 
-										This project involved web scraping, extracting, cleaning and manipulating nine
-										years of geospatial data as well as using time series methods.
-									  The web application can be found on the website: 
-										<a href="http://crimetime.online/"> CrimeTime</a>.
-										</p>
+					<p class="lead">
+					As a data science fellow at Insight Data Science I built a Python 
+					based web application for exploring historical crime rates and forecasting
+					future crime rates in New York City. 
+					This project involved web scraping, extracting, cleaning and manipulating nine
+					years of geospatial data as well as using time series methods.
+					The web application can be found on the website: 
+					<a href="http://crimetime.online/"> CrimeTime</a>.
+
+                    </br>
+                    </br>
+
+                     <div class="row">
+                    <div class="col-lg-12 text-center">
+                    <!-- <h3>More info</h3> -->
+            
+                    <a href="http://michael-harmon.elbowpatched.io/" class="btn btn-lg btn-dark">Academic Website</a>
+                    <a href="http://d1tkp2k7ixwpmm.cloudfront.net/uploads/profiles/6/3db72d0dbdf80da9cc9012ac5b220e7b5bdd1dd1-original.pdf?1485363500" class="btn btn-lg btn-dark"> My Resume</a> 
+                    </br>
+                    </br>
+                    <a href="https://www.linkedin.com/in/michaeldavidharmon"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
+                    <a href="https://github.com/mdh266"><i class="fa fa-github fa-fw fa-3x"></i></a>
+                    </br>
+                    </br>
+                    <i class="fa fa-envelope-o fa-fw"></i> <a href="">mdh266@gmail.com</a>
+
+                </div>
+            </div>
+					</p>
                 </div>
             </div>
             <!-- /.row -->
@@ -117,15 +133,8 @@
                                 <i class="fa fa-user-secret fa-stack-1x text-primary"></i>
                             </span>
                                 <h4>
-                                    <strong>CrimeTime</strong>
+                                    <strong>CrimeTime: Prediciting Crime Rates In NYC</strong>
                                 </h4>
-                                <p>This is a 3 week  project I completed at Insight Data Science.
-																The goal of the project was to develop a predictive model for crime rates in 
-																Manhattan using historical data provided by the NYC Open Data Website. 
-																This project involved exploratory data analysis using Python, SQL, the Pandas 
-																library and time series analysis using StatsModels library.
-																This eventually lead me to create a Python web application, CrimeTime,
-																where users can preform similar analysis in their neighborhood anywhere in New York City.</p>
                                 <a href="https://github.com/mdh266/CrimeTime/" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
@@ -138,10 +147,6 @@
                                 <h4>
                                     <strong>Classification Models For Cancer Detection</strong>
                                 </h4>
-                                <p>The purpose of this project was to look into using
-																classification methods to develop predictive models for 
-																cancer detection. To complete this project I used a Python, 
-																Pandas, seaborn, and Scikit-liearn libraries.</p>
                                 <a href="http://michael-harmon.com/Cancer_Detection/" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
@@ -152,15 +157,8 @@
                                 <i class="fa fa-money fa-stack-1x text-primary"></i>
                             </span>
                                 <h4>
-                                    <strong>Predicting Stock Returns</strong>
+                                    <strong>Regression Models For Predicting Stock Returns</strong>
                                 </h4>
-                                <p>In this project I wanted to look at how to well I can
-															 predict the return on Goodyear (GT) stock based off of 
-															 the return of other companies stock using linear regression. 
-															 The predictors I used were the return on the S&P 500 (SPY), 
-															 Consumer Discretionary Select Sector (XLY), Ford (F), Toyota (T),
-															 and the exponentially weighted average of the return on Ford and Toyota.
-															 To complete this project I used Python, Pandas, and Scikit-learn libraries.</p>
                                 <a href="http://michael-harmon.com/PredictingStocks/" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
@@ -173,13 +171,6 @@
                                 <h4>
                                     <strong>deal.ii Finite Element Library</strong>
                                 </h4>
-                                <p> I contributed to the open source deal.ii C++ library by adding functionality 
-																to its interface with the Trilinos library. Specifically, 
-																I added the ability to use direct solvers for large-scale distributed linear 
-																systems (using MPI) without needing to re-factorize the matrix every time a solve is performed. 
-																This improved runtimes for codes where one is solving linear systems: Ax=b, where A is fixed, 
-																but there are multiple b's and in my case resulted in a 250x speed up. 
-																I also added unit test to test-suite for testing the functionality that I added.</p>
                                 <a href="http://www.dealii.org" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
@@ -192,11 +183,6 @@
                                 <h4>
                                     <strong>2D Photoelectrochemical Solar Cell Simulator</strong>
                                 </h4>
-                                <p>This code solves the coupled drift-diffusion-Poisson equations that model
-																 a photoelectrochemical solar cell in 2D using the deal.ii C++ library.
-																 I used a mixed finite element method to solve the Poisson equation and 
-																local discontinuous Galerkin method along with implicit-explicit time 
-																stepping method for the drift-diffusion equations.</p>
                                 <a href="https://mdh266.github.io/PECS/" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
@@ -209,33 +195,11 @@
                                 <h4>
                                     <strong>1D Photoelectrochemical Solar Cell Simulator</strong>
                                 </h4>
-                                <p>This C++ code solves the coupled drift-diffusion-Poisson equations that
-																 model a photoelectrochemical solar cell in 1D using the linear algebra 
-																library Eigen, Boost library, and OpenMP. I used a mixed finite element 
-																method to solve the Poisson equation and local discontinuous Galerkin method 
-																along with implicit-explicit time stepping method for the drift-diffusion equations.</p>
                                 <a href="https://github.com/mdh266/PECS-1D" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-laptop fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Semiconductor Device Simulator</strong>
-                                </h4>
-                                <p>This code is designed to numerically solve the drift-diffusion-Poisson 
-																equations for semiconductor devices in 2D and 3D using the deal.ii C++library. 
-																The code runs in parallel using Intel Thread Building Blocks for multithreading. 
-																Poisson's equation is solved using the mixed finite element method. The drift-diffusion 
-																equations for electron and hole transport are discrititzed with the local discontinuous 
-																Galerkin method and time stepping is performed using implicit-explicit (IMEX) methods.</p>
-                                <a href="https://github.com/mdh266/Semiconductor_Device_Simulator" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-												<div class="col-md-3 col-sm-6">
+            
+						<div class="col-md-3 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
                                 <i class="fa fa-circle fa-stack-2x"></i>
@@ -244,57 +208,10 @@
                                 <h4>
                                     <strong>Large-Scale Distributed Poisson Equation Solver</strong>
                                 </h4>
-                                <p>A large-scale distributed solver for the Poisson equation in 2D and 3D solver 
-																using the local discontinuous Galerkin method. It mainly uses the deal.ii C++ 
-																library and the Trilinos library for distributed linear algebra data structures 
-																and routines through MPI.</p>
                                 <a href="https://github.com/mdh266/Distributed_Poisson_Solver" class="btn btn-light">Learn More</a>
                             </div>
                         </div>
-												<div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Multithreaded Poisson Equation Solver</strong>
-                                </h4>
-                                <p>This code is designed to numerically solve the Poisson equation 
-																in 2D and 3D using the mixed finite element method and the deal.ii C++ library. 
-																The code runs in parallel using multithreading through Intel Thread Building Blocks.</p>
-                                <a href="https://github.com/mdh266/Multithreaded_Poisson_Solver" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-												<div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Poisson Equation Solver</strong>
-                                </h4>
-                                <p>This code is designed to numerically solve the Poisson
-															 equation in 2D and 3D using the traditional Finite Element Method (FEM) 
-															 and the deal.ii C++ library.</p>
-                                <a href="https://github.com/mdh266/Poisson_Solver" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-												<div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-calculator fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Advection Equation Solver</strong>
-                                </h4>
-                                <p> This code is designed to numerically solve the steady-state advection equation in 2D and
-																 3D using the discontinuous Galerkin (DG) method and the deal.ii C++ library.</p>
-                                <a href="https://github.com/mdh266/Advection_Solver" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
+
                     </div>
                     <!-- /.row (nested) -->
                 </div>
@@ -305,50 +222,12 @@
         <!-- /.container -->
     </section>
 
-    <!-- Callout -->
-    <aside class="callout">
-        <div class="text-vertical-center">
-            <h1>More Info</h1>
-        </div>
-    </aside>
-
-
- <section id="contact" class="projects bg-primary">
-    <!-- Call to Action -->
-    <aside class="call-to-action bg-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <!-- <h3>More info</h3> -->
-                    <a href="http://michael-harmon.elbowpatched.io/" class="btn btn-lg btn-light">Academic Website</a>
-                    <a href="http://d1tkp2k7ixwpmm.cloudfront.net/uploads/profiles/6/3db72d0dbdf80da9cc9012ac5b220e7b5bdd1dd1-original.pdf?1485363500" class="btn btn-lg btn-dark"> My Resume</a>
-                </div>
-            </div>
-        </div>
-    	</aside>
-		</section>
-
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Michael Harmon</strong>
-                    </h4>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="">mdh266@gmail.com</a>
-                        </li>
-                    </ul>
-                    <br>
-                    <ul class="list-inline">
-                        <li>
-                            <a href="https://www.linkedin.com/in/michaeldavidharmon"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/mdh266"><i class="fa fa-github fa-fw fa-3x"></i></a>
-                        </li>
-                    </ul>
                     <hr class="small">
                     <p class="text-muted">Copyright &copy; Michael-Harmon.com 2016</p>
                 </div>
