@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
- <header>
+<<header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -11760,10 +11760,13 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="A-Quick-Intro-To-Interactive-Visualizations-With-Bokeh">A Quick Intro To Interactive Visualizations With Bokeh<a class="anchor-link" href="#A-Quick-Intro-To-Interactive-Visualizations-With-Bokeh">&#182;</a></h1><h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>The purpose of this blog post is to go over some of the basics of plotting with <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a>.  Bokeh is a Python library that generates interactive visualizations with ease and also can handle very large or streaming datasets.  This is important because <a href="http://matplotlib.org/">Matplotlib</a> and <a href="https://seaborn.github.io">Seaborn</a> will often fail if the datasets one is working with becomes too large.</p>
+<h1 id="A-Quick-Intro-To-Interactive-Visualizations-With-Bokeh">A Quick Intro To Interactive Visualizations With Bokeh<a class="anchor-link" href="#A-Quick-Intro-To-Interactive-Visualizations-With-Bokeh">&#182;</a></h1><hr>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
+<p>The purpose of this blog post is to go over some of the basics of plotting with <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a>.  Bokeh is a Python library that generates interactive visualizations with ease and also can handle very large or streaming datasets.  This is important because <a href="http://matplotlib.org/">Matplotlib</a> and <a href="https://seaborn.github.io">Seaborn</a> will often fail if the datasets one is working with becomes too large.</p>
 <p>We will be using geospatial data with the end goal of making an interactive plot of the <a href="https://en.wikipedia.org/wiki/Chicago_%22L%22">Chicago "L"</a> stations.  Therefore we will also make use of the <a href="http://geopandas.org">GeoPandas</a> library which extends the power of Pandas to geospatial data analysis.</p>
 <p>We first cover how to work with GeoPandas and then dive into plotting with Bokeh.  The source code for this blog post can be found <a href="https://github.com/mdh266/IntroToBokeh">here</a>.</p>
-<h2 id="GeoPandas">GeoPandas<a class="anchor-link" href="#GeoPandas">&#182;</a></h2><p>GeoPandas extends the ease of working with the <a href="http://pandas.pydata.org">Pandas</a> library for data analysis to geospatial analysis.  It also has built-in plotting mechanisms that use the Matplotlib library.  To start we include the following libraries:</p>
+<h2 id="GeoPandas">GeoPandas<a class="anchor-link" href="#GeoPandas">&#182;</a></h2><hr>
+<p>GeoPandas extends the ease of working with the <a href="http://pandas.pydata.org">Pandas</a> library for data analysis to geospatial analysis.  It also has built-in plotting mechanisms that use the Matplotlib library.  To start we include the following libraries:</p>
 
 </div>
 </div>
@@ -12830,7 +12833,8 @@ gg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>But what if we want something more interactive? Something where we can zoom in or if we hover over a station we can get more information on it?  For interactive plotting there are many options such as <a href="https://carto.com/">Carto</a> which is easy to use and has a nice interface.  However, you have to pay to use Carto. A free option is to use the <a href="https://d3js.org/">D3.js</a> library.  But D3 has more of a learning curve and requires a lot of knowledge of JavaScript.</p>
 <p>There is also somewhat inbetween the two called <a href="http://bokeh.pydata.org/en/latest/">Bokeh</a>.</p>
-<h2 id="Bokeh">Bokeh<a class="anchor-link" href="#Bokeh">&#182;</a></h2><p>Bokeh is free, is easy to use, doesn't require much JavaScript and gives you almost all of the capabilities of D3.js. It works on small, large and even streaming datasets which makes it perfect for data science and web analytics.  The first thing we need to do to use Bokeh is to import the basic modules from library.  Bokeh is written in a modular format and requires that each individual component be imported seperately.  We read in the basic function modules below,</p>
+<h2 id="Bokeh">Bokeh<a class="anchor-link" href="#Bokeh">&#182;</a></h2><hr>
+<p>Bokeh is free, is easy to use, doesn't require much JavaScript and gives you almost all of the capabilities of D3.js. It works on small, large and even streaming datasets which makes it perfect for data science and web analytics.  The first thing we need to do to use Bokeh is to import the basic modules from library.  Bokeh is written in a modular format and requires that each individual component be imported seperately.  We read in the basic function modules below,</p>
 
 </div>
 </div>
@@ -12869,10 +12873,10 @@ gg==
 
 
 
-<div id="e61881ac-4774-44d1-90dd-b67867f03de3"></div>
+<div id="1cbbd937-fe3f-4b61-b9aa-d16ede46467a"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#e61881ac-4774-44d1-90dd-b67867f03de3');
+var element = $('#1cbbd937-fe3f-4b61-b9aa-d16ede46467a');
 
 (function(global) {
   function now() {
@@ -14023,7 +14027,8 @@ and <code>L_Source</code>.  We first set the tools we want our interactive plot 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>Bokeh is a powerful high performance Python visualization library that makes D3-like interactive web plotting easy.  In this blogpost we went over how to make simple interactive plot using GeoPandas and Bokeh using the Chicago "L" station data as our example.  There is definitely much more you can do with Bokeh, but that will have to wait for another day.  I'll be updating this to add more cool features, so check back in the future!</p>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><hr>
+<p>Bokeh is a powerful high performance Python visualization library that makes D3-like interactive web plotting easy.  In this blogpost we went over how to make simple interactive plot using GeoPandas and Bokeh using the Chicago "L" station data as our example.  There is definitely much more you can do with Bokeh, but that will have to wait for another day.  I'll be updating this to add more cool features, so check back in the future!</p>
 
 </div>
 </div>
