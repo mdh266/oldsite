@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
-
-<header>
+ <header>
     <div class="nav">
       <ul>
-        <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+        <li class="home"><a href="http://michael-harmon.com">Home/a></li>
         <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
         <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
       </ul>
     </div>
   </header>
-
 <head><meta charset="utf-8" />
 <title>SQLWars</title>
 
@@ -11762,14 +11760,17 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="SQL-Wars:-Comparing-Relational-Databases">SQL Wars: Comparing Relational Databases<a class="anchor-link" href="#SQL-Wars:-Comparing-Relational-Databases">&#182;</a></h1><h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h2><ol>
+<h1 id="SQL-Wars:-Comparing-Relational-Databases">SQL Wars: Comparing Relational Databases<a class="anchor-link" href="#SQL-Wars:-Comparing-Relational-Databases">&#182;</a></h1><hr>
+<h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h2><ol>
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Preliminaries">Preliminary Ideas</a></li>
 <li><a href="#SQLite">C.R.U.D. with SQLite</a></li>
 <li><a href="#PostgreSQL">C.R.U.D. with PostgreSQL</a></li>
 <li><a href="#Conclusion">Conclusion</a></li>
 </ol>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>Coming from a computational science/applied mathematics background many of the ideas of data science/machine learning are second nature to me. One thing that was very new to me was creating and manipulating databases. In computational science we don't really deal with databases and I/O is something to avoid as much as possible because it limits performance.  Therefore, in this blog post I'll be going what I have learend about SQL databases, i.e. what they are, how to set them up, and how to use them.</p>
+<hr>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
+<p>Coming from a computational science/applied mathematics background many of the ideas of data science/machine learning are second nature to me. One thing that was very new to me was creating and manipulating databases. In computational science we don't really deal with databases and I/O is something to avoid as much as possible because it limits performance.  Therefore, in this blog post I'll be going what I have learend about SQL databases, i.e. what they are, how to set them up, and how to use them.</p>
 <h3 id="SQL-And-What-I'll-Cover:">SQL And What I'll Cover:<a class="anchor-link" href="#SQL-And-What-I'll-Cover:">&#182;</a></h3><p>SQL stands for Structured Query Language. It is a domain specific language used in programming to deal with data that is stored in a relational database.  SQL is designed for a specific purpose: to query data contained in a relational database.  There are plently of good references on how to learn SQL query commands, two that I used are,</p>
 <ol>
 <li><a href="http://sqlzoo.net/">SQLZOO</a></li>
@@ -11792,7 +11793,9 @@ div#notebook {
 </ul>
 <p>As we'll see most of the differences between working with the two implementations will be in how we create the databases.  The queries will be relatively the same, but the libaries we use to interact with the databases will be different depending on the SQL implementation. I'll be updating this blog post as a time goes on, so check back later for new additions.</p>
 <p>First let me go over two topics: relational databases and the client-server model for databases.</p>
-<h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">&#182;</a></h2><h3 id="Relational-Database-Model">Relational Database Model<a class="anchor-link" href="#Relational-Database-Model">&#182;</a></h3><p>This model organizes data into one or more tables (or "relations") of columns and rows, with a unique key identifying each row. Rows in a table can be linked to rows in other tables by adding a column for the unique key of the linked row (such columns are known as foreign keys). Most physical implementations have a unique primary key (PK) for each table. When a new row is written to the table, a new unique value for the primary key is generated; this is the key that the system uses primarily for accessing the table.</p>
+<hr>
+<h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">&#182;</a></h2><hr>
+<h3 id="Relational-Database-Model">Relational Database Model<a class="anchor-link" href="#Relational-Database-Model">&#182;</a></h3><p>This model organizes data into one or more tables (or "relations") of columns and rows, with a unique key identifying each row. Rows in a table can be linked to rows in other tables by adding a column for the unique key of the linked row (such columns are known as foreign keys). Most physical implementations have a unique primary key (PK) for each table. When a new row is written to the table, a new unique value for the primary key is generated; this is the key that the system uses primarily for accessing the table.</p>
 <p>The primary keys within a database are used to define the relationships among the tables. When a primary key migrates to another table, it becomes a foreign key in the other table. This can be seen below where the primary key, <code>ID</code>, in the <code>School Table</code> becomes the foriegn key, <code>School ID</code>, in the <code>Student Table</code>:</p>
 <p><img src="./images/Primary-Foriegn.png" alt="primary-foriegn"></p>
 <p>When each cell can contain only one value and the primary key migrates into a regular entity table, this design pattern can represent either a one-to-one or one-to-many relationship. A one-to-one relationship exists when one row in a table may be linked with only one row in another table and vice versa. A one-to-many relationship exists when one row in table A may be linked with many rows in table B, but one row in table B is linked to only one row in table A. The above diagram of relationship between the <code>School Table</code> and the <code>Student Table</code> is an example of a one-to-many relationship.  There is also a many-to-many relationship, but this is more complicated and we wont discuss it. The example I will work below will involve a one-to-many relationship.</p>
@@ -11808,7 +11811,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h2><p><a href="https://www.sqlite.org/">SQLite</a> was the first relational database that I learned.  It's fast, lightweight and filebased. In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program.  SQLite stores the entire database (definitions, tables, indices, and the data itself) as a single cross-platform file on a host machine.  SQLite is also embedded into Python naturally with <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a> which we will be covering in this post.</p>
+<hr>
+<h2 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h2><hr>
+<p><a href="https://www.sqlite.org/">SQLite</a> was the first relational database that I learned.  It's fast, lightweight and filebased. In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program.  SQLite stores the entire database (definitions, tables, indices, and the data itself) as a single cross-platform file on a host machine.  SQLite is also embedded into Python naturally with <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a> which we will be covering in this post.</p>
 <p>Let's get started with C.R.U.D. for SQLite with Python:</p>
 <h3 id="Creating-A-SQLite-Database">Creating A SQLite Database<a class="anchor-link" href="#Creating-A-SQLite-Database">&#182;</a></h3><p>First thing we need to do is import sqlite3:</p>
 
@@ -12459,7 +12464,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="PostgreSQL">PostgreSQL<a class="anchor-link" href="#PostgreSQL">&#182;</a></h2><p>While SQLite is fast and easy, it can't handle many concurrent writes. It is also not great for large databases since everything must fit in one file on disk.  PostgreSQL is another great option for a relation database that is powerful and open source.  PostgreSQL databases are not limited in size and can handle multiple concurrent writes.  PostgreSQL manages concurrency through a system known as multiversion concurrency control (MVCC), which gives each transaction a "snapshot" of the database, allowing changes to be made without being visible to other transactions until the changes are committed. This largely eliminates the need for read locks, and ensures the database maintains the ACID (atomicity, consistency, isolation, durability) principles in an efficient manner. The one draw back to PostgreSQL is that is a little harder to set up, which is what I will be focusing on below.</p>
+<hr>
+<h2 id="PostgreSQL">PostgreSQL<a class="anchor-link" href="#PostgreSQL">&#182;</a></h2><hr>
+<p>While SQLite is fast and easy, it can't handle many concurrent writes. It is also not great for large databases since everything must fit in one file on disk.  PostgreSQL is another great option for a relation database that is powerful and open source.  PostgreSQL databases are not limited in size and can handle multiple concurrent writes.  PostgreSQL manages concurrency through a system known as multiversion concurrency control (MVCC), which gives each transaction a "snapshot" of the database, allowing changes to be made without being visible to other transactions until the changes are committed. This largely eliminates the need for read locks, and ensures the database maintains the ACID (atomicity, consistency, isolation, durability) principles in an efficient manner. The one draw back to PostgreSQL is that is a little harder to set up, which is what I will be focusing on below.</p>
 <h3 id="Creating-A-Database">Creating A Database<a class="anchor-link" href="#Creating-A-Database">&#182;</a></h3><p>The first thing we will need to do is import the libraries to interact with SQL in Python.  These are <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="https://sqlalchemy-utils.readthedocs.io/en/latest/">sqlalchemy_utils</a>. We import them in below,</p>
 
 </div>
@@ -12945,7 +12952,9 @@ cur.fetchall()
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>I'll be upating this more as time goes on, but for now we can summarize some of the highlights of SQLite and PostgreSQL are:</p>
+<hr>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><hr>
+<p>I'll be upating this more as time goes on, but for now we can summarize some of the highlights of SQLite and PostgreSQL are:</p>
 <h3 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h3><p>SQLite Is probably best for mobile apps or personal projects or where the dataset is not too big and can be stored locally on the machine.</p>
 <p><strong>PROS:</strong> Requires less configuration than client-server based database. Easy to use, fast, lightweight and has native bindings to Python.</p>
 <p><strong>CONS:</strong> Cannot handle concurrent writes, instead writes must be performed sequentially.  SQLite can handle concurrent reads, but not too many.</p>
