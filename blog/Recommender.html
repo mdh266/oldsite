@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Recommender</title>
+<title>Recommender Systems</title>
 
  <header>
     <div class="nav">
@@ -12,7 +12,6 @@
       </ul>
     </div>
   </header>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -11762,8 +11761,13 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Recommender-Systems-&amp;-Collaborative-Filtering">Recommender Systems &amp; Collaborative Filtering<a class="anchor-link" href="#Recommender-Systems-&amp;-Collaborative-Filtering">&#182;</a></h1><hr>
+<h2 id="Contents">Contents<a class="anchor-link" href="#Contents">&#182;</a></h2><hr>
+<p><strong><a href="#first-bullet">1. Inroduction</a></strong></p>
+<p><strong><a href="#second-bullet">2. Preprocessing &amp; Basic Statistics</a></strong></p>
+<p><strong><a href="#third-bullet">3. User-User Collaborative Filtering</a></strong></p>
+<p><strong><a href="#fourth-bullet">4. Next Steps</a></strong></p>
 <hr>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
+<h2 id="Introduction-">Introduction <a class="anchor" id="first-bullet" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
 <p>Recommender systems are an important application of data science in industry.  They are used almost everywhere; examples being recommending items to sell to users on Amazon, songs on Pandora and movies/shows on Netflix.  There are two general approaches to recommender systems:</p>
 <ol>
 <li><p><a href="https://en.wikipedia.org/wiki/Collaborative_filtering">Collaborative filtering</a></p>
@@ -11791,7 +11795,7 @@ div#notebook {
 </ul>
 <p>In this blog post I'll talk I'll go user-user collaborative filtering to predict how a given user will rate an item for now and look into other methods later on. Let's jump into the code...</p>
 <hr>
-<h2 id="Preprocessing-&amp;-Basic-Statistics">Preprocessing &amp; Basic Statistics<a class="anchor-link" href="#Preprocessing-&amp;-Basic-Statistics">&#182;</a></h2><hr>
+<h2 id="Preprocessing-&amp;-Basic-Statistics-">Preprocessing &amp; Basic Statistics <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Preprocessing-&amp;-Basic-Statistics-">&#182;</a></h2><hr>
 <p>First let's load some of the basic libraries,</p>
 
 </div>
@@ -12649,7 +12653,7 @@ GyUVERHJjZKKiIjkRklFRERyo6QiIiK5UVIREZHc/D8rOVApuiKlgQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># turn each reviewer and product into categorical data,</span>
@@ -12674,7 +12678,7 @@ GyUVERHJjZKKiIjkRklFRERyo6QiIiK5UVIREZHc/D8rOVApuiKlgQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">reviews</span> <span class="o">=</span> <span class="n">csc_matrix</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;overall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> 
@@ -12691,7 +12695,7 @@ GyUVERHJjZKKiIjkRklFRERyo6QiIiK5UVIREZHc/D8rOVApuiKlgQAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12716,7 +12720,7 @@ GyUVERHJjZKKiIjkRklFRERyo6QiIiK5UVIREZHc/D8rOVApuiKlgQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ratings_matrix</span> <span class="o">=</span> <span class="n">reviews</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
@@ -12844,7 +12848,7 @@ GyUVERHJjZKKiIjkRklFRERyo6QiIiK5UVIREZHc/D8rOVApuiKlgQAAAABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h2 id="User-User-Collaborative-Filtering">User-User Collaborative Filtering<a class="anchor-link" href="#User-User-Collaborative-Filtering">&#182;</a></h2><hr>
+<h2 id="User-User-Collaborative-Filtering-">User-User Collaborative Filtering <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#User-User-Collaborative-Filtering-">&#182;</a></h2><hr>
 
 </div>
 </div>
@@ -13644,7 +13648,7 @@ RK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see that after aboud 25 users there isn't much improvement in predictive power of collaborative filtering.</p>
 <hr>
-<h2 id="Next-Steps...">Next Steps...<a class="anchor-link" href="#Next-Steps...">&#182;</a></h2><hr>
+<h2 id="Next-Steps...-">Next Steps... <a class="anchor" id="fourth-bullet" /><a class="anchor-link" href="#Next-Steps...-">&#182;</a></h2><hr>
 <p>User-User collaborative filtering while definitely an improvement over using the mean rating as predictor has some serious limitations.  First of all it does not scale well as the number of users grows. This is because searching for similar users will take longer as the list of users grows. Another method which scales better with a larger user base is item-item collaborative filtering, which is incredibly similar to user-user collaborative filtering.  An even better method is to use matrix-factorization in model based collaborative filtering. I'll be updating this post soon and go into the details of using another method.</p>
 
 </div>

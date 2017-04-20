@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-
-<header>
+<head><meta charset="utf-8" />
+<title>Wikimedia Challenge</title>
+ <header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -10,9 +11,6 @@
       </ul>
     </div>
   </header>
-<head><meta charset="utf-8" />
-<title>Wikimedia_Challnenge</title>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -11762,14 +11760,14 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Wikimedia-Data-Challenge">Wikimedia Data Challenge<a class="anchor-link" href="#Wikimedia-Data-Challenge">&#182;</a></h1><hr>
-<h2 id="Contents:">Contents:<a class="anchor-link" href="#Contents:">&#182;</a></h2><ul>
-<li><p><a href="#Introduction">Introduction</a></p>
-</li>
-<li><p><a href="#Analysis">Data Analysis</a></p>
-</li>
-<li><p><a href="#Conclusion">Conclusion</a></p>
-</li>
-</ul>
+<h2 id="Contents:">Contents:<a class="anchor-link" href="#Contents:">&#182;</a></h2><hr>
+<p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
+<p><strong><a href="#second-bullet">2. Data Analysis</a></strong></p>
+<p><strong><a href="#third-bullet">3.What The Average Daily Clickthrough Rates?</a></strong></p>
+<p><strong><a href="#fourth-bullet">4. Which Results Do Clients Click First?</a></strong></p>
+<p><strong><a href="#fifth-bullet">5. What Are The Daily Average Zero Results Rate?</a></strong></p>
+<p><strong><a href="#sixth-bullet">6. What Factors Affect User Session Length?</a></strong></p>
+<p><strong><a href="#seventh-bullet">7. Conclusion</a></strong></p>
 <p>The source code can be found <a href="https://github.com/mdh266/Wikimedia_Challenge">here</a>.</p>
 <hr>
 
@@ -11781,7 +11779,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
+<h2 id="Introduction-">Introduction <a class="anchor" id="first-bullet" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
 <p>This Project was put out as data challenge by the <a href="https://wikimediafoundation.org/wiki/Home">Wikimedia Foundation</a> for a data analyst position. I thought it would be a great opportunity to brush up on some data analysis tools in Pandas and decided to complete the challenge.</p>
 <p>The goal of the project was to analyze data from <em>event logging</em> (EL) to track a variety of performance and usage metrics to help the company make decisions. Specifically, they were interested in:</p>
 <ul>
@@ -11792,7 +11790,7 @@ div#notebook {
 </ul>
 <p>EL uses JavaScript to asynchronously send messages (events) to their servers when the user has performed specific actions.</p>
 <hr>
-<h3 id="Data">Data<a class="anchor-link" href="#Data">&#182;</a></h3><hr>
+<h3 id="Data--">Data  <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Data--">&#182;</a></h3><hr>
 <p>The dataset comes from a <a href="3">tracking schema</a> that the Wikimedia Foundation uses for assessing user satisfaction. Desktop users are randomly sampled to be anonymously tracked by this schema which uses a "I'm alive" pinging system that we can use to estimate how long our users stay on the pages they visit. The dataset contains just a little more than a week of EL data.</p>
 <table>
 <thead><tr>
@@ -11942,7 +11940,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h2 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">&#182;</a></h2><hr>
+<h2 id="Data-Analysis-">Data Analysis <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Data-Analysis-">&#182;</a></h2><hr>
 <p>The data was provided in csv format in a file called, "events_log.csv." When reading in the data I wanted to set the index of the dataframe to be a TimeStamp.  This can be achieved using the pandas command:</p>
 
 <pre><code>df = pd.read_csv("events_log.csv",
@@ -12201,7 +12199,7 @@ memory usage: 27.5+ MB
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-The-Average-Daily-Clickthrough-Rates?">What The Average Daily Clickthrough Rates?<a class="anchor-link" href="#What-The-Average-Daily-Clickthrough-Rates?">&#182;</a></h3><p>We first set out to understand what the average daily clickthrough rate of the users is, we can do this by first finding out how many people visit the website per day. 
+<h3 id="What-The-Average-Daily-Clickthrough-Rates?-">What The Average Daily Clickthrough Rates? <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#What-The-Average-Daily-Clickthrough-Rates?-">&#182;</a></h3><p>We first set out to understand what the average daily clickthrough rate of the users is, we can do this by first finding out how many people visit the website per day. 
 In order to find this number on a per day basis, we have to first perform a <a href="http://pandas.pydata.org/pandas-docs/stable/groupby.html">groupby</a> day,</p>
 
 <pre><code>df.groupby([pd.TimeGrouper('D')])
@@ -12481,7 +12479,7 @@ AABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="Which-Results-Do-Clients-Click-First?">Which Results Do Clients Click First?<a class="anchor-link" href="#Which-Results-Do-Clients-Click-First?">&#182;</a></h3><hr>
+<h3 id="Which-Results-Do-Clients-Click-First?-">Which Results Do Clients Click First? <a class="anchor" id="fourth-bullet" /><a class="anchor-link" href="#Which-Results-Do-Clients-Click-First?-">&#182;</a></h3><hr>
 <p>In order to figure out which links clients click first we have get the number of search result pages that were clicked on and group by day, <code>session_id</code> and <code>result_positon</code>.  We do this using the <a href="http://pandas.pydata.org/pandas-docs/stable/groupby.html">groupby</a> Pandas call as well as filtering the rows by which rows includes a webpage that has been visited.  We can tell which page has been visited by getting the <code>result_position</code> of the page that was visisted. The groupby and filter call are below,</p>
 
 </div>
@@ -13484,7 +13482,7 @@ zMzMzBrkjpOZmZlZg9xxMjMzM2uQO05mZmZmDXLHyczMzKxB7jiZmZmZNcgdJzMzM7MGueNkZmZm
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="What-Are-The-Daily-Average-Zero-Results-Rate?">What Are The Daily Average Zero Results Rate?<a class="anchor-link" href="#What-Are-The-Daily-Average-Zero-Results-Rate?">&#182;</a></h3><hr>
+<h3 id="What-Are-The-Daily-Average-Zero-Results-Rate?-">What Are The Daily Average Zero Results Rate? <a class="anchor" id="fifth-bullet" /><a class="anchor-link" href="#What-Are-The-Daily-Average-Zero-Results-Rate?-">&#182;</a></h3><hr>
 <p>Now we are interested in the daily zero rates, that is the the number of searches that return zero results. We group the data by day as we did in Question 1. and then count the number of rows that have,</p>
 
 <pre><code>'n_results' == 0
@@ -13732,7 +13730,7 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="What-Factors-Affect-User-Session-Length?">What Factors Affect User Session Length?<a class="anchor-link" href="#What-Factors-Affect-User-Session-Length?">&#182;</a></h3><hr>
+<h3 id="What-Factors-Affect-User-Session-Length?-">What Factors Affect User Session Length? <a class="anchor" id="sixth-bullet" /><a class="anchor-link" href="#What-Factors-Affect-User-Session-Length?-">&#182;</a></h3><hr>
 <p>Now we want to look into the session length and what factors may affect it.</p>
 <p>We first get the start time of each session by grouping by <code>session_id</code> and taking the first row.  We have to use the command, <code>nth(0)</code> instead of <code>first()</code>, because of issues with <code>first()</code> dropping cases that have <code>NaN</code> as values.  We drop the <code>uuid</code> column since it seems like useless information and pushes the dataframe off the screen when I print it.  The last thing I will mention is that we use <code>as_index = False</code> in the <code>groupby(...)</code> call so that we get keep the original index and a Pandas DataFrame is returned instead of Pandas Series:</p>
 
@@ -17278,7 +17276,7 @@ hP8B7Vi8WudBkWsAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><hr>
+<h2 id="Conclusion-">Conclusion <a class="anchor" id="seventh-bullet" /><a class="anchor-link" href="#Conclusion-">&#182;</a></h2><hr>
 <p>In this project we looked into factors that influence clickthrough rates on eight days of data from the Wikimedia foundation.  They had two different groups that users sessions were in, these are 'group a' and 'group b'.  We found that,</p>
 <ul>
 <li>'group b' had a higher return of zero results and subsequently a lower clickthrough rate compared to 'group a'.</li>
@@ -17299,19 +17297,6 @@ hP8B7Vi8WudBkWsAAAAASUVORK5CYII=
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
