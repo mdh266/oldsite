@@ -2,8 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 <title>NYC Crime Rates</title>
-
- <header>
+<header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -11,8 +10,8 @@
         <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
       </ul>
     </div>
-  </header>
-  
+</header>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -15367,7 +15366,7 @@ Ncj/ABYrgE+/zENBAAAAAElFTkSuQmCC
 <p>We can see that overall the number of crimes involving larceny has been steadily decreasing over the years. We can also see that larceny in Midtown is very seasonal. Larceny is lowest at the beginning of the year and highest at the end of year. Sadly this makes some sense, since larceny involves shoplifting, many people might be stealing presents for the holidays.</p>
 <p>Since the two crimes in the two neighborhoods are out of phase with one another (occur at different times of the year), it may be possible to redirect police efforts to the different areas depending on the time of year. Let's develop a predictive model to estimate the number of monthly crimes involving grand larceny in Midtown and the number of assaults in East Harlem using the time series data. Being able to predict the number of incidents on a month-to-month basis would be useful for police as they might be able to better prepare for increases and decreases in crime within the city and reallocate resources to specific neighborhoods at the appropriate time of year.</p>
 <hr>
-<h2 id="Time-Series-Anal-">Time Series Anal <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#Time-Series-Anal-">&#182;</a></h2><hr>
+<h2 id="Time-Series-Analysis-">Time Series Analysis <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#Time-Series-Analysis-">&#182;</a></h2><hr>
 <p>There are lot of great resource for time series analysis.  For this project I used the following blogs:</p>
 <p><a href="https://www.analyticsvidhya.com/blog/2015/12/complete-tutorial-time-series-modeling/">A tutorial on time series model</a> is a good place to start, but its in R, so I turned to, <a href="https://www.analyticsvidhya.com/blog/2016/02/time-series-forecasting-codes-python/">Time series forecasting in python</a> to learn how to do time series analysis in Python.  Another good resource is <a href="http://tomaugspurger.github.io/modern-7-timeseries">Tom Augspurger's blog</a>. Finally, for seasonal ARIMA I found the the following blog <a href="http://www.seanabu.com/2016/03/22/time-series-seasonal-ARIMA-model-in-python/">post</a> very helpful.</p>
 <p>I won't go over the details of modeling with ARIMA, but more information can be found in the links above.  It's worth noting that R has a lot better time series capabilities than Python. However, one can use the <a href="http://statsmodels.sourceforge.net/">statsmodels library</a> to perform ARIMA modeling.</p>
