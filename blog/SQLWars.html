@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
-<title>SQLWars</title>
-<header>
+ <header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -11,6 +9,10 @@
       </ul>
     </div>
   </header>
+<head><meta charset="utf-8" />
+<title>SQLWars</title>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -11767,20 +11769,8 @@ div#notebook {
 <p><strong><a href="#Conclusion">5. Conclusion</a></strong></p>
 <hr>
 <h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
-<p>Coming from a computational science/applied mathematics background many of the ideas of data science/machine learning are second nature to me. One thing that was very new to me was creating and manipulating databases. In computational science we don't really deal with databases and I/O is something to avoid as much as possible because it limits performance.  Therefore, in this blog post I'll be going what I have learend about SQL databases, i.e. what they are, how to set them up, and how to use them.</p>
-<h3 id="SQL-And-What-I'll-Cover:">SQL And What I'll Cover:<a class="anchor-link" href="#SQL-And-What-I'll-Cover:">&#182;</a></h3><p>SQL stands for Structured Query Language. It is a domain specific language used in programming to deal with data that is stored in a relational database.  SQL is designed for a specific purpose: to query data contained in a relational database.  There are plently of good references on how to learn SQL query commands, two that I used are,</p>
-<ol>
-<li><a href="http://sqlzoo.net/">SQLZOO</a></li>
-<li><a href="https://www.w3schools.com/sql/">w3schools.com</a></li>
-</ol>
-<p>However, this is not what I intend to cover here.  Instead, I would like to look at how one can create and interact with different implementations of SQL databases.  And specifically how to do this using Python.  There are many different implementations of SQL: SQLite, Oracle, MySQL, PostgreSQL, etc.  The basic operations on SQL databases that are common to all the implementations are described in the acronym, C.R.U.D.:</p>
-<ul>
-<li><strong>C</strong>reate: How to create a database and tables.</li>
-<li><strong>R</strong>ead: How read from a table in a database.</li>
-<li><strong>U</strong>pdate: How to update the values in a table in the database.</li>
-<li><strong>D</strong>elete: How to delete rows from a table in the database.</li>
-</ul>
-<p>For now the SQL implementations I'll be focusing on are,</p>
+<p>Coming from a computational science/applied mathematics background many of the ideas of data science/machine learning are second nature to me. One thing that was very new to me was creating and manipulating databases. In computational science we don't really deal with databases and I/O is something to avoid as much as possible because it limits performance.  Therefore, in this blog post I'll be going what I have learned about SQL databases, i.e. what they are, how to set them up, and how to use them.</p>
+<p>In this post I'll be focusing on two SQL implementations,</p>
 <ul>
 <li><a href="https://www.sqlite.org/">SQLite</a> and Python's interface to it <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a>.</li>
 </ul>
@@ -11788,17 +11778,46 @@ div#notebook {
 <ul>
 <li><a href="https://www.postgresql.org/">PostgreSQL</a> and Python's interface to it <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="http://initd.org/psycopg/">psycopg2</a>.</li>
 </ul>
-<p>As we'll see most of the differences between working with the two implementations will be in how we create the databases.  The queries will be relatively the same, but the libaries we use to interact with the databases will be different depending on the SQL implementation. I'll be updating this blog post as a time goes on, so check back later for new additions.</p>
-<p>First let me go over two topics: relational databases and the client-server model for databases.</p>
+<p>Another option, and probably the most popular option, is <a href="https://www.mysql.com/">MySQL</a>.  However, I wont be talking about MySQL in this post. Let's first start out discussing SQL, relational databases and the client-server model for databases.</p>
 <hr>
 <h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">&#182;</a></h2><hr>
-<h3 id="Relational-Database-Model">Relational Database Model<a class="anchor-link" href="#Relational-Database-Model">&#182;</a></h3><p>This model organizes data into one or more tables (or "relations") of columns and rows, with a unique key identifying each row. Rows in a table can be linked to rows in other tables by adding a column for the unique key of the linked row (such columns are known as foreign keys). Most physical implementations have a unique primary key (PK) for each table. When a new row is written to the table, a new unique value for the primary key is generated; this is the key that the system uses primarily for accessing the table.</p>
+<h3 id="SQL">SQL<a class="anchor-link" href="#SQL">&#182;</a></h3><p>SQL stands for <strong>Structured Query Language</strong>. It is a domain specific language used in programming to deal with data that is stored in a <strong><a href="https://en.wikipedia.org/wiki/Relational_database">relational database</a></strong>.  SQL is designed for a specific purpose: to query data contained in a relational database.  There are plently of good references on how to learn SQL query commands, two that I used were,</p>
+<ol>
+<li><a href="http://sqlzoo.net/">SQLZOO</a></li>
+<li><a href="https://www.w3schools.com/sql/">w3schools.com</a></li>
+</ol>
+<p>However, SQL queries are not not what I intend to cover in this post.  Instead, I would like to look at how one can create and interact with different implementations of SQL databases.  And specifically how to do this using Python.  There are many different implementations of SQL: SQLite, Oracle, MySQL, PostgreSQL, etc.  The basic operations on SQL databases that are common to all the implementations are described in the acronym, <strong>C.R.U.D.</strong>:</p>
+<ul>
+<li><p><strong>Create</strong>: How to create a database and tables.</p>
+</li>
+<li><p><strong>Read</strong>: How read from a table in a database.</p>
+</li>
+<li><p><strong>Update</strong>: How to update the values in a table in the database.</p>
+</li>
+<li><p><strong>Delete</strong>: How to delete rows from a table in the database.</p>
+</li>
+</ul>
+<p>A sequence of database operations that satisfies the <strong>A.C.I.D</strong> properties can be perceived as single logical operation on the data, is called a <strong>transaction.</strong>  A.C.I.D is an acronym for set of properties relating to database transcations.  The properties are,</p>
+<ul>
+<li><strong>Atomicity</strong>: The requirement that each transaction be "all or nothing." This means that if one part of the transaction fails, then the entire transaction fails, and the database state is left unchanged.</li>
+</ul>
+<ul>
+<li><strong>Consistency</strong>: Consistency ensures that any transaction will bring the database from one valid state to another and that changes that have affected data were only completed in allowed ways. Consistency does not however, guarantee the correctness of the transcation.</li>
+</ul>
+<ul>
+<li><strong>Isolation</strong>: This property ensures that the concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially, i.e., one after the other</li>
+</ul>
+<ul>
+<li><strong>Durability</strong>: Durability ensures that once a transaction has been committed, it will remain so, even in the event of power loss, crashes, or errors.</li>
+</ul>
+<p>As we will see, most of the differences between working with the two implementations will be in how we create the databases.  The queries will be relatively the same, but the libaries we use to interact with the databases will be different depending on the SQL implementation. Let's now talk about the relational database model.</p>
+<h3 id="Relational-Database-Model">Relational Database Model<a class="anchor-link" href="#Relational-Database-Model">&#182;</a></h3><p>This model organizes data into one or more tables (or "relations") of columns and rows, with a unique key identifying each row. Rows in a table can be linked to rows in other tables by adding a column for the unique key of the linked row (such columns are known as <strong>foreign keys</strong>). Most physical implementations have a unique <strong>primary key</strong> (PK) for each table. When a new row is written to the table, a new unique value for the primary key is generated; this is the key that the system uses primarily for accessing the table.</p>
 <p>The primary keys within a database are used to define the relationships among the tables. When a primary key migrates to another table, it becomes a foreign key in the other table. This can be seen below where the primary key, <code>ID</code>, in the <code>School Table</code> becomes the foriegn key, <code>School ID</code>, in the <code>Student Table</code>:</p>
 <p><img src="./images/Primary-Foriegn.png" alt="primary-foriegn"></p>
-<p>When each cell can contain only one value and the primary key migrates into a regular entity table, this design pattern can represent either a one-to-one or one-to-many relationship. A one-to-one relationship exists when one row in a table may be linked with only one row in another table and vice versa. A one-to-many relationship exists when one row in table A may be linked with many rows in table B, but one row in table B is linked to only one row in table A. The above diagram of relationship between the <code>School Table</code> and the <code>Student Table</code> is an example of a one-to-many relationship.  There is also a many-to-many relationship, but this is more complicated and we wont discuss it. The example I will work below will involve a one-to-many relationship.</p>
-<h3 id="Client-Server-Model-For-Databases">Client-Server Model For Databases<a class="anchor-link" href="#Client-Server-Model-For-Databases">&#182;</a></h3><p>The client-server model is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients.  The resource/service in the case of a database is the data stored in it. Often clients and servers communicate over a computer network on separate hardware, but both client and server may reside in the same system. A server host runs one or more server programs which share their resources with clients. A client does not share any of its resources, but requests a server's content or service function. Clients therefore initiate communication sessions with servers which await incoming requests.</p>
+<p>When each cell can contain only one value and the primary key migrates into a regular entity table, this design pattern can represent either a one-to-one or one-to-many relationship. A <strong>one-to-one relationship</strong> exists when one row in a table may be linked with only one row in another table and vice versa. A <strong>one-to-many relationship</strong> exists when one row in table A may be linked with many rows in table B, but one row in table B is linked to only one row in table A. The above diagram of relationship between the <code>School Table</code> and the <code>Student Table</code> is an example of a one-to-many relationship.  There is also a <strong>many-to-many relationship</strong>, but this is more complicated and we won't discuss it further. The example I will work below will involve a one-to-many relationship.</p>
+<h3 id="Client-Server-Model-For-Databases">Client-Server Model For Databases<a class="anchor-link" href="#Client-Server-Model-For-Databases">&#182;</a></h3><p>The <strong>client-server model</strong> is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients.  The resource/service in the case of a database is the data stored in it. Often clients and servers communicate over a computer network on separate hardware, but both client and server may reside in the same system. A server host runs one or more server programs which share their resources with clients. A client does not share any of its resources, but requests a server's content or service function. Clients therefore initiate communication sessions with servers which await incoming requests.</p>
 <p><img src="./images/Client-server-model.png" alt="&#39;client-server&#39;"></p>
-<p>Now let's get started with SQLite first!</p>
+<p>Now that we got that basic information under our belt let's get started with SQLite first!</p>
 
 </div>
 </div>
@@ -11810,7 +11829,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
 <h2 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h2><hr>
-<p><a href="https://www.sqlite.org/">SQLite</a> was the first relational database that I learned.  It's fast, lightweight and filebased. In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program.  SQLite stores the entire database (definitions, tables, indices, and the data itself) as a single cross-platform file on a host machine.  SQLite is also embedded into Python naturally with <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a> which we will be covering in this post.</p>
+<p><a href="https://www.sqlite.org/">SQLite</a> was the first relational database that I learned.  It's fast, lightweight and filebased. In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program.  <em>SQLite stores the entire database (definitions, tables, indices, and the data itself) as a single cross-platform file on a host machine.</em>  SQLite is also embedded into Python naturally with <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a> which we will be covering in this post.</p>
 <p>Let's get started with C.R.U.D. for SQLite with Python:</p>
 <h3 id="Creating-A-SQLite-Database">Creating A SQLite Database<a class="anchor-link" href="#Creating-A-SQLite-Database">&#182;</a></h3><p>First thing we need to do is import sqlite3:</p>
 
@@ -12463,7 +12482,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
 <h2 id="PostgreSQL">PostgreSQL<a class="anchor-link" href="#PostgreSQL">&#182;</a></h2><hr>
-<p>While SQLite is fast and easy, it can't handle many concurrent writes. It is also not great for large databases since everything must fit in one file on disk.  PostgreSQL is another great option for a relation database that is powerful and open source.  PostgreSQL databases are not limited in size and can handle multiple concurrent writes.  PostgreSQL manages concurrency through a system known as multiversion concurrency control (MVCC), which gives each transaction a "snapshot" of the database, allowing changes to be made without being visible to other transactions until the changes are committed. This largely eliminates the need for read locks, and ensures the database maintains the ACID (atomicity, consistency, isolation, durability) principles in an efficient manner. The one draw back to PostgreSQL is that is a little harder to set up, which is what I will be focusing on below.</p>
+<p>While SQLite is fast and easy, it can't handle many concurrent writes. It is also not great for large databases since everything must fit in one file on disk.  PostgreSQL is another great option for a relation database that is powerful and open source.  PostgreSQL databases are not limited in size and can handle multiple concurrent writes.  PostgreSQL manages concurrency through a system known as <strong>multiversion concurrency control (MVCC)</strong>, which gives each transaction a "snapshot" of the database, allowing changes to be made without being visible to other transactions until the changes are committed. This largely eliminates the need for read locks, and ensures the database maintains the ACID (atomicity, consistency, isolation, durability) principles in an efficient manner. The one draw back to PostgreSQL is that is a little harder to set up, which is what I will be focusing on below.</p>
 <h3 id="Creating-A-Database">Creating A Database<a class="anchor-link" href="#Creating-A-Database">&#182;</a></h3><p>The first thing we will need to do is import the libraries to interact with SQL in Python.  These are <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="https://sqlalchemy-utils.readthedocs.io/en/latest/">sqlalchemy_utils</a>. We import them in below,</p>
 
 </div>
