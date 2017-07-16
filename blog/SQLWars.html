@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
- <header>
+<head><meta charset="utf-8" />
+<header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -9,9 +10,7 @@
       </ul>
     </div>
   </header>
-<head><meta charset="utf-8" />
 <title>SQLWars</title>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11778,7 +11777,7 @@ div#notebook {
 <ul>
 <li><a href="https://www.postgresql.org/">PostgreSQL</a> and Python's interface to it <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="http://initd.org/psycopg/">psycopg2</a>.</li>
 </ul>
-<p>Another option, and probably the most popular option, is <a href="https://www.mysql.com/">MySQL</a>.  However, I wont be talking about MySQL in this post. Let's first start out discussing SQL, relational databases and the client-server model for databases.</p>
+<p>Another option, and probably the most popular option, is <a href="https://www.mysql.com/">MySQL</a>.  However, I wont be talking about MySQL in this post.One thing that was particularly helpful with SQLite was the <a href="http://sqlitebrowser.org/">DB Browser for SQLite</a> which is a GUI for SQLite databases.  A similar tool with more features for PostgreSQL that is <a href="https://www.pgadmin.org/">pgAdmin</a>, but I haven't used it too much. For now, let's first start out discussing SQL, relational databases and the client-server model for databases.</p>
 <hr>
 <h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">&#182;</a></h2><hr>
 <h3 id="SQL">SQL<a class="anchor-link" href="#SQL">&#182;</a></h3><p>SQL stands for <strong>Structured Query Language</strong>. It is a domain specific language used in programming to deal with data that is stored in a <strong><a href="https://en.wikipedia.org/wiki/Relational_database">relational database</a></strong>.  SQL is designed for a specific purpose: to query data contained in a relational database.  There are plently of good references on how to learn SQL query commands, two that I used were,</p>
@@ -11788,14 +11787,16 @@ div#notebook {
 </ol>
 <p>However, SQL queries are not not what I intend to cover in this post.  Instead, I would like to look at how one can create and interact with different implementations of SQL databases.  And specifically how to do this using Python.  There are many different implementations of SQL: SQLite, Oracle, MySQL, PostgreSQL, etc.  The basic operations on SQL databases that are common to all the implementations are described in the acronym, <strong>C.R.U.D.</strong>:</p>
 <ul>
-<li><p><strong>Create</strong>: How to create a database and tables.</p>
-</li>
-<li><p><strong>Read</strong>: How read from a table in a database.</p>
-</li>
-<li><p><strong>Update</strong>: How to update the values in a table in the database.</p>
-</li>
-<li><p><strong>Delete</strong>: How to delete rows from a table in the database.</p>
-</li>
+<li><strong>Create</strong>: How to create a database and tables.</li>
+</ul>
+<ul>
+<li><strong>Read</strong>: How read from a table in a database.</li>
+</ul>
+<ul>
+<li><strong>Update</strong>: How to update the values in a table in the database.</li>
+</ul>
+<ul>
+<li><strong>Delete</strong>: How to delete rows from a table in the database.</li>
 </ul>
 <p>A sequence of database operations that satisfies the <strong>A.C.I.D</strong> properties can be perceived as single logical operation on the data, is called a <strong>transaction.</strong>  A.C.I.D is an acronym for set of properties relating to database transcations.  The properties are,</p>
 <ul>
@@ -12490,7 +12491,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
