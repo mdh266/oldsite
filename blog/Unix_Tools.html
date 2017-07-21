@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
  <header>
     <div class="nav">
       <ul>
@@ -11,7 +10,8 @@
       </ul>
     </div>
   </header>
-<title>SQLWars</title>
+<head><meta charset="utf-8" />
+<title>Unix_Tools</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11761,389 +11761,33 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="SQL-Wars:-Comparing-Relational-Databases">SQL Wars: Comparing Relational Databases<a class="anchor-link" href="#SQL-Wars:-Comparing-Relational-Databases">&#182;</a></h1><hr>
+<h1 id="Unix-Tools-For-Data-Science">Unix Tools For Data Science<a class="anchor-link" href="#Unix-Tools-For-Data-Science">&#182;</a></h1><hr>
 <h2 id="Table-of-contents">Table of contents<a class="anchor-link" href="#Table-of-contents">&#182;</a></h2><p><strong><a href="#Introduction">1. Introduction</a></strong></p>
-<p><strong><a href="#Preliminaries">2. Preliminary Ideas</a></strong></p>
-<p><strong><a href="#SQLite">3. C.R.U.D. with SQLite</a></strong></p>
-<p><strong><a href="#PostgreSQL">4. C.R.U.D. with PostgreSQL</a></strong></p>
-<p><strong><a href="#Conclusion">5. Conclusion</a></strong></p>
-<hr>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
-<p>Coming from a computational science/applied mathematics background many of the ideas of data science/machine learning are second nature to me. One thing that was very new to me was creating and manipulating databases. In computational science we don't really deal with databases and I/O is something to avoid as much as possible because it limits performance.  Therefore, in this blog post I'll be going what I have learned about SQL databases, i.e. what they are, how to set them up, and how to use them.</p>
-<p>In this post I'll be focusing on two SQL implementations,</p>
+<p><strong><a href="#Basics">2. Basic Commands</a></strong></p>
+<p><strong><a href="#Files">3. Files And Vim</a></strong></p>
+<p><strong><a href="#Network">4. Working Over A Network</a></strong></p>
+<p><strong><a href="#Git">5. A Word On Working With Git</a></strong></p>
+<p><strong><a href="#More">6.Conclusion And More Resources</a></strong></p>
+<h2 id="Introduction-">Introduction <a class="anchor" id="Introduction" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
+<p>Knowing Unix tools and Bash commands is not the sexiest part of data science and is often the most overlooked skills.  During my time as a Ph.D. student in Computational Science/Applied Mathematics I picked up a bunch of unix commands that were life savers and I'm going to go over a few here. Learning these skills is definitely can seem a little bit boring, but I cannot emphasize how useful they are. Setting up my unix environment and linking various libraries was one of the most frustrating parts of graduate school, but I believe I am much more productive as a data scientist having learned these valuable lessons.</p>
+<p>Most of the commands and concepts I will be going over don't require any special libraries and when they do I'll provide links to them.  In fact most of the unix commands can be run from <a href="http://jupyter.org/">Jupyter Notebook</a>.  When they don't, I will run them from the <a href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a>, which is the MacOS version of the <a href="https://en.wikipedia.org/wiki/Unix_shell">Unix/Linux shell</a>.</p>
+<h2 id="Basic-Commands-">Basic Commands <a class="anchor" id="Basics" /><a class="anchor-link" href="#Basic-Commands-">&#182;</a></h2><hr>
+<p>One of my favorite resources for learning various scientific computing concepts during graduate school was the <a href="http://www.math.colostate.edu/~bangerth/videos.html">deal.ii video lecture series</a>.  While these videos were made for scientific computing using their library, they still are extremely good resources for data scinentist beause the authors are incredibly thorough and amazing educators.  For videos on command basics see this <a href="http://www.math.colostate.edu/~bangerth/videos.676.2.9.html">link</a>.</p>
+<p>The first command to we'll go over in this post is,</p>
 <ul>
-<li><a href="https://www.sqlite.org/">SQLite</a> and Python's interface to it <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a>.</li>
+<li><strong><code> ls </code></strong></li>
 </ul>
-<p>and</p>
-<ul>
-<li><a href="https://www.postgresql.org/">PostgreSQL</a> and Python's interface to it <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="http://initd.org/psycopg/">psycopg2</a>.</li>
-</ul>
-<p>Another option, and probably the most popular option, is <a href="https://www.mysql.com/">MySQL</a>.  However, I wont be talking about MySQL in this post.One thing that was particularly helpful with SQLite was the <a href="http://sqlitebrowser.org/">DB Browser for SQLite</a> which is a GUI for SQLite databases.  A similar tool with more features for PostgreSQL that is <a href="https://www.pgadmin.org/">pgAdmin</a>, but I haven't used it too much. For now, let's first start out discussing SQL, relational databases and the client-server model for databases.</p>
-<hr>
-<h2 id="Preliminaries">Preliminaries<a class="anchor-link" href="#Preliminaries">&#182;</a></h2><hr>
-<h3 id="SQL">SQL<a class="anchor-link" href="#SQL">&#182;</a></h3><p>SQL stands for <strong>Structured Query Language</strong>. It is a domain specific language used in programming to deal with data that is stored in a <strong><a href="https://en.wikipedia.org/wiki/Relational_database">relational database</a></strong>.  SQL is designed for a specific purpose: to query data contained in a relational database.  There are plently of good references on how to learn SQL query commands, two that I used were,</p>
-<ol>
-<li><a href="http://sqlzoo.net/">SQLZOO</a></li>
-<li><a href="https://www.w3schools.com/sql/">w3schools.com</a></li>
-</ol>
-<p>However, SQL queries are not not what I intend to cover in this post.  Instead, I would like to look at how one can create and interact with different implementations of SQL databases.  And specifically how to do this using Python.  There are many different implementations of SQL: SQLite, Oracle, MySQL, PostgreSQL, etc.  The basic operations on SQL databases that are common to all the implementations are described in the acronym, <strong>C.R.U.D.</strong>:</p>
-<ul>
-<li><strong>Create</strong>: How to create a database and tables.</li>
-</ul>
-<ul>
-<li><strong>Read</strong>: How read from a table in a database.</li>
-</ul>
-<ul>
-<li><strong>Update</strong>: How to update the values in a table in the database.</li>
-</ul>
-<ul>
-<li><strong>Delete</strong>: How to delete rows from a table in the database.</li>
-</ul>
-<p>A sequence of database operations that satisfies the <strong>A.C.I.D</strong> properties can be perceived as single logical operation on the data, is called a <strong>transaction.</strong>  A.C.I.D is an acronym for set of properties relating to database transcations.  The properties are,</p>
-<ul>
-<li><strong>Atomicity</strong>: The requirement that each transaction be "all or nothing." This means that if one part of the transaction fails, then the entire transaction fails, and the database state is left unchanged.</li>
-</ul>
-<ul>
-<li><strong>Consistency</strong>: Consistency ensures that any transaction will bring the database from one valid state to another and that changes that have affected data were only completed in allowed ways. Consistency does not however, guarantee the correctness of the transcation.</li>
-</ul>
-<ul>
-<li><strong>Isolation</strong>: This property ensures that the concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially, i.e., one after the other</li>
-</ul>
-<ul>
-<li><strong>Durability</strong>: Durability ensures that once a transaction has been committed, it will remain so, even in the event of power loss, crashes, or errors.</li>
-</ul>
-<p>As we will see, most of the differences between working with the two implementations will be in how we create the databases.  The queries will be relatively the same, but the libaries we use to interact with the databases will be different depending on the SQL implementation. Let's now talk about the relational database model.</p>
-<h3 id="Relational-Database-Model">Relational Database Model<a class="anchor-link" href="#Relational-Database-Model">&#182;</a></h3><p>This model organizes data into one or more tables (or "relations") of columns and rows, with a unique key identifying each row. Rows in a table can be linked to rows in other tables by adding a column for the unique key of the linked row (such columns are known as <strong>foreign keys</strong>). Most physical implementations have a unique <strong>primary key</strong> (PK) for each table. When a new row is written to the table, a new unique value for the primary key is generated; this is the key that the system uses primarily for accessing the table.</p>
-<p>The primary keys within a database are used to define the relationships among the tables. When a primary key migrates to another table, it becomes a foreign key in the other table. This can be seen below where the primary key, <code>ID</code>, in the <code>School Table</code> becomes the foriegn key, <code>School ID</code>, in the <code>Student Table</code>:</p>
-<p><img src="./images/Primary-Foriegn.png" alt="primary-foriegn"></p>
-<p>When each cell can contain only one value and the primary key migrates into a regular entity table, this design pattern can represent either a one-to-one or one-to-many relationship. A <strong>one-to-one relationship</strong> exists when one row in a table may be linked with only one row in another table and vice versa. A <strong>one-to-many relationship</strong> exists when one row in table A may be linked with many rows in table B, but one row in table B is linked to only one row in table A. The above diagram of relationship between the <code>School Table</code> and the <code>Student Table</code> is an example of a one-to-many relationship.  There is also a <strong>many-to-many relationship</strong>, but this is more complicated and we won't discuss it further. The example I will work below will involve a one-to-many relationship.</p>
-<h3 id="Client-Server-Model-For-Databases">Client-Server Model For Databases<a class="anchor-link" href="#Client-Server-Model-For-Databases">&#182;</a></h3><p>The <strong>client-server model</strong> is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients.  The resource/service in the case of a database is the data stored in it. Often clients and servers communicate over a computer network on separate hardware, but both client and server may reside in the same system. A server host runs one or more server programs which share their resources with clients. A client does not share any of its resources, but requests a server's content or service function. Clients therefore initiate communication sessions with servers which await incoming requests.</p>
-<p><img src="./images/Client-server-model.png" alt="&#39;client-server&#39;"></p>
-<p>Now that we got that basic information under our belt let's get started with SQLite first!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h2 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h2><hr>
-<p><a href="https://www.sqlite.org/">SQLite</a> was the first relational database that I learned.  It's fast, lightweight and filebased. In contrast to many other database management systems, SQLite is not a client–server database engine. Rather, it is embedded into the end program.  <em>SQLite stores the entire database (definitions, tables, indices, and the data itself) as a single cross-platform file on a host machine.</em>  SQLite is also embedded into Python naturally with <a href="https://docs.python.org/2/library/sqlite3.html">sqlite3</a> which we will be covering in this post.</p>
-<p>Let's get started with C.R.U.D. for SQLite with Python:</p>
-<h3 id="Creating-A-SQLite-Database">Creating A SQLite Database<a class="anchor-link" href="#Creating-A-SQLite-Database">&#182;</a></h3><p>First thing we need to do is import sqlite3:</p>
+<p><code>ls</code> lists all the files in the current <em>directory</em> (this is just a fancier way of saying "folder"):</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Then we need to connect to our database using the command,</p>
-
-<pre><code>conn = sqlite3.connect("database_name")
-</code></pre>
-<p>Let's do this below, calling the database <code>MyFirstDatabase.db</code>,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;MyFirstDatabase.db&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The <code>connect</code> function acts to make a "connection" to the database stored in the file <code>MyFirstDatabase.db</code>.  If the file does not exist, then it will be created automatically.  It may seem a little silly to "connect" to a file that is on our computer, but sometimes the database can reside on a different computer and the phase makes more sense.  We then use the <code>cursor()</code> function to "open" the database:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Every interaction we make with our database through python will now occur through the cursor object <code>cur</code>.</p>
-<p>Say, we now wish to create a table within the database called <code>Person</code> which contains the <code>name</code>, <code>id</code>, and <code>salary</code> of all employees with our company.  We note that <code>name</code> will be of type <code>TEXT</code>, which is SQLite's version of a string, while <code>id</code> and <code>salary</code> will be of type <code>INTEGER</code>.  Since each person will be uniquely identified with their <code>id</code> we make this the <code>PRIMARY KEY</code>.</p>
-<p>The SQLite command to create this table if it doesn't already exist is,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">create_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS Person</span>
-<span class="s2">                (</span>
-<span class="s2">                    name TEXT, </span>
-<span class="s2">                    id INTEGER PRIMARY KEY, </span>
-<span class="s2">                    salary INTEGER</span>
-<span class="s2">                )&quot;&quot;&quot;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We excute this command on the SQLite database using the sqlite3 function <code>execute()</code>:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;sqlite3.Cursor at 0x1044a6420&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note:</strong> We can write SQL commands using single qoutation marks ('...'), double qoutation marks ("...") or as above with three double qoutation marks("""...""").  The latter is perferable for SQL commands for two reasons:</p>
-<ul>
-<li>We can continue the command onto another line without the need for a backslash.</li>
-</ul>
-<ul>
-<li>When using single quotation marks we would have to write a SQL string using backslashes before the single qoutations, for example:
-<pre><code> 'name = \'Bob\' '
-</code></pre>
- This isn't necessary with double quotation marks or three double qoutation marks.</li>
-</ul>
-<p>Now we'll create another table called <code>Emails</code> which contains all the employee emails.  The table will contain <code>employee_id</code> which is an <code>INTEGER</code>, <code>email</code> which is of type <code>TEXT</code> and <code>email_id</code> which is an <code>INTEGER</code>.  The <code>email_id</code> will be our <code>PRIMARY KEY</code> since it is an integer that uniquely identifies each row. The <code>FORIEGN KEY</code> in this table is then <code>employee_id</code> since it is the <code>PRIMARY KEY</code> in the <code>Person</code> table. Since employees can have more than one email address this is an example of a one-to-many relationship. The command to create the <code>Emails</code> table is then,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">create_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS Emails </span>
-<span class="s2">                (</span>
-<span class="s2">                     email_id INTEGER PRIMARY KEY,</span>
-<span class="s2">                     employee_id INTEGER FORIEGN KEY REFERENCES Person(id), </span>
-<span class="s2">                     email TEXT</span>
-<span class="s2">                 )&quot;&quot;&quot;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice how after we declare our foriegn key we have to say what the primary key in which table it references. Now we can execute the command:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;sqlite3.Cursor at 0x1044a6420&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have created the tables can start to insert values into them. We use the SQL command <code>INSERT</code> to insert a new row of data into the database.  The general procedure is:</p>
-
-<pre><code>curr.execute("""INERT INTO Table_Name 
-             (col_name_1, col_name_2, ... ) 
-             VALUES (?, ?, ... )""",
-             (col_1_value, col_2_value, ...) )
-</code></pre>
-<p>Where the tupple of column names <code>(col_name_1, col_name_2, ... )</code> of the table are followed with a <code>VALUES</code> and then followed by another tupple of '?'.  The actual column values for the row are then entered in as a separate tupple <code>(col_1_value, col_2_value, ...)</code>.</p>
-<p>We do this first for the <code>Person</code> table:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># create dictionary of values</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Sally&#39;</span><span class="p">,</span> <span class="s1">&#39;Wendy&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">]</span>
-<span class="n">employee_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">salaries</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-
-<span class="c1"># loop over all the entries in the dictionary and insert them into the table</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO Person </span>
-<span class="s2">                (name, id, salary) </span>
-<span class="s2">                VALUES (?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">employee_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">salaries</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
-
-<span class="c1"># commit the changes to disk</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The <code>commit()</code> function forces the executed SQL command to occur on the database on disk.  I'll show what happens if you don't do this in a moment, but for now let's do the same thing for the <code>Emails</code> table:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># create dictionary of values</span>
-<span class="n">employee_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">emails</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bob@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;bob@b.com&#39;</span><span class="p">,</span> <span class="s1">&#39;sally@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;wendy@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;joe@a.com&#39;</span><span class="p">]</span>
-<span class="n">email_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-
-<span class="c1"># loop over all the entries in the dictionary and insert them into the table</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO Emails </span>
-<span class="s2">                (email_id, employee_id, email) </span>
-<span class="s2">                VALUES (?, ?, ?)&quot;&quot;&quot;</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">email_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">employee_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">emails</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
-    
-<span class="c1"># commit the changes to disk</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Reading-From-The-Database">Reading From The Database<a class="anchor-link" href="#Reading-From-The-Database">&#182;</a></h3><p>Reading from the SQLite database is rather straightforward. The following command will return a <code>sqlite.cursor</code> object:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
 </pre></div>
 
 </div>
@@ -12156,7 +11800,7 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;type &#39;sqlite3.Cursor&#39;&gt;
+<pre><span class="ansi-blue-fg">Direc1</span>/           Unix_Tools.ipynb  file1
 </pre>
 </div>
 </div>
@@ -12170,22 +11814,17 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Note:</strong> If was a large database we probably dont want to read in all the rows and instead can limit to the first 100 using the command:</p>
-
-<pre><code>SELECT * FROM Person LIMIT 100
-</code></pre>
-<p>The returned <code>sqlite.cursor</code> object will contain all the rows that were returned by the SQL query.  We can now loop over all the rows in the table and print them out with the command:</p>
+<p>We see that there is a directory called <code>Direc1/</code> (the forward slash after the name gives away that it is a directory instead of a file) and two files: this notebook (<code>Unix_Tools.ipynb</code>) as well as a file called <code>file1</code>. We can view the "hidden files" (those with a . infront of them) using a <strong><code>/-a</code></strong> after the  <code>ls</code>:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">a</span>
 </pre></div>
 
 </div>
@@ -12198,10 +11837,8 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Bob&#39;, 1, 50)
-(u&#39;Sally&#39;, 2, 30)
-(u&#39;Wendy&#39;, 3, 70)
-(u&#39;Joe&#39;, 4, 20)
+<pre><span class="ansi-blue-fg">.</span>/                  <span class="ansi-blue-fg">.ipynb_checkpoints</span>/ Unix_Tools.ipynb
+<span class="ansi-blue-fg">..</span>/                 <span class="ansi-blue-fg">Direc1</span>/             file1
 </pre>
 </div>
 </div>
@@ -12215,26 +11852,18 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice how the names of the employees are not of tpe <code>str</code>, but are rather unicode! We can also do more advanced queries like this left join:</p>
+<p>The &lt;/code&gt;.ipynb_checkpoints/&lt;/code&gt; is a "hidden directory."  The <code>./</code> stands for the current directory (we could also use <code>ls .</code> instead of <code>ls</code>). And the <code>../</code> stands for the parent directory (the directory containing this directory).</p>
+<p>We can get more information on the files and directories using the <code>ls -al</code> command (this will give us information on all the files, if we wanted just non hidden ones we would use <code>ls -al</code>):</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sql_querry</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT name, salary, email </span>
-<span class="s2">              FROM Person </span>
-<span class="s2">              LEFT JOIN Emails</span>
-<span class="s2">              ON (Person.id = emails.employee_id)&quot;&quot;&quot;</span>
-
-<span class="n">joined_rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_querry</span><span class="p">)</span>
-
-<span class="c1"># print the rows in the table</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">joined_rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">al</span>
 </pre></div>
 
 </div>
@@ -12247,11 +11876,13 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Bob&#39;, 50, u&#39;bob@a.com&#39;)
-(u&#39;Bob&#39;, 50, u&#39;bob@b.com&#39;)
-(u&#39;Sally&#39;, 30, u&#39;sally@a.com&#39;)
-(u&#39;Wendy&#39;, 70, u&#39;wendy@a.com&#39;)
-(u&#39;Joe&#39;, 20, u&#39;joe@a.com&#39;)
+<pre>total 24
+drwxr-xr-x   6 Mike  staff   204 Jul 16 20:54 <span class="ansi-blue-fg">.</span>/
+drwxr-xr-x  14 Mike  staff   476 Jul 16 14:30 <span class="ansi-blue-fg">..</span>/
+drwxr-xr-x   3 Mike  staff   102 Jul 16 14:03 <span class="ansi-blue-fg">.ipynb_checkpoints</span>/
+drwxr-xr-x   4 Mike  staff   136 Jul 16 20:45 <span class="ansi-blue-fg">Direc1</span>/
+-rw-r--r--   1 Mike  staff  9944 Jul 16 20:52 Unix_Tools.ipynb
+-rw-r--r--   1 Mike  staff     0 Jul 16 20:54 file1
 </pre>
 </div>
 </div>
@@ -12265,390 +11896,11 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Updating-Values-In-The-Database">Updating Values In The Database<a class="anchor-link" href="#Updating-Values-In-The-Database">&#182;</a></h3><p>Updaing the values in a SQLite database is rather straight forward as well. In order to do so,  we update a row's <code>column_name1</code> value by specifying another columns value to identify that row. We'll call this other column to identify the row <code>column_name2</code>.  The general comamand is,</p>
-
-<pre><code>UPDATE table_name SET column_name1 = val1 WHERE column_name2 = val2
-</code></pre>
-<p>Let's say Sally gets a raise and now her income changes from 30 to 40, we can do this with the SQLite command,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Update Sally&#39;s salary</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;UPDATE Person SET salary = 40 WHERE name = &#39;Sally&#39; &quot;&quot;&quot;</span><span class="p">)</span>
-
-<span class="c1"># read in the table and print out the rows</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Bob&#39;, 1, 50)
-(u&#39;Sally&#39;, 2, 40)
-(u&#39;Wendy&#39;, 3, 70)
-(u&#39;Joe&#39;, 4, 20)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>But this only changes the local version of the table and does not persist to the database on disk.  We can observe this firsthand if we close the connection to the database, then reconnect again and print out the values:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># close the connection and reopen it.</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;MyFirstDatabase.db&quot;</span><span class="p">)</span>
-<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-
-<span class="c1"># read in the table and print out the rows</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Bob&#39;, 1, 50)
-(u&#39;Sally&#39;, 2, 30)
-(u&#39;Wendy&#39;, 3, 70)
-(u&#39;Joe&#39;, 4, 20)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we will commit the update to the database on disk and close the connection. Then we will re-connect to it and print out the data to make sure that it has changed:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># update the row in the table and commit the change to disk</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;UPDATE Person SET salary = 40 WHERE name = &#39;Sally&#39; &quot;&quot;&quot;</span><span class="p">)</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="c1"># reopen the connection and print the rows in the table</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;MyFirstDatabase.db&quot;</span><span class="p">)</span>
-<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Bob&#39;, 1, 50)
-(u&#39;Sally&#39;, 2, 40)
-(u&#39;Wendy&#39;, 3, 70)
-(u&#39;Joe&#39;, 4, 20)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can see that database has been updated!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Deleting-Rows-From-The-Database">Deleting Rows From The Database<a class="anchor-link" href="#Deleting-Rows-From-The-Database">&#182;</a></h3><p>To delete a row from a table in a SQLite database we have to identify the row by one of its column values.  The general command is,</p>
-
-<pre><code>DELETE FROM table_name WHERE column_name = val
-</code></pre>
-<p>We can delete Bob from the <code>Person</code> table with the following command:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># delete the row</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;DELETE FROM Person WHERE name = &#39;Bob&#39; &quot;&quot;&quot;</span><span class="p">)</span>
-
-<span class="c1"># print the rows in the table</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">row</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(u&#39;Sally&#39;, 2, 40)
-(u&#39;Wendy&#39;, 3, 70)
-(u&#39;Joe&#39;, 4, 20)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have covered the basic C.R.U.D commands in SQLite let's move on to PostgreSQL!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h2 id="PostgreSQL">PostgreSQL<a class="anchor-link" href="#PostgreSQL">&#182;</a></h2><hr>
-<p>While SQLite is fast and easy, it can't handle many concurrent writes. It is also not great for large databases since everything must fit in one file on disk.  PostgreSQL is another great option for a relation database that is powerful and open source.  PostgreSQL databases are not limited in size and can handle multiple concurrent writes.  PostgreSQL manages concurrency through a system known as <strong>multiversion concurrency control (MVCC)</strong>, which gives each transaction a "snapshot" of the database, allowing changes to be made without being visible to other transactions until the changes are committed. This largely eliminates the need for read locks, and ensures the database maintains the ACID (atomicity, consistency, isolation, durability) principles in an efficient manner. The one draw back to PostgreSQL is that is a little harder to set up, which is what I will be focusing on below.</p>
-<h3 id="Creating-A-Database">Creating A Database<a class="anchor-link" href="#Creating-A-Database">&#182;</a></h3><p>The first thing we will need to do is import the libraries to interact with SQL in Python.  These are <a href="https://www.sqlalchemy.org/">sqlalchemy</a> and <a href="https://sqlalchemy-utils.readthedocs.io/en/latest/">sqlalchemy_utils</a>. We import them in below,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy_utils</span> <span class="kn">import</span> <span class="n">database_exists</span><span class="p">,</span> <span class="n">create_database</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-<pre><code>dialect+driver://username:password@host:port/database</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Above we see the general command for how to create a SQL database using Python.  The dialect in our case will be <code>postgresql</code> and the driver will be <code>psycopg2</code>. We import the <a href="http://initd.org/psycopg/">psycopg2</a> library here,</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">psycopg2</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we define our user name, <code>username</code>, and database name, <code>dbname</code>:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">dbname</span> <span class="o">=</span> <span class="s1">&#39;AnotherDatabase&#39;</span>
-<span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;Mike&#39;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Then we create the database engine using the above command with the values filled in. Notice below how we do not include the password since we don't want to use one.  We also make the host to be <code>localhost</code> since we are going to have the database local on our machine.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql+psycopg2://</span><span class="si">%s</span><span class="s1">@localhost/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="n">dbname</span><span class="p">))</span>
-<span class="k">print</span> <span class="n">engine</span><span class="o">.</span><span class="n">url</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>postgresql+psycopg2://Mike@localhost/AnotherDatabase
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now create the database, if it doesn't already exist:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">database_exists</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
-    <span class="n">create_database</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">database_exists</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">url</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>True
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We connect to our database, <code>dbname</code> with the psycopg2 library using the command :</p>
-
-<pre><code>psycopg2.connect(database = dbname, user = username, password = user_password)
-</code></pre>
-<p>where <code>user_password</code> is our password. To connect to our newly created PostgreSQL database we then type,</p>
+<p>Each row now corresponds to a file or directory. It also gives us information on the permisions for the file/directory, number of links, owner name, group name, number of bytes in the file, abbreviated month, day-of-month file was last modified, hour file last modified, minute file last modified, and the pathname/file name.</p>
+<p>We can also view the path to the current directory using,</p>
+<ul>
+<li><strong> <code> pwd </code> </strong></li>
+</ul>
 
 </div>
 </div>
@@ -12658,10 +11910,26 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span> <span class="o">=</span> <span class="s1">&#39;AnotherDatabase&#39;</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;Mike&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">pwd</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>u&#39;/Users/Mike/Documents/DS_Projects/Unix_Tools&#39;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12671,7 +11939,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We now get our cursor object:</p>
+<p>You can see that in jupyter notebooks the path is returned as unicode. We can also use <code>ls</code> to view the contents of other directories than our current one.  We can see the contents of <code>Direc1/</code> by typing:</p>
 
 </div>
 </div>
@@ -12681,7 +11949,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> <span class="n">Direc1</span>
 </pre></div>
 
 </div>
@@ -12694,7 +11962,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And we can create the same <code>Person</code> table as before, except this time instead of <code>name</code> being of type <code>TEXT</code> it is of type <code>VARCHAR</code>.</p>
+<p>Nothing happened here because that directory is emtpy.  We can move the file, <code>file1</code>, into <code>Direc1/</code> by using the command</p>
+<ul>
+<li><strong> <code> mv </code> </strong></li>
+</ul>
 
 </div>
 </div>
@@ -12704,14 +11975,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">create_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS Person </span>
-<span class="s2">                (</span>
-<span class="s2">                    name VARCHAR, </span>
-<span class="s2">                    id INTEGER PRIMARY KEY, </span>
-<span class="s2">                    salary INTEGER</span>
-<span class="s2">                )</span>
-<span class="s2">                &quot;&quot;&quot;</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">mv</span> <span class="n">file1</span> <span class="n">Direc1</span><span class="o">/</span>
 </pre></div>
 
 </div>
@@ -12724,31 +11988,34 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Inserting the data with PostgresSQL is almost exactly the same as with SQLite except instead of the command using '?' in the tupple after <code>VALUES</code> we use '%s'.</p>
-<p>We fill in the values for the <code>Person</code> table below:</p>
+<p>We can now see the contents of <code>Direc1</code> again to see that the file has moved there:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Sally&#39;</span><span class="p">,</span> <span class="s1">&#39;Wendy&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">]</span>
-<span class="n">employee_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">salaries</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO Person </span>
-<span class="s2">                (name, id, salary) </span>
-<span class="s2">                VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">);&quot;&quot;&quot;</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">employee_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">salaries</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
-
-<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> <span class="n">Direc1</span><span class="o">/</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>file1
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12758,52 +12025,11 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We repeat the same process for the <code>Email</code> table, except with PostgreSQL we don't have to explicitly state that <code>employee_id</code> is the <code>FOREIGN KEY</code>, but we do still have to say what <code>PRIMARY KEY</code> it references:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># create the table</span>
-<span class="n">create_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS Emails </span>
-<span class="s2">                (</span>
-<span class="s2">                     email_id INTEGER PRIMARY KEY,</span>
-<span class="s2">                     employee_id INTEGER REFERENCES Person(id), </span>
-<span class="s2">                     email VARCHAR</span>
-<span class="s2">                 )&quot;&quot;&quot;</span>
-
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table</span><span class="p">)</span>
-
-<span class="c1"># fill in the table</span>
-<span class="n">employee_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">email_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">emails</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bob@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;bob@b.com&#39;</span><span class="p">,</span> <span class="s1">&#39;sally@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;wendy@a.com&#39;</span><span class="p">,</span> <span class="s1">&#39;joe@a.com&#39;</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;INSERT INTO Emails </span>
-<span class="s2">                (email_id, employee_id, email) </span>
-<span class="s2">                VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;&quot;&quot;</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">email_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">employee_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">emails</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
-
-<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Reading-From-The-Database">Reading From The Database<a class="anchor-link" href="#Reading-From-The-Database">&#182;</a></h3><p>Now we want to read data in from the table in the database.  We first have to connect with the database again and then set the cursor object:</p>
+<p>We can then go into to <code>Direc1</code> by using,</p>
+<ul>
+<li><strong><code>cd</code></strong> </li>
+</ul>
+<p>which stands for "change directory,"</p>
 
 </div>
 </div>
@@ -12813,11 +12039,24 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">database</span> <span class="o">=</span> <span class="n">dbname</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="n">username</span><span class="p">)</span>
-<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cd</span> <span class="n">Direc1</span><span class="o">/</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/Users/Mike/Documents/DS_Projects/Unix_Tools/Direc1
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12827,39 +12066,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now the command to select the rows from the table are exactly the same as with SQLite.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM Person&quot;&quot;&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>However, now the way we view the rows in the table using PostgreSQL is different from SQLite.  The command above does not return an object of the rows as it did with sqlite3.  Instead, now we get the rows in the table by using one of the following commands on cur:</p>
-
-<pre><code>cur.fetchone() 
-
-cur.fetchmany() 
-
-cur.fetchall()
-
-</code></pre>
-<p>For information on these commands see <a href="http://stackoverflow.com/questions/5189997/python-db-api-fetchone-vs-fetchmany-vs-fetchall">this</a> Stack Overflow post. Since our table is so small we'll fetch all the rows:</p>
+<p>We can also use <code>mv</code> to <em>change the name of a file or directory</em>:</p>
 
 </div>
 </div>
@@ -12869,52 +12076,20 @@ cur.fetchall()
 <div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">mv</span> <span class="n">file1</span> <span class="n">file2</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;Bob&#39;, 1, 50), (&#39;Sally&#39;, 2, 30), (&#39;Wendy&#39;, 3, 70), (&#39;Joe&#39;, 4, 20)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We can also do the same left join as before:</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sql_querry</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT name, salary, email </span>
-<span class="s2">              FROM Person </span>
-<span class="s2">              LEFT JOIN Emails</span>
-<span class="s2">              ON (Person.id = emails.employee_id)&quot;&quot;&quot;</span>
-
-<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_querry</span><span class="p">)</span>
-<span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> 
 </pre></div>
 
 </div>
@@ -12925,17 +12100,11 @@ cur.fetchall()
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[35]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;Bob&#39;, 50, &#39;bob@a.com&#39;),
- (&#39;Bob&#39;, 50, &#39;bob@b.com&#39;),
- (&#39;Sally&#39;, 30, &#39;sally@a.com&#39;),
- (&#39;Wendy&#39;, 70, &#39;wendy@a.com&#39;),
- (&#39;Joe&#39;, 20, &#39;joe@a.com&#39;)]</pre>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>file2
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12947,7 +12116,10 @@ cur.fetchall()
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Updating-And-Deleting-Rows-In-The-Database">Updating And Deleting Rows In The Database<a class="anchor-link" href="#Updating-And-Deleting-Rows-In-The-Database">&#182;</a></h3><p>Updating values and deleting rows in PostgreSQL is exactly the same as in SQLite and don't go into here.</p>
+<p>We can copy the contents of <code>file2</code> into <code>file1</code> using the command,</p>
+<ul>
+<li><strong><code>cp</code></strong></li>
+</ul>
 
 </div>
 </div>
@@ -12957,7 +12129,7 @@ cur.fetchall()
 <div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cp</span> <span class="n">file2</span> <span class="n">file1</span>
 </pre></div>
 
 </div>
@@ -12970,15 +12142,752 @@ cur.fetchall()
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><hr>
-<p>I'll be upating this more as time goes on, but for now we can summarize some of the highlights of SQLite and PostgreSQL are:</p>
-<h3 id="SQLite">SQLite<a class="anchor-link" href="#SQLite">&#182;</a></h3><p>SQLite Is probably best for mobile apps or personal projects or where the dataset is not too big and can be stored locally on the machine.</p>
-<p><strong>PROS:</strong> Requires less configuration than client-server based database. Easy to use, fast, lightweight and has native bindings to Python.</p>
-<p><strong>CONS:</strong> Cannot handle concurrent writes, instead writes must be performed sequentially.  SQLite can handle concurrent reads, but not too many.</p>
-<h3 id="PostgreSQL">PostgreSQL<a class="anchor-link" href="#PostgreSQL">&#182;</a></h3><p>PostgreSQL is the best bet for a large scale open-source databases that will have heavy user traffic.</p>
-<p><strong>PROS:</strong> Advanced open-source database that scales to large datasets. Can handle multiple concurrent write and reads.</p>
-<p><strong>CONS:</strong> Can be more complex to set up.</p>
+<p>We can then go back to the the parent (original) directory using,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/Users/Mike/Documents/DS_Projects
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see the process that are running in this directory,</p>
+<ul>
+<li><strong>&lt;/code&gt;ps&lt;/code&gt;</strong></li>
+</ul>
+<p>This one we will have to use in the terminal,</p>
+<p><img src="images/ps.png" alt=""></p>
+<p>The <code>PID</code> is the process id and is important because we can use it to help us <a href="https://en.wikipedia.org/wiki/Kill_(command)">kill</a> the <em>process</em> or <em>command</em> if we need to. The <code>Time</code> is how long the process has been running and <code>CMD</code> is the name of the <em>command</em> or process that is running.  The <code>TTY</code> isn't something that I have ever have had to use.</p>
+<p>We can also use the command,</p>
+<ul>
+<li><strong><code>top</code></strong></li>
+</ul>
+<p>to see all the processes running on our computer, the results from my terminal are below,</p>
+<p><img src="images/top.png" alt=""></p>
+<p>As you can see theres a lot more information that is provided by <code>top</code> including the ammount of memory each process is using.  One tool I liked using in graduate school is,</p>
+<ul>
+<li><strong><a href="http://hisham.hm/htop/">htop</a></strong></li>
+</ul>
+<p>which provides an interactive version of of <code>top</code>.  I liked it because when writing multi-threaded applications you can see directly how much work each core/thread is using (you can get a similar effect using  <code>top</code> by pressing <code>1</code> while <code>top</code> is running).  An example on my computer of the results of <code>htop</code> are shown below,</p>
+<p><img src="images/htop.png" alt=""></p>
+<p>The last two basic commands I'll mention are,</p>
+<ul>
+<li><strong><code>history</code> </strong></li>
+</ul>
+<p>which shows use a list of all the commands you have used recently.  As well as,</p>
+<ul>
+<li><strong> <a href="https://en.wikipedia.org/wiki/Man_page">man</a> </strong></li>
+</ul>
+<p>which can be used to show the manual page of specific unix commands.</p>
+<p>Now that we have on the basics of unix commands we can move on to dealing with directories and files more concretely.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Files-And-Vim">Files And Vim<a class="anchor" id="Files" /><a class="anchor-link" href="#Files-And-Vim">&#182;</a></h2><hr>
+<h3 id="Working-with-Files:">Working with Files:<a class="anchor-link" href="#Working-with-Files:">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can create directories using the,</p>
+<ul>
+<li><strong><code>mkdir</code> </strong></li>
+</ul>
+<p>command.  Say we want to create a new directory called <code>Direc2/</code>, we can do this by the command,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">mkdir</span> <span class="n">Direc2</span><span class="o">/</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-blue-fg">Direc1</span>/           README.md         file1
+<span class="ansi-blue-fg">Direc2</span>/           Unix_Tools.ipynb  <span class="ansi-blue-fg">images</span>/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can remove empty directories by using,</p>
+<ul>
+<li><strong><code>rmdir</code></strong></li>
+</ul>
+<p>as we see below,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rmdir</span> <span class="n">Direc2</span><span class="o">/</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-blue-fg">Direc1</span>/           Unix_Tools.ipynb  <span class="ansi-blue-fg">images</span>/
+README.md         file1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next let's go into directory <code>Direc1/</code> and create a file.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cd</span> <span class="n">Direc1</span><span class="o">/</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/Users/Mike/Documents/DS_Projects/Unix_Tools/Direc1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span> <span class="o">.</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>file1  file2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can make an empty by using the command,</p>
+<ul>
+<li><strong><code>touch</code></strong></li>
+</ul>
+<p>Let's make a file called <code>file3.txt</code> using the terminal,</p>
+<p><img src="images/touch.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can delete files by using the command,</p>
+<ul>
+<li><strong><code>rm</code></strong> </li>
+</ul>
+<p>Let's delete <code>file3.txt</code> in the jupyter notebook,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>file1      file2      file3.txt
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rm</span> <span class="n">file3</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>file1  file2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can delete multiple files by just having a space between the files after <code>rm</code>. We can view the contents a file using the command,</p>
+<ul>
+<li><strong><code>less</code> </strong></li>
+</ul>
+<p>Let's take a look at the contents of <code>file1</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">less</span> <span class="n">file1</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The results of typing this into the terminal are seen below:</p>
+<p><img src="images/less.png" alt=""></p>
+<p>We can scroll through the lines of the file by pressing the <code>enter</code> button.  We can exit the file by typing <code>q</code>.</p>
+<p>Finally, let's show how to delete all a non-empty file.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/Users/Mike/Documents/DS_Projects/Unix_Tools
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we just try to delete <code>Direc1/</code>, we'll get a warning that it is not empty and it won't delete the directory,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rmdir</span> <span class="n">Direc1</span><span class="o">/</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>rmdir: Direc1/: Directory not empty
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-blue-fg">Direc1</span>/           Unix_Tools.ipynb  <span class="ansi-blue-fg">images</span>/
+README.md         file1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To delete this directory and everything inside we can use the command,</p>
+<ul>
+<li><strong><code>rm -rf</code></strong></li>
+</ul>
+<p>The <code>-r</code>after the <code>rm</code> stands for recursive. We could also use <code>cp -r direc1 direc2</code> to copy all the contents of <code>direct1</code> to <code>direct2</code>.  The <code>-f</code> forces command to take place.  Let's try it:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">Direc1</span><span class="o">/</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>README.md         Unix_Tools.ipynb  file1             <span class="ansi-blue-fg">images</span>/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It worked!  Now that we've got that under our belt lets see how we can edit files.</p>
+<h2 id="Vim">Vim<a class="anchor-link" href="#Vim">&#182;</a></h2><p>Vim (or <a href="https://en.wikipedia.org/wiki/Vi">Vi</a> as it is sometimes known as) is a file editor that is on every Unix/Linux and Mac computer by default. There is a historical debate between developers who perfer Vi vs. Emacs vs. some newer editor.  I think it's is important to know the basics of Vim, solely because on you may have to make a few changes on a machine where there are no other editors to use except vi.</p>
+<p>If you type,</p>
+<ul>
+<li><strong><code>vi</code></strong></li>
+</ul>
+<p>in to the terminal you can see that we have new window with <code>no name</code> displayed at the bottom of the screen; this means that we are working with an unnammed file.  To quit vi without saving the file (that we're editing) we first press the <code>esp</code> key followed by a colon (:) and then use,</p>
+<ul>
+<li><strong><code>q!</code></strong></li>
+</ul>
+<p>We can create a file with a specific name and open it using vi using the following one line command,</p>
+
+<pre><code>vi hello.py
+
+</code></pre>
+<p>This creates a file called <code>hello.py</code> as seen below:</p>
+<p><img src="images/hello.py1.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can edit the file by typing,</p>
+<ul>
+<li><strong> <code> i </code></strong></li>
+</ul>
+<p>for insert. We do this and write the following,</p>
+<p><img src="images/vi_saving.png" alt=""></p>
+<p>We can save the edits to the file using the command,</p>
+<ul>
+<li><strong><code> w </code> </strong></li>
+</ul>
+<p>which stands for <em>write</em>. We save our edits by pressing the <code>esp</code> key, then <code>:w</code>and hit enter.  You can scroll up and down lines in the file using the up and down arrows and scroll left or right across the screen using the left and right arrows. We can then exit editing the fiel in vi by using,</p>
+<ul>
+<li><strong><code> q </code> </strong></li>
+</ul>
+<p>by again first using the <code>esp</code> then <code>:q</code> (one could also save and quit by using <code>esp</code> then <code>:wq</code>).</p>
+<p>We then can excute the contents of this file using the command from the terminal,</p>
+
+<pre><code>python hello.py
+
+</code></pre>
+<p>We see the results below:</p>
+<p><img src="images/results.png" alt=""></p>
+<p>Now, let's go back and edit our <code>hello.py</code> file by adding the following on top:</p>
+<p><img src="images/hello.py2.png" alt=""></p>
+<p>And then exit and type <code>ls -al </code> into our terminal we will see the following for <code>hello.py</code>:</p>
+<p><img src="images/permissions1.png" alt=""></p>
+<p>You can see the <code>-rw-r--r--</code>.  The <code>r</code> stands that fact we have for <em>read</em> permissions to the file, the <code>w</code> stands for the fact we have <em>write</em> permissions to the file, and if we had a <code>x</code> that would mean we could <em>excute</em> the file. We can give ourselves the ability to execute the file using the command</p>
+<ul>
+<li><strong><code>chmod</code></strong></li>
+</ul>
+<p>We'll simply give anyone access to read, write and execute this file by typing,</p>
+
+<pre><code>chmod 777 hello.py
+
+</code></pre>
+<p>into the terminmal.  Now if you type <code>ls -al </code> you can see we have the ability to execute the file as well:</p>
+<p><img src="images/permissions2.png" alt=""></p>
+<p>I've skipped a bunch of detiails, so for more information on chmod, see <a hre="https://en.wikipedia.org/wiki/Chmod">here</a>. We can npw execute the file by typing,</p>
+
+<pre><code>./hello.py
+
+</code></pre>
+<p>The results are shown below:</p>
+<p><img src="images/results2.png" alt=""></p>
+<p>Note that if we did not add the line</p>
+
+<pre><code>#!/usr/bin/env python
+
+</code></pre>
+<p>on to the top of the <code>hello.py</code> file it wouldn't be executable, to understand why this is so check out this <a href="https://stackoverflow.com/questions/2429511/why-do-people-write-usr-bin-env-python-on-the-first-line-of-a-python-script">post</a>.</p>
+<p>There are tons more commands you can use in Vi (for more see <a href="https://docs.oracle.com/cd/E19683-01/806-7612/6jgfmsvqn/index.html">here</a>), but if you just looking to quickly open and edit a file this is pretty much all you need to know.  One reason why you would use Vi over another editor is that you may be working over a network and not have the ability to use any advance editors like <a href="https://www.sublimetext.com/3">sublime</a> which require a graphical interface.  This point segways directly into the next topic which is working over a network.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Working-Over-A-Network-">Working Over A Network <a class="anchor" id="Network" /><a class="anchor-link" href="#Working-Over-A-Network-">&#182;</a></h2><hr>
+<p>Working over a network to access a computer or cluster is something you will often have to do as a data scientist.  The basic way to "log on" to another unix computer is with using</p>
+<p>-<strong><code>ssh</code></strong></p>
+<p><a href="https://en.wikipedia.org/wiki/Secure_Shell">ssh</a> stands for secure shell and is a way to operate network services/computers securely over a non-secure network. The way you would access a computer with an address or ip address <code>computer_address</code> using your login name <code>login_name</code> is by the command,</p>
+
+<pre><code>ssh login_name@computer_address
+
+</code></pre>
+<p>you'll then be prompted for your password and after typing it in you can hit <code>enter</code>.  Once on the computer/cluster you can nativate through directories and edit files as we learned above.</p>
+<p>Now, how do you get files back to your own computer from the cluster or put files from your computer on the cluser? There are many ways to do this, the easiest involve three things:</p>
+<ol>
+<li>File Compression</li>
+<li>File Transfer</li>
+<li>File Extraction</li>
+</ol>
+<p>To compress and extract (uncompess) a file or directory we will use the,</p>
+<ul>
+<li><strong><a href="http://linuxcommand.org/man_pages/tar1.html">tar</a></strong> </li>
+</ul>
+<p>command.  We can compress a file or directory with the command,</p>
+
+<pre><code>tar -cvf fine_name compressed_file_name.tar
+
+</code></pre>
+<p>To uncompress or extract the "tar file" we use the command,</p>
+
+<pre><code>tar -xvf fine_name compressed_file_name.tar
+
+</code></pre>
+<p>We compress and uncompress the file before and after transfering to reduce the amount of data that must be sent as well as the time it takes to transfer it. In order to get files to and from a cluster or machine we use,</p>
+<ul>
+<li><strong><a href="https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol">sftp</a></strong></li>
+</ul>
+<p>which stands for <strong>secure file transfer protocol.</strong>  You can use <code>sftp</code> just like <code>ssh</code>,</p>
+
+<pre><code>sftp login_name@computer_address
+
+</code></pre>
+<p>we can then nativate the cluster or computer using the commands we disucussed above.  Once we get to the directory with the file we can say,</p>
+
+<pre><code>get file_name
+
+</code></pre>
+<p>If we want to get an entire directory we use the command,</p>
+
+<pre><code>get -r directory_name
+
+</code></pre>
+<p>The file(s) will be transfered to the our local machine in the directory we called <code>sftp</code> from. In order to transfer a file from your local macine to a remote machine we first <code>cd</code> to the directory that contains the file we wish to transfer and then call <code>sftp</code> from there.  We then write,</p>
+
+<pre><code>put file_name
+
+</code></pre>
+<p>If we want to push an entire directory we use the command,</p>
+
+<pre><code>put -r directory_name
+
+</code></pre>
+<p>We can quit of <code>sftp</code> by typing <code>exit</code> from the command line.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-Word-On-Working-With-Git-">A Word On Working With Git <a class="anchor" id="Git" /><a class="anchor-link" href="#A-Word-On-Working-With-Git-">&#182;</a></h2><hr>
+<p>The last thing that you need to know is how to work with <a href="https://en.wikipedia.org/wiki/Git">git</a>.  You don't have to use git, but you should be working with some type of version/source control.  Version control is essential and has saved me countless times.  However, version control is useless unless you work with it properly. This means commiting often and having meaningful messages when you commit.  It also means when you move files around that you do it within the git framework, i.e.</p>
+
+<pre><code>git mv file_name directory_name
+
+</code></pre>
+<p>or</p>
+
+<pre><code>git rm file_name
+
+</code></pre>
+<p>instead of</p>
+
+<pre><code>mv file_name directory_name
+
+</code></pre>
+<p>and</p>
+
+<pre><code>rm file_name
+
+</code></pre>
+<p>In order to learn about git and <a href="https://github.com/">github</a> I used a lot of the videos on the deal.ii <a href="http://www.math.colostate.edu/~bangerth/videos.html">website</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion-And-More-Resources-">Conclusion And More Resources <a class="anchor" id="More" /><a class="anchor-link" href="#Conclusion-And-More-Resources-">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this blog post we went over some of the basics of using command line tools.  There are a lot other things out there to learn.  Some things that I didnt cover which are important are,</p>
+<ul>
+<li><p><strong> <a href="https://www.tutorialspoint.com/unix/unix-environment.htm">environment variables</a> </strong></p>
+</li>
+<li><p><strong> <a href="https://en.wikibooks.org/wiki/Bash_Shell_Scripting"> Bash Scritpts</a> </strong></p>
+</li>
+<li><p><strong> <a href="https://en.wikibooks.org/wiki/Bash_Shell_Scripting"> bashrc files</a> </strong></p>
+</li>
+</ul>
+<p>You should definitely invest in using <a href="https://en.wikipedia.org/wiki/Package_manager">package managers</a> as they make your life much easier by installing and updating libraries and figure out dependencies between libraries. The package mananager I use is <a href="https://brew.sh/">homebrew</a> and for Python I use <a href="https://packaging.python.org/tutorials/installing-packages/">pip</a> and <a href="https://www.continuum.io/">Anaconda</a>.  That's it for now.</p>
+<p>Happy hacking!</p>
 
 </div>
 </div>
