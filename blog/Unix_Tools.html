@@ -2,6 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 <title>Unix_Tools</title>
+
  <header>
     <div class="nav">
       <ul>
@@ -12,7 +13,7 @@
       </ul>
     </div>
   </header>
-
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -11769,14 +11770,14 @@ div#notebook {
 </ul>
 <p><strong><a href="#Files">3. Files And Vim</a></strong></p>
 <ul>
-<li><strong>Topics:</strong> mkdir, rmdir, touch, rm (-rf), less, vi, chmod</li>
+<li><strong>Topics:</strong> mkdir, rmdir, touch, rm (-rf), less, grep, vi, chmod</li>
 </ul>
 <p><strong><a href="#Network">4. Working Over A Network</a></strong></p>
 <ul>
 <li><strong>Topics:</strong> ssh, tar, sftp, screen </li>
 </ul>
 <p><strong><a href="#Git">5. A Word On Working With Git</a></strong></p>
-<p><strong><a href="#More">6.Conclusion And More Resources</a></strong></p>
+<p><strong><a href="#More">6. Conclusion And More Resources</a></strong></p>
 <h2 id="Introduction-">Introduction <a class="anchor" id="Introduction" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
 <p>Knowing Unix tools and Bash commands is not the sexiest part of data science and is often the most overlooked skills.  During my time as a Ph.D. student in Computational Science/Applied Mathematics I picked up a bunch of unix commands that were life savers and I'm going to go over a few here. Learning these skills is definitely can seem a little bit boring, but I cannot emphasize how useful they are. Setting up my unix environment and linking various libraries was one of the most frustrating parts of graduate school, but I believe I am much more productive as a data scientist having learned these valuable lessons.</p>
 <p>Most of the commands and concepts I will be going over don't require any special libraries and when they do I'll provide links to them.  In fact most of the unix commands can be run from <a href="http://jupyter.org/">Jupyter Notebook</a>.  When they don't, I will run them from the <a href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal</a>, which is the MacOS version of the <a href="https://en.wikipedia.org/wiki/Unix_shell">Unix/Linux shell</a>.</p>
@@ -12692,7 +12693,22 @@ README.md         file1
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It worked!  Now that we've got that under our belt lets see how we can edit files.</p>
+<p>It worked!  One last tool that for working with files in Unix that is extremely helpful is,</p>
+<p><a href="https://www.gnu.org/software/grep/manual/grep.html">grep</a></p>
+<p>grep is a utility that searches any given input files or directory, selecting lines that match one or more patterns using <a href="https://en.wikipedia.org/wiki/Regular_expression">regular expression</a>.</p>
+<p>An example migh tbe to <em>search and list all the files in a directory that end with the word <code>.json</code>.</em> You can see an example where I do this on my Destkop below:</p>
+<p><img src="images/grep.png" alt=""></p>
+<p>There are lot more useful things that grep can do and for more examples see this <a href="http://www.thegeekstuff.com/2009/03/15-practical-unix-grep-command-examples">article</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we've got that under our belt lets see how we can edit files.</p>
 <h2 id="Vim">Vim<a class="anchor-link" href="#Vim">&#182;</a></h2><p>Vim (or <a href="https://en.wikipedia.org/wiki/Vi">Vi</a> as it is sometimes known as) is a file editor that is on every Unix/Linux and Mac computer by default. There is a historical debate between developers who perfer Vi vs. Emacs vs. some newer editor.  I think it's is important to know the basics of Vim, solely because on you may have to make a few changes on a machine where there are no other editors to use except vi.</p>
 <p>If you type,</p>
 <ul>
