@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>NYC Crime Rates</title>
+<title>Crimetime</title>
  <header>
     <div class="nav">
       <ul>
@@ -11762,13 +11762,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Exploring-And-Forecasting-Crime-Rates-In-NYC">Exploring And Forecasting Crime Rates In NYC<a class="anchor-link" href="#Exploring-And-Forecasting-Crime-Rates-In-NYC">&#182;</a></h1><hr>
-<h2 id="Contents">Contents<a class="anchor-link" href="#Contents">&#182;</a></h2><hr>
-<p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
-<p><strong><a href="#second-bullet">2. Exploratory Data Analysis</a></strong></p>
-<p><strong><a href="#third-bullet">3. Time Series Analysis</a></strong></p>
-<p><strong><a href="#fourth-bullet">4. Conclusion</a></strong></p>
-<hr>
-<h2 id="Introduction-">Introduction <a class="anchor" id="first-bullet" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><hr>
 <p>This post is about the project I completed at <a href="http://insightdatascience.com/">Insight Data Science</a>.  The goal of the project was to develop a data driven strategy for reducing crime in New York City using historical data provided by the <a href="https://nycopendata.socrata.com/">NYC Open Data Website</a>. Analyzing the crime data it became evident that different types of crimes affect different neighborhoods at different times of the year.  I believe that by developing a predictive model of monthly crime rates on the neighborhood level, police will be able to distribute their resources to the right neigborhoods at the appropriate time and hopefully this will lead to a reduction in the crime rates.  This led me to create a web application, <a href="https://crimetime.online">CrimeTime</a>, where users can preform similar analysis in their neighborhood anywhere in New York City.</p>
 <p>The purpose of this post is therefore two-fold:</p>
 <ol>
@@ -11804,7 +11798,7 @@ library <a href="http://statsmodels.sourceforge.net/"> StatsModels</a>. I used a
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h2 id="Exploratory-Data-Analysis-">Exploratory Data Analysis <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Exploratory-Data-Analysis-">&#182;</a></h2><hr>
+<h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">&#182;</a></h2><hr>
 <p>After downloading the crime data (in CSV format) from the <a href="https://nycopendata.socrata.com/">NYC Open Data Website</a> and cleaning I decided to store it in a sqlite database.  I put all these steps into a method in the <code>PreProcessor</code> class from CrimeTime (in the backend directory).  If one wants to run the application on their local machine, all you have to do is pass the <code>PreProcessor</code> object the address and name the database we want to make during instantiation:</p>
 
 </div>
@@ -11962,6 +11956,7 @@ library <a href="http://statsmodels.sourceforge.net/"> StatsModels</a>. I used a
 
 <span class="n">CRIMES_PER_YEAR</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Number of crimes per year all of Manhattan&#39;</span><span class="p">,</span>
                      <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of Crimes&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">useOffset</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -12515,7 +12510,9 @@ lnhA5TiO4ziOkyX/B493s8pUTfkpAAAAAElFTkSuQmCC
 <span class="n">nyc_crime_map</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">geo_path</span><span class="o">=</span><span class="n">pathgeo</span><span class="p">,</span>
                         <span class="n">data</span><span class="o">=</span><span class="n">CRIMES_2015</span><span class="p">,</span>
                         <span class="n">key_on</span><span class="o">=</span><span class="s1">&#39;feature.properties.Precinct&#39;</span><span class="p">,</span>
-                        <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;BuPu&#39;</span><span class="p">,</span> <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">line_opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;BuPu&#39;</span><span class="p">,</span> 
+                        <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> 
+                        <span class="n">line_opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                         <span class="n">legend_name</span><span class="o">=</span><span class="s1">&#39;MANHATTAN&#39;</span><span class="p">)</span>
 <span class="c1"># show the map</span>
 <span class="n">nyc_crime_map</span>
@@ -12569,7 +12566,9 @@ lnhA5TiO4ziOkyX/B493s8pUTfkpAAAAAElFTkSuQmCC
 <span class="n">nyc_crime_map</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">geo_path</span><span class="o">=</span><span class="n">pathgeo</span><span class="p">,</span>
                         <span class="n">data</span><span class="o">=</span><span class="n">CRIMES_2015</span><span class="p">,</span>
                         <span class="n">key_on</span><span class="o">=</span><span class="s1">&#39;feature.properties.Precinct&#39;</span><span class="p">,</span>
-                        <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;BuPu&#39;</span><span class="p">,</span> <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">line_opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;BuPu&#39;</span><span class="p">,</span>
+                        <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+                        <span class="n">line_opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
                         <span class="n">legend_name</span><span class="o">=</span><span class="s1">&#39;MANHATTAN&#39;</span><span class="p">)</span>
 <span class="c1"># show the map</span>
 <span class="n">nyc_crime_map</span>
@@ -15367,7 +15366,7 @@ Ncj/ABYrgE+/zENBAAAAAElFTkSuQmCC
 <p>We can see that overall the number of crimes involving larceny has been steadily decreasing over the years. We can also see that larceny in Midtown is very seasonal. Larceny is lowest at the beginning of the year and highest at the end of year. Sadly this makes some sense, since larceny involves shoplifting, many people might be stealing presents for the holidays.</p>
 <p>Since the two crimes in the two neighborhoods are out of phase with one another (occur at different times of the year), it may be possible to redirect police efforts to the different areas depending on the time of year. Let's develop a predictive model to estimate the number of monthly crimes involving grand larceny in Midtown and the number of assaults in East Harlem using the time series data. Being able to predict the number of incidents on a month-to-month basis would be useful for police as they might be able to better prepare for increases and decreases in crime within the city and reallocate resources to specific neighborhoods at the appropriate time of year.</p>
 <hr>
-<h2 id="Time-Series-Analysis-">Time Series Analysis <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#Time-Series-Analysis-">&#182;</a></h2><hr>
+<h2 id="TIME-SERIES-ANALYSIS">TIME SERIES ANALYSIS<a class="anchor-link" href="#TIME-SERIES-ANALYSIS">&#182;</a></h2><hr>
 <p>There are lot of great resource for time series analysis.  For this project I used the following blogs:</p>
 <p><a href="https://www.analyticsvidhya.com/blog/2015/12/complete-tutorial-time-series-modeling/">A tutorial on time series model</a> is a good place to start, but its in R, so I turned to, <a href="https://www.analyticsvidhya.com/blog/2016/02/time-series-forecasting-codes-python/">Time series forecasting in python</a> to learn how to do time series analysis in Python.  Another good resource is <a href="http://tomaugspurger.github.io/modern-7-timeseries">Tom Augspurger's blog</a>. Finally, for seasonal ARIMA I found the the following blog <a href="http://www.seanabu.com/2016/03/22/time-series-seasonal-ARIMA-model-in-python/">post</a> very helpful.</p>
 <p>I won't go over the details of modeling with ARIMA, but more information can be found in the links above.  It's worth noting that R has a lot better time series capabilities than Python. However, one can use the <a href="http://statsmodels.sourceforge.net/">statsmodels library</a> to perform ARIMA modeling.</p>
@@ -20411,7 +20410,7 @@ pCaNCTxpAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h2 id="Conclusion-">Conclusion <a class="anchor" id="fourth-bullet" /><a class="anchor-link" href="#Conclusion-">&#182;</a></h2><hr>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><hr>
 <p>In this post we have looked into using exploratory data analysis to come up with a data driven strategie to reduce crime in Manhattan.  We saw that larceny and assault are two crimes that effect different parts of Manhattan and also peak at different times of the year. Larceny effects midtown and peaks at the end of the year, while assault effects East Harlem and peaks in summer time.  We looked into time series analysis to model monthly crime rates in both Midtown and East Harlem and used them to predict monthly crime rates into the future. This is just an small example with two neighborhoods, but if police are better able to predict monthly crime rates on a neighborhood level they can more effectively distribute their resources at the appropriate place and time. Lastly, I demonstrated how to use the tools I developed; this will be helpful to those trying to extend the codebase of <a href="https://crimetime.online">CrimeTime.online</a></p>
 <p>Hopefully this post has been both ineteresting and informative!</p>
 

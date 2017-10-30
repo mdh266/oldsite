@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>NYC Building Energy</title>
+<title>NYC Building Energy Usage</title>
 
  <header>
     <div class="nav">
@@ -13,6 +13,7 @@
       </ul>
     </div>
   </header>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -11761,7 +11762,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Analyzing-And-Reducing-Building-Energy-Usage-In-NYC">Analyzing And Reducing Building Energy Usage In NYC<a class="anchor-link" href="#Analyzing-And-Reducing-Building-Energy-Usage-In-NYC">&#182;</a></h1><h2 id="Contents">Contents<a class="anchor-link" href="#Contents">&#182;</a></h2><p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
+<h1 id="Analyzing-And-Reducing-Building-Energy-Usage-In-NYC">Analyzing And Reducing Building Energy Usage In NYC<a class="anchor-link" href="#Analyzing-And-Reducing-Building-Energy-Usage-In-NYC">&#182;</a></h1><hr>
+<h2 id="Contents">Contents<a class="anchor-link" href="#Contents">&#182;</a></h2><p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
 <p><strong><a href="#second-bullet">2. Initial Cleaning And Analysis</a></strong></p>
 <p><strong><a href="#third-bullet">3. Analysis Of Multifamily Housing </a></strong></p>
 <p><strong><a href="#fourth-bullet">4. Recommendations And Conclusion </a></strong></p>
@@ -11845,7 +11847,9 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_2016_2</span> <span class="o">=</span> <span class="n">initial_clean</span><span class="p">(</span><span class="n">df_2016</span><span class="p">)</span>
 <span class="n">temp_cols_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BBL&#39;</span><span class="p">,</span><span class="s1">&#39;Street_Number&#39;</span><span class="p">,</span><span class="s1">&#39;Zip_Code&#39;</span><span class="p">]</span>
-<span class="n">df_2016_2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">temp_cols_to_drop</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+<span class="n">df_2016_2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">temp_cols_to_drop</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>\
+         <span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12010,7 +12014,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">df_2016_2</span><span class="p">[</span><span class="s1">&#39;Benchmarking_Status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">df_2016_2</span><span class="p">[</span><span class="s1">&#39;Benchmarking_Status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>\
+                                <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;DOF Benchmarking Submission Status&#39;</span><span class="p">)</span>
 </pre></div>
@@ -12469,8 +12474,10 @@ RDIKRxERkcz/A2kSfLMh4FpgAAAAAElFTkSuQmCC
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">100</span><span class="p">]</span>
 
-<span class="n">df_2016</span><span class="p">[</span><span class="s1">&#39;ENERGY STAR Score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
-                                          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of ENERGY STAR Ratings&#39;</span><span class="p">)</span>
+<span class="n">df_2016</span><span class="p">[</span><span class="s1">&#39;ENERGY STAR Score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>\
+                            <span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                            <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
+                                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of ENERGY STAR Ratings&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;ENERGY STAR Score&#39;</span><span class="p">)</span>
 </pre></div>
@@ -12826,8 +12833,10 @@ NBARERGR2mggIiIiIrXRQERERERqo4GIiIiI1OYfoYS7NlXSD1MAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_2016_2</span><span class="p">[</span><span class="s1">&#39;Property_Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-                                                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of building type&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_2016_2</span><span class="p">[</span><span class="s1">&#39;Property_Type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>\
+                          <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>\
+                          <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+                                <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of building type&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Building Type&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 </pre></div>
@@ -13483,8 +13492,12 @@ yUQkpZRSSsX8P5myPwJ+8IDYAAAAAElFTkSuQmCC
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">bins2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">]</span>
 
 <span class="n">Energy_Star_Scores</span> <span class="o">=</span> <span class="n">Property_Type</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Property_Type&#39;</span><span class="p">])[</span><span class="s1">&#39;Energy_Star&#39;</span><span class="p">]</span>
-<span class="n">Energy_Star_Scores</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins2</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-                                 <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of Energy Star Score by building type&#39;</span><span class="p">)</span>
+
+<span class="n">Energy_Star_Scores</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins2</span><span class="p">)</span>\
+                  <span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                  <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency of Energy Star Score by building type&#39;</span><span class="p">)</span>
+        
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Building Type and Energy Star&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 </pre></div>
@@ -14344,7 +14357,9 @@ JEmSNCH/BzAsQzVWe00uAAAAAElFTkSuQmCC
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">Multifamily_Buildings</span> <span class="o">=</span> <span class="n">df_2016_2</span><span class="p">[</span><span class="n">df_2016_2</span><span class="p">[</span><span class="s1">&#39;Property_Type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Multifamily Housing&#39;</span><span class="p">]</span>
-<span class="n">Multifamily_Buildings</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">temp_cols_to_drop</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+<span class="n">Multifamily_Buildings</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">temp_cols_to_drop</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                     <span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -20906,19 +20921,6 @@ JeZ8SBjxW4sAAAAASUVORK5CYII=
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>
