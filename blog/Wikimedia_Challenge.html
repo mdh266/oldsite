@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Wikimedia Challenge</title>
-    <header>
+<title>Wikimedia_Challenge</title>
+
+ <header>
     <div class="nav">
       <ul>
         <li class="home"><a href="http://michael-harmon.com">Home</a></li>
@@ -12,6 +13,7 @@
       </ul>
     </div>
   </header>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -12260,7 +12262,10 @@ In order to find this number on a per day basis, we have to first perform a <a h
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">diff</span> <span class="o">=</span> <span class="n">average_click_through_rate_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plot_grouped_and_ungrouped</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="s2">&quot;Daily Clickthrough Rate&quot;</span><span class="p">)</span>
+
+<span class="n">plot_grouped_and_ungrouped</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> 
+                           <span class="n">rate</span><span class="p">,</span> 
+                           <span class="s2">&quot;Daily Clickthrough Rate&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12491,9 +12496,8 @@ AABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">clicked</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">TimeGrouper</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">),</span>
-                    <span class="s1">&#39;session_id&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;result_position&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;result_position&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">clicked</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">TimeGrouper</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">),</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span><span class="s1">&#39;result_position&#39;</span><span class="p">])</span>\
+            <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;result_position&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]))</span>
 </pre></div>
 
 </div>
@@ -12718,8 +12722,8 @@ dtype: int64</pre>
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">first_clicked</span> <span class="o">=</span> <span class="n">visited_pages</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">TimeGrouper</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">),</span>
-                                       <span class="s1">&#39;session_id&#39;</span><span class="p">,],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="s1">&#39;result_position&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">first_clicked</span> <span class="o">=</span> <span class="n">visited_pages</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">TimeGrouper</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">),</span><span class="s1">&#39;session_id&#39;</span><span class="p">,],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="s1">&#39;result_position&#39;</span><span class="p">]</span>\
+                             <span class="o">.</span><span class="n">first</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13528,7 +13532,9 @@ zMzMzBrkjpOZmZlZg9xxMjMzM2uQO05mZmZmDXLHyczMzKxB7jiZmZmZNcgdJzMzM7MGueNkZmZm
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">diff2</span> <span class="o">=</span> <span class="n">average_zero_rate_by_group</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="n">plot_grouped_and_ungrouped</span><span class="p">(</span><span class="n">diff2</span><span class="p">,</span> <span class="n">zero_rate</span><span class="p">,</span> <span class="s1">&#39;Average Daily Zero Rate By Group&#39;</span><span class="p">)</span>
+<span class="n">plot_grouped_and_ungrouped</span><span class="p">(</span><span class="n">diff2</span><span class="p">,</span> 
+                           <span class="n">zero_rate</span><span class="p">,</span> 
+                           <span class="s1">&#39;Average Daily Zero Rate By Group&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13743,11 +13749,13 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_begin</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span> 
-                                        <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
-                                        <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_begin</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                  <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>\
+                  <span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>\
+                  <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">session_begin</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">session_begin</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span>
+             <span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13862,7 +13870,8 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">test_session</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">session_id</span> <span class="o">==</span> <span class="s1">&#39;0001382e027b2ea4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">test_session</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">session_id</span> <span class="o">==</span> <span class="s1">&#39;0001382e027b2ea4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                                                      <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">test_session</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -13979,7 +13988,8 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="s1">&#39;page_id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span><span class="s1">&#39;page_id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>\
+        <span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -14002,8 +14012,11 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_end</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span><span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">session_end</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_end</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;session_id&#39;</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>\
+                <span class="o">.</span><span class="n">nth</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="n">session_end</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)</span>\
+           <span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -14250,7 +14263,8 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_begin</span> <span class="o">=</span> <span class="n">session_begin</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;checkin&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_begin</span> <span class="o">=</span> <span class="n">session_begin</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>\
+                             <span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;checkin&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -14274,7 +14288,9 @@ mVlBHMpmZgVxKJuZFcShbGZWEIeymVlB/j+/KJ9hcRupaAAAAABJRU5ErkJggg==
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_end</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session_end</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span>
-<span class="n">session_end</span> <span class="o">=</span> <span class="n">session_end</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;checkin&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">session_end</span> <span class="o">=</span> <span class="n">session_end</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>\
+                         <span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;checkin&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -14298,7 +14314,10 @@ merge</a> the two pandas dataframes into one:</p>
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">session_begin</span><span class="p">,</span> <span class="n">session_end</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span><span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_start&#39;</span><span class="p">,</span><span class="s1">&#39;_end&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">session_begin</span><span class="p">,</span> 
+               <span class="n">session_end</span><span class="p">,</span> 
+               <span class="n">on</span><span class="o">=</span><span class="s1">&#39;session_id&#39;</span><span class="p">,</span>
+               <span class="n">suffixes</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_start&#39;</span><span class="p">,</span><span class="s1">&#39;_end&#39;</span><span class="p">))</span>
 <span class="n">df3</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -14488,8 +14507,10 @@ merge</a> the two pandas dataframes into one:</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">top_session_lengths</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
-                                      <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency Of Session Lengths&#39;</span><span class="p">)</span>
+<span class="n">top_session_lengths</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                   <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
+                         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency Of Session Lengths&#39;</span><span class="p">)</span>
+    
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Seconds&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 </pre></div>
@@ -14855,7 +14876,8 @@ OmUYkSRJnfodjCo499UhlyIAAAAASUVORK5CYII=
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">df3</span><span class="p">[</span><span class="s1">&#39;session_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_session_length</span>
-<span class="n">session_length_by_group</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;group_start&#39;</span><span class="p">])[</span><span class="s1">&#39;session_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+<span class="n">session_length_by_group</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;group_start&#39;</span><span class="p">])[</span><span class="s1">&#39;session_length&#39;</span><span class="p">]</span>\
+                             <span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -15338,7 +15360,7 @@ UwlOsI7jbCD4MI3jOI7jOBXFp/Y6juM4jlNR3BhxHMdxHKeiuDHiOI7jOE5FcWPEcRzHcZyK4saI
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">plot_session_length_by_group_percentages</span><span class="p">(</span><span class="n">session_length_a</span><span class="p">,</span>
-                                          <span class="n">session_length_b</span><span class="p">)</span>
+                                         <span class="n">session_length_b</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -15748,9 +15770,14 @@ then group a.  Group b also seems like it had larger percentage of sessions that
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">temp_results</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;session_id&#39;</span><span class="p">)[</span><span class="s1">&#39;n_results&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="n">temp_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">temp_results</span><span class="o">.</span><span class="n">values</span><span class="p">)))</span>
 
-<span class="n">number_of_results</span> <span class="o">=</span> <span class="n">temp_results</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="n">number_of_results</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-                                    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency Of The Number Of Results&#39;</span><span class="p">)</span>
+<span class="n">number_of_results</span> <span class="o">=</span> <span class="n">temp_results</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>\
+                                <span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>\
+                                <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+        
+<span class="n">number_of_results</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+                 <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Frequency Of The Number Of Results&#39;</span><span class="p">)</span>
+    
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number Of Results&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -16134,9 +16161,11 @@ mpMVMzMzq7W/ATU+B0wUmsPlAAAAAElFTkSuQmCC
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">n_results</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">results</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
-                            <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">n</span><span class="p">],</span>
-                            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n_results = &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_results</span><span class="p">[</span><span class="n">n</span><span class="p">]))</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>\
+              <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">n</span><span class="p">],</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;n_results = &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_results</span><span class="p">[</span><span class="n">n</span><span class="p">]))</span>
+        
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Seconds&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">])</span>
@@ -16891,11 +16920,12 @@ RU5ErkJggg==
 <div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df_420</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="n">df3</span><span class="o">.</span><span class="n">session_length</span> <span class="o">&lt;</span> <span class="mi">480</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;result_position of page where people spent 6-8 minutes.&#39;</span>
+<span class="n">df_420</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="n">df3</span><span class="o">.</span><span class="n">session_length</span> <span class="o">&lt;</span> <span class="mi">480</span><span class="p">]</span>
 <span class="n">df_420</span> <span class="o">=</span> <span class="n">df_420</span><span class="p">[</span><span class="n">df_420</span><span class="o">.</span><span class="n">session_length</span> <span class="o">&gt;=</span> <span class="mi">360</span><span class="p">]</span>
-<span class="n">df_420</span><span class="o">.</span><span class="n">result_position_end</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-                        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-                        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;result_position of page where people spent 6-8 minutes.&#39;</span><span class="p">)</span>
+<span class="n">df_420</span><span class="o">.</span><span class="n">result_position_end</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+                          <span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+                                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;result_position&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
 </pre></div>
