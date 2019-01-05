@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<head><meta charset="utf-8" />
+  
  <header>
     <div class="nav">
       <ul>
@@ -10,8 +12,8 @@
       </ul>
     </div>
   </header>
-<head><meta charset="utf-8" />
-<title>Predicting GHG Emissions</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+
+<title>Green Buildings</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -12795,10 +12797,10 @@ div#notebook {
 
 
 
-<div id="ce8c5629-d6d6-4372-87c1-488e0259ba8d"></div>
+<div id="2d3052d9-7be9-4282-88df-38fd74a2a2e1"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#ce8c5629-d6d6-4372-87c1-488e0259ba8d');
+var element = $('#2d3052d9-7be9-4282-88df-38fd74a2a2e1');
 
 (function(root) {
   function now() {
@@ -13099,10 +13101,10 @@ var element = $('#ce8c5629-d6d6-4372-87c1-488e0259ba8d');
 
 
 
-<div id="5ed66bbe-48f4-41d4-92b5-189dad0be957"></div>
+<div id="217fed21-fda0-4df0-86b7-28bd806f68f0"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#5ed66bbe-48f4-41d4-92b5-189dad0be957');
+var element = $('#217fed21-fda0-4df0-86b7-28bd806f68f0');
 (function(root) {
   function embed_document(root) {
     
@@ -14562,9 +14564,13 @@ Total Multifamily Buildings without missing data: 4407
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Linear-Regression-">Linear Regression <a class="anchor" id="model-one" /><a class="anchor-link" href="#Linear-Regression-">&#182;</a></h3><p>As we stated early we'll start out with a <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear Regression Model</a> since it is simple and interpertable. The form of a linear regression model is,</p>
-<p>$$ y \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p}$$</p>
-<p>The $x_{i}$'s are the features for our model (<code>WI</code>, <code>OPSFT</code>, etc) and $y$ is the green hour gas emission intensity (<code>GHGI</code>).  The coefficents ($\theta_{i}$) are estimated using ordinary least squares methods.  We can easily implement a least squares regression model using Scikit-learn:</p>
+<h3 id="Linear-Regression-">Linear Regression <a class="anchor" id="model-one" /><a class="anchor-link" href="#Linear-Regression-">&#182;</a></h3><p>As we stated early we'll start out with a <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Linear Regression Model</a> since it is simple and interpertable. The form of a linear regression the model assumes that the green hour gas emission intensity (<code>GHGI</code>) labeld $y$, can be expressed a linear combination,</p>
+<p>$$ y \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} + \epsilon$$</p>
+<p>The $x_{i}$'s are the features for our model (<code>WI</code>, <code>OPSFT</code>, etc), and the error $\epsilon \sim N(0,\sigma^{2}$) is normally distributed.  We then make a model $h_{\theta}(\textbf{x})$,</p>
+<p>$$ h_{\theta}(\textbf{x}) \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} $$</p>
+<p>And estimate the coefficents ($\theta_{i}$) are estimated using ordinary least squares methods.  This leads to the expected value of our preditions being unbiased:</p>
+<p>$$ E[ h_{\theta}(\textbf{x})] \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} $$</p>
+<p>We can easily implement a least squares regression model using Scikit-learn:</p>
 
 </div>
 </div>
@@ -14824,12 +14830,12 @@ Energy_Star&#39;s p-value : 0.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A slightly parabolic pattern in the <code>WI</code>'s residuals, but nothing to clear in the others. Let's move on to a more flexible model and hopefully improve our predictions.</p>
+<p>A slightly parabolic pattern in the <code>WI</code>'s residuals, but nothing to clear in the others. One way we could improve our model's $R^{2}$ value is to tune the regularization parameter however, let's move on to a more flexible model and hopefully improve our predictions.</p>
 <h3 id="Generalized-Additive-Models-">Generalized Additive Models <a class="anchor" id="model-two" /><a class="anchor-link" href="#Generalized-Additive-Models-">&#182;</a></h3><p>Linear regression is a specific type of generalized linear model.  <a href="https://en.wikipedia.org/wiki/Generalized_linear_model">Generalized lienar models</a> relate the expected outcome of the target variable, $y$, to the model's features $x_{1}, x_{2}, \ldots x_{p}$ through the equation:</p>
-<p>$$ g(E[y]) \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} $$</p>
+<p>$$ g(E[h_{\theta}(\textbf{x})]) \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} $$</p>
 <p>The function $g$ is called the <strong>link</strong> function. For linear regresion the link function is just the identity function, while for logistic regression it is the <a href="https://en.wikipedia.org/wiki/Logit">logit function</a>.</p>
 <p><a href="https://en.wikipedia.org/wiki/Generalized_additive_model">Generalized Additive Models </a>are extension of the generalized addative model that assume that the expected outcome of the target variable $y$ to the features $x_{1}, x_{2}, \ldots x_{p}$ through the equation:</p>
-<p>$$ g(E[y]) \; = \; \theta_{0} + f_{1}(x_{1}) + f_{2}(x_{2}) +  \ldots + f_{p}(x_{p}) $$</p>
+<p>$$ g(E[h_{\theta}(\textbf{x})]) \; = \; \theta_{0} + f_{1}(x_{1}) + f_{2}(x_{2}) +  \ldots + f_{p}(x_{p}) $$</p>
 <p>The basis functions $f_{i}$ can be functions of a parameteric form such as a polynomial, or more general non-parametric functions.  Using basis functions allows for smoother, higher order (more accurate) approximations to the model in parameter space when compared to traditional polynomials.  GAMs therefore allow for more accurate predictions than generalized linear models, however, they still allowing for the model to be interperable.</p>
 <p>We'll use the <a href="https://github.com/dswah/pyGAM">PyGam</a> library which uses penalized <a href="https://en.wikipedia.org/wiki/B-spline">B splines</a> as basis functions. This choice of basis functions allow us to automatically model non-linear relationships without having to manually try out many different transformations on each variable.</p>
 <p>We can import the regression GAM model:</p>
