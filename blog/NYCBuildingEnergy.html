@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-  
+
  <header>
     <div class="nav">
       <ul>
@@ -14830,7 +14830,7 @@ Energy_Star&#39;s p-value : 0.0
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A slightly parabolic pattern in the <code>WI</code>'s residuals, but nothing to clear in the others. One way we could improve our model's $R^{2}$ value is to tune the regularization parameter however, let's move on to a more flexible model and hopefully improve our predictions.</p>
+<p>A slightly parabolic pattern in the <code>WI</code>'s residuals, but nothing to clear in the others. One way we could improve our model's $R^{2}$ value is to tune the regularization parameter to reduce variance, however, let's move on to a more flexible model and hopefully improve our predictions.  A more flexible model will reduce the bias (which we can tell is high since the scatter plots do not show a linear relationship) in our model and therefore improve the overall performance. </p>
 <h3 id="Generalized-Additive-Models-">Generalized Additive Models <a class="anchor" id="model-two" /><a class="anchor-link" href="#Generalized-Additive-Models-">&#182;</a></h3><p>Linear regression is a specific type of generalized linear model.  <a href="https://en.wikipedia.org/wiki/Generalized_linear_model">Generalized lienar models</a> relate the expected outcome of the target variable, $y$, to the model's features $x_{1}, x_{2}, \ldots x_{p}$ through the equation:</p>
 <p>$$ g(E[h_{\theta}(\textbf{x})]) \; = \; \theta_{0} + \theta_{1} x_{1} + \theta_{2} x_{2} +  \ldots + \theta_{p} x_{p} $$</p>
 <p>The function $g$ is called the <strong>link</strong> function. For linear regresion the link function is just the identity function, while for logistic regression it is the <a href="https://en.wikipedia.org/wiki/Logit">logit function</a>.</p>
