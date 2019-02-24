@@ -11879,17 +11879,27 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="o">%</span> <span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">from</span> <span class="nn">plotting_functions</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">helper_functions</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">plotting_functions</span> <span class="k">import</span> <span class="p">(</span><span class="n">plot_grouped_and_ungrouped</span><span class="p">,</span>
+                                <span class="n">plot_daily_clicked</span><span class="p">,</span>
+                                <span class="n">plot_session_length_by_group</span><span class="p">,</span>
+                                <span class="n">plot_session_length_by_group_percentages</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">helper_functions</span> <span class="k">import</span> <span class="p">(</span><span class="n">searched_per_day_by_group</span><span class="p">,</span>
+                              <span class="n">searched_per_day</span><span class="p">,</span>
+                              <span class="n">average_click_through_rate</span><span class="p">,</span>
+                              <span class="n">average_click_through_rate_by_group</span><span class="p">,</span>
+                              <span class="n">average_zero_rate</span><span class="p">,</span>
+                              <span class="n">average_zero_rate_by_group</span><span class="p">,</span>
+                              <span class="n">get_sessions_with_n_results</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="k">def</span> <span class="nf">read_in_data</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -12042,8 +12052,8 @@ memory usage: 27.5+ MB
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">session_ids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">session_id</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-<span class="k">print</span> <span class="s2">&quot;Number of sessions: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">session_ids</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">session_ids</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">session_id</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of sessions: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">session_ids</span><span class="p">)))</span>
 </pre></div>
 
 </div>
