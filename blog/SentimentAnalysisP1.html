@@ -11819,7 +11819,7 @@ div#notebook {
 <li><p>The <a href="https://spark.apache.org/docs/latest/">documentation webpage</a> is pretty extensive as well</p>
 </li>
 </ul>
-<p>In this blog post I will <strong>NOT</strong> be covering the basics of Spark, there are plenty of other resources (like those above) that will do that better than I can. Instead, I want to cover the basics of working with Spark for ETL on text data.  I'll explain the steps of ETL I took in detail in this post. While I used a notebook for development, in practice I wrote a Python script that I used to the perform batch analysis.  You can find that script <a href="https://github.com/mdh266/TwitterSentimentAnalysis/tree/master/ETL">here</a>.</p>
+<p>In this blog post I will <strong>NOT</strong> be covering the basics of Spark, there are plenty of other resources (like those above) that will do that better than I can. Instead, I want to cover the basics of working with Spark for ETL on text data.  I'll explain the steps of ETL I took in detail in this post. While I used a notebook for development, in practice I wrote a Python script that I used to the perform batch analysis.  You can find that script <a href="https://github.com/mdh266/TwitterSentimentAnalysis/tree/master/ETL">here</a>.  The script was used to connect to my <a href="https://www.mongodb.com/cloud/atlas">Atlas</a> MongoDB cluster and I had to change a few things to the results within the memory limits of the free tier.</p>
 <p>Now let's dive into the extract-transform-load operations in Spark and MongodDB!</p>
 
 </div>
@@ -12789,7 +12789,7 @@ only showing top 3 rows
 
     <span class="n">cleaned</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -13653,8 +13653,8 @@ Document = {&#39;user&#39;: &#39;haveyoumettony&#39;, &#39;tweet&#39;: &#39;@Gra
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusions-">Conclusions <a class="anchor" id="bullet7" /><a class="anchor-link" href="#Conclusions-">&#182;</a></h2><hr>
-<p>In this blog post we went over how to perform ETL operations on text data using PySpark and MongoDB.  We then showed how one can explore the loaded data in the Mongo database using Compass and PyMongo.  Spark is a great platform from doing batch ETL work on both structured and unstructed data.  MongoDB is a document based NoSQL database that is fast, easy to use, allows for flexible schemas and perfect for working with text data.  PySpark and MongoDB work well together allowing for fast, flexible ETL pipelines on large semi-structured data like those coming from tweets.  In the next blog post will be looking into using PySpark to model the sentiment of these tweets.  That's it for now!</p>
+<h2 id="Next-Steps-">Next Steps <a class="anchor" id="bullet7" /><a class="anchor-link" href="#Next-Steps-">&#182;</a></h2><hr>
+<p>In this blog post we went over how to perform ETL operations on text data using PySpark and MongoDB.  We then showed how one can explore the loaded data in the Mongo database using Compass and PyMongo.  Spark is a great platform from doing batch ETL work on both structured and unstructed data.  MongoDB is a document based NoSQL database that is fast, easy to use, allows for flexible schemas and perfect for working with text data.  PySpark and MongoDB work well together allowing for fast, flexible ETL pipelines on large semi-structured data like those coming from tweets.  In the next blog post will be looking into using PySpark to model the sentiment of these tweets using PySpark!</p>
 
 </div>
 </div>
