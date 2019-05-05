@@ -10,9 +10,8 @@
       </ul>
     </div>
   </header>
-  
 <head><meta charset="utf-8" />
-<title>Part1_ETL</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Sentiment Analysis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11786,7 +11785,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Sentiment-Analysis,-Part1:--ETL-With-PySpark-and-MongoDB">Sentiment Analysis 1:  ETL With PySpark and MongoDB<a class="anchor-link" href="#Sentiment-Analysis,-Part1:--ETL-With-PySpark-and-MongoDB">&#182;</a></h1><hr>
+<h1 id="Sentiment-Analysis,-Part1:--ETL-With-PySpark-and-MongoDB">Sentiment Analysis, Part1:  ETL With PySpark and MongoDB<a class="anchor-link" href="#Sentiment-Analysis,-Part1:--ETL-With-PySpark-and-MongoDB">&#182;</a></h1><hr>
 <p><strong><a href="#bullet1">1. Introduction</a></strong></p>
 <p><strong><a href="#bullet2">2. ETL With PySpark</a></strong></p>
 <p><strong><a href="#bullet6">3. MongoDB &amp; PyMongo</a></strong></p>
@@ -11830,7 +11829,51 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, we import the datatypes that we will need for ETL and the functions module from <code>spark.sql</code></p>
+<p>First we download and extract the dataset from the Kaggle website:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;kaggle datasets download -d kazanova/sentiment140&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;unzip sentiment140.zip&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next we import the datatypes that we will need for ETL and the functions module from <code>spark.sql</code></p>
 
 </div>
 </div>
@@ -11896,7 +11939,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;ETL/training.1600000.processed.noemoticon.csv&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;training.1600000.processed.noemoticon.csv&quot;</span>
 
 <span class="c1"># read in the csv as a datafame</span>
 <span class="n">df</span>   <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span>\
