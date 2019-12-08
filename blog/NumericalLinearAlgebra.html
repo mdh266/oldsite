@@ -13415,7 +13415,7 @@ X_test.shape =  (1234, 4)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plotting</span> <span class="k">import</span> <span class="n">plot_results</span>
@@ -13512,7 +13512,7 @@ X^{T} \, \textbf{r} \; = \; 0
 \end{equation}<p>Or the solution $\hat{\boldsymbol \omega}$ is <em>value such that the residual is orthogonal to our feature space or the residual is statistically uncorrelated with any of the features.</em></p>
 <p>The covariance matrix is symmetric and positive definite, but if the two features are highly correlated then two rows in the matrix will be nearly identical and the matrix will be nearly singular. Statistically, having correlated features is bad since it makes it hard to determine the impact on any one feature has on the target. Numerically, having correlated features is bad because the condition number of the covariance matrix explodes.  The reason is that the condition number is definted as,</p>
 \begin{equation}
-\kappa(S) \; = \; \Vert S \Vert_2 \, \Vert S^{-1} \Vert_2 \; = \; \frac{\sigma_{\text{min}}}{\sigma_{\text{max}}}
+\kappa(S) \; = \; \Vert S \Vert_2 \, \Vert S^{-1} \Vert_2 \; = \; \frac{\sigma_{\text{max}}}{\sigma_{\text{min}}}
 \end{equation}<p>Where $\sigma$ are the singular values from the singular value decomposition.  As the matrix $S$ becomes more singular $\Vert S^{-1} \Vert_2 \, \rightarrow \, \infty$, forcing the $\kappa \, \rightarrow \, \infty$.   We remark that the condition number affects not only the accuracy of your solution, but also the stability of the solvers, see <a href="https://people.maths.ox.ac.uk/trefethen/text.html">Lecture 12</a>.</p>
 <p>There are two we will go over about solving the over-determined system of equations $X \boldsymbol \omega \, = \, \textbf{y}$:</p>
 <ol>
@@ -13558,7 +13558,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Build the covariance matrix</span>
@@ -13605,7 +13605,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
@@ -13637,10 +13637,10 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cond_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigs</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">/</span> <span class="n">eigs</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cond_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="n">eigs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">eigs</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Condition number = </span><span class="si">{cond_num}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -13658,7 +13658,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Condition number = 0.0418806638295396
+<pre>Condition number = 23.87736746652693
 </pre>
 </div>
 </div>
@@ -13670,7 +13670,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The eigenvalues are all positive and the condition number is small which is good!</p>
+<p>The eigenvalues are all positive and the condition number are not too big which is good!</p>
 <p>We will now be using many SciPy function calls. SciPy is a sister Python library with Numpy and supports many scientific algorithms.  <a href="https://docs.scipy.org/doc/scipy-0.16.1/reference/linalg.html">SciPy's</a> linear algebra routines expand on <a href="https://docs.scipy.org/doc/numpy/reference/routines.linalg.html">NumPy's</a> and even allow for use sparse matrices and vectors. SciPy acts a wrappers around LAPACK, indeed the eigenvalue calculator directly calls <a href="http://www.icl.utk.edu/~mgates3/docs/lapack.html#geev">LAPACK's</a> eigenvalue decomposition.</p>
 <p>Let's now perform the Cholesky Decomposition using <a href="https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.linalg.cholesky.html">SciPy</a>:</p>
 
@@ -13679,12 +13679,12 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">linalg</span>
 
-<span class="c1"># Perform the Cholesky Factorization</span>
+<span class="c1"># Perform the Cholesky Factsaorization</span>
 <span class="n">L</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
@@ -13739,7 +13739,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
@@ -13755,7 +13755,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13783,7 +13783,7 @@ L^T \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># solve for the coefficents</span>
@@ -13903,7 +13903,7 @@ V^{T} \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">Sig</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -13924,7 +13924,7 @@ V^{T} \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Sig</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Vt</span><span class="o">.</span><span class="n">shape</span>
@@ -13940,7 +13940,7 @@ V^{T} \boldsymbol \omega \; = \; \textbf{z}
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -13965,7 +13965,7 @@ V^{T} \boldsymbol \omega \; = \; \textbf{z}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">Sig</span><span class="p">)</span> <span class="o">*</span> <span class="n">U</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -14097,12 +14097,12 @@ D_{i,i} \; = \; \frac{\sigma_{i}^{2}}{\sigma_{i}^{2} + \lambda}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># using function annotations in Python 3 </span>
 <span class="c1"># (see, https://www.python.org/dev/peps/pep-3107/)</span>
-
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
 <span class="k">def</span> <span class="nf">ridge_svd</span><span class="p">(</span>
     <span class="n">X</span>         <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
     <span class="n">y</span>         <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
@@ -14150,7 +14150,7 @@ D_{i,i} \; = \; \frac{\sigma_{i}^{2}}{\sigma_{i}^{2} + \lambda}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;omega: &quot;</span><span class="p">,</span> <span class="n">ridge_svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
@@ -14189,7 +14189,7 @@ D_{i,i} \; = \; \frac{\sigma_{i}^{2}}{\sigma_{i}^{2} + \lambda}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">omega</span> <span class="o">=</span> <span class="n">ridge_svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
