@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-
  <header>
     <div class="nav">
       <ul>
@@ -14,7 +13,6 @@
   </header>
 
 <title>NLP</title>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13100,8 +13098,8 @@ div#notebook {
 <p><strong><a href="#ninth-bullet">9. Conclusions</a></strong></p>
 <hr>
 <h2 id="Introduction-">Introduction <a class="anchor" id="first-bullet" /><a class="anchor-link" href="#Introduction-">&#182;</a></h2><hr>
-<p>Natural language processing or NLP is an hot topic in data science and machine learning.  While research in NLP dates back to the 1950's, the real revolution in this domain came in 1980's and 1990's with the introduction of statistical models and fast computational power. Before this most language processing tasks made use of hand-coded rules which were generally not very robust.</p>
-<p>The span of topics in Natural Language Processing is immense and I'll just getting to the tip of the iceberg with going over the topic of <a href="https://en.wikipedia.org/wiki/Document_classification">document classification</a> also known as <a href="https://monkeylearn.com/text-classification/">text classification</a>.  I will be working with the <a href="http://scikit-learn.org/">Scikit-learn</a> library and using an imbalanced dataset that I create from summaries of papers published on <a href="https://arxiv.org">arxiv</a>. The topic of each paper is given a category alleviating the need to label the dataset.  I create an imbalance in the number of topics I train on as having imbalanced makes the developing a good model more challenging, but it is also more realistic. Imbalanced classes often occur in classification problems and may times it is too expensive or not possible to get more data on the classes that have to few samples. Developing strategies for dealing with imbalanced data is paramount for creating good classification models.  We will cover some of the basics of dealing with imbalanced data using the <a href="https://imbalanced-learn.readthedocs.io/en/stable/">Imbalance-Learn</a> library.  We also over the basics of term frequency-inverse document frequency, stop words, lemmatization using the <a href="https://www.nltk.org/">NLTK</a> as well as using Naive Bayes classifier from <a href="http://scikit-learn.org/">Scikit-learn</a> .</p>
+<p>Natural language processing (NLP) is an hot topic in data science and machine learning.  While research in NLP dates back to the 1950's, the real revolution in this domain came in 1980's and 1990's with the introduction of statistical models and fast computational power. Before this most language processing tasks made use of hand-coded rules which were generally not very robust.</p>
+<p>The span of topics in Natural Language Processing is immense and I'll just getting to the tip of the iceberg with the topic of <a href="https://en.wikipedia.org/wiki/Document_classification">document classification</a>, also known as <a href="https://monkeylearn.com/text-classification/">text classification</a>. I will be working with the <a href="http://scikit-learn.org/">Scikit-learn</a> library and an imbalanced dataset (corpus) that I will create from summaries of papers published on <a href="https://arxiv.org">arxiv</a>. The topic of each paper is already labeled as the category therefore alleviating the need for me to label the dataset. The imbalance in the dataset will be caused by the imbalance in the number of samples in each of the categories we are trying to predict. Imbalanced data occurs quite frequently in classification problems and makes developing a good model more challenging. Often times it is too expensive or not possible to get more data on the classes that have to few samples. Developing strategies for dealing with imbalanced data is therefore paramount for creating a good classification model.  We will cover some of the basics of dealing with imbalanced data using the <a href="https://imbalanced-learn.readthedocs.io/en/stable/">Imbalance-Learn</a> library.  We will also over the basics of term frequency-inverse document frequency, stop words, lemmatization using the <a href="https://www.nltk.org/">NLTK</a> as well as using Naive Bayes classifier from <a href="http://scikit-learn.org/">Scikit-learn</a>.</p>
 <p>Let's dive into the data!</p>
 
 </div>
@@ -13110,7 +13108,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-Dataset:-Creating,-Storing-and-Exploring">The Dataset: Creating, Storing and Exploring<a class="anchor" id="second-bullet" /><a class="anchor-link" href="#The-Dataset:-Creating,-Storing-and-Exploring">&#182;</a></h2><p>The first thing I want to do is create a database to store the data between session on this project. I chose to create a local <a href="https://www.mongodb.com/">MongoDB</a> database since its easy to use and I have <a href="https://api.mongodb.com/python/current/">experience</a> with it and <a href="https://api.mongodb.com/python/current/">PyMongo</a>.</p>
+<h2 id="The-Dataset:-Creating,-Storing-and-Exploring">The Dataset: Creating, Storing and Exploring<a class="anchor" id="second-bullet" /><a class="anchor-link" href="#The-Dataset:-Creating,-Storing-and-Exploring">&#182;</a></h2><p>The first thing I wanted to do was create a database to store the data between working sessions on this project. Storing the dataset meant that I wouldn't have to re-download the data each time I ran the notebook. I chose to create a local <a href="https://www.mongodb.com/">MongoDB</a> database since its easy to use and I have <a href="https://api.mongodb.com/python/current/">experience</a> with it and <a href="https://api.mongodb.com/python/current/">PyMongo</a>.</p>
 <p>We can create a client with pymongo and create a new database using the commands:</p>
 
 </div>
@@ -13155,7 +13153,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We will focus on only four topics in this blogpost and those are:</p>
+<p>We will focus on only four topics in this blogpost:</p>
 <ul>
 <li>Artificial Intelligence</li>
 <li>Numerical Analysis</li>
@@ -13163,7 +13161,7 @@ div#notebook {
 <li>Programming Languages</li>
 </ul>
 <p>These topics are pretty different and therefore I expect there to be significant differences in the words in the summaries of the topics in the papers. This means I will expect pretty good performance of our model.</p>
-<p>We query the the arxiv api and create a list of dictionaries for each topic.  The dictionary will include the</p>
+<p>We query the the arxiv api and create a list of dictionaries for each topic. Each dictionary will correspond to a paper on arxiv. Each dictionary will include,</p>
 <ol>
 <li>The link to the paper</li>
 <li>The category code arxiv gave for this papers topic</li>
@@ -13262,7 +13260,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see that there is some <a href="https://www.latex-project.org/about/">LaTeX</a> sprinkled in the summary text that we may have to address in data cleaning.</p>
-<h3 id="Storing-The-Train-and-Test-Set">Storing The Train and Test Set<a class="anchor-link" href="#Storing-The-Train-and-Test-Set">&#182;</a></h3><p>The four topics we are trying to predict are also called the target classess or classes. We refer to artifical intelligence, numerical analysis and material science as the "majority classes" and programming languages as the "minority class" due to the discrepencies in the number of datapoints.  Let's break out data set into a 75% training and 25% testing.  We create the training set:</p>
+<h3 id="Storing-The-Train-and-Test-Set">Storing The Train and Test Set<a class="anchor-link" href="#Storing-The-Train-and-Test-Set">&#182;</a></h3><p>The four topics we are trying to predict are also called the target classes or simply the classes. We refer to artifical intelligence, numerical analysis and material science as the "majority classes" and programming languages as the "minority class" due to the discrepencies in the number of datapoints.  Let's break out data set into a 75% training and 25% testing.  We create the training set:</p>
 
 </div>
 </div>
@@ -13494,7 +13492,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see the number of samples we have in each dataframe:</p>
+<p>We can see the total number of papers we have:</p>
 
 </div>
 </div>
@@ -13738,7 +13736,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can look an example article summary and its target value:</p>
+<p>We can see that classes 0, 1, 2 are pretty even, but class 3 is much smaller than the other, the imbalance in the classes is what we mean by imbalanced data.  We can look an example article summary and its target value:</p>
 
 </div>
 </div>
@@ -14171,9 +14169,8 @@ $$ P\left(x_{1}, \ldots, x_{p} \, \vert \, C_{k} \right) \; = \; \Pi_{i=1}^{p} P
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="k">import</span> <span class="n">MultinomialNB</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="p">(</span><span class="n">accuracy_score</span><span class="p">,</span> 
-                             <span class="n">balanced_accuracy_score</span><span class="p">,</span>
-                             <span class="n">f1_score</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span>
+
 
 <span class="n">mod</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
 <span class="n">mod</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
@@ -14250,7 +14247,7 @@ $$ P\left(x_{1}, \ldots, x_{p} \, \vert \, C_{k} \right) \; = \; \Pi_{i=1}^{p} P
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>About 89% which is very good!  We can get more a detailed view of the performance of our classifier by using the Scikit-learn library's <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html">classification report</a> function,</p>
+<p>About 88% which is very good!  We can get more a detailed view of the performance of our classifier by using the Scikit-learn library's <a href="http://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html">classification report</a> function,</p>
 
 </div>
 </div>
@@ -14315,8 +14312,8 @@ artifical_intelligence       0.76      0.96      0.85       250
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Whoa our precision and recall for programming languages is terrible! Low recall means that the false negatives for hockey are very high; meaning we are failing to classify documents as programing langauges when they are on programing languages.</p>
-<p>Our accuracy is fairly high still, this is because accuracy is not a good metric for a classifiers performance when the data is imbalanced! We can instead use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html">balanced_accuracy</a>:</p>
+<p>Whoa our precision and recall for programming languages is terrible! Low recall means that the false negatives for programming languages are very high; meaning we are failing to classify documents as programing langauges when they are on programing languages.</p>
+<p>At 88% our accuracy is fairly high even thought we are failing at classifying programming languages. This is because accuracy is not a good metric for a classifiers performance when the data is imbalanced! We can instead use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html">balanced_accuracy</a>:</p>
 
 </div>
 </div>
@@ -14326,7 +14323,9 @@ artifical_intelligence       0.76      0.96      0.85       250
 <div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">,</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">balanced_accuracy_score</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">,</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> 
                                                    <span class="n">predicted</span><span class="p">))</span>
 </pre></div>
 
@@ -14366,7 +14365,9 @@ artifical_intelligence       0.76      0.96      0.85       250
 <div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;weighted f1 score:&quot;</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">f1_score</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;weighted f1 score:&quot;</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">test_df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">],</span> 
                                      <span class="n">predicted</span><span class="p">,</span> 
                                      <span class="n">average</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">))</span>
 </pre></div>
@@ -14515,8 +14516,8 @@ weighted f1 score: 0.8434891897950954
 </tr>
 </tbody>
 </table>
-<p>There are pitfalls to both strategies, upsampling the minority class can bias our model to overemphasize certain words, while downsampling the majority class can also add bias to our model as well.  Undersampling has traditionally been used in dealing with imbalanced classes so we will start out with that first using the <a href="https://imbalanced-learn.org/stable/">Imbalanced Learn</a> library which has its own Pipelines class that naturally integrates with Scikit-learn.</p>
-<p>Let's first perform Undersampling of the minority class and take the cross validated average of the balanced accuracy.  Note we now have to use imbalance learn's Pipeline</p>
+<p>There are pitfalls to both these strategies; upsampling the minority class can bias our model to overemphasize certain words, while downsampling the majority class can also add bias to our model as well.  Undersampling has traditionally been used in dealing with imbalanced classes so we will start out with that first using the <a href="https://imbalanced-learn.org/stable/">Imbalanced Learn</a> library which has its own Pipelines class that naturally integrates with Scikit-learn.</p>
+<p>Let's first perform Undersampling of the minority class and take the cross validated average of the balanced accuracy. <strong>Note we now have to use imbalance learn's Pipeline.</strong></p>
 
 </div>
 </div>
@@ -14526,9 +14527,9 @@ weighted f1 score: 0.8434891897950954
 <div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.pipeline</span> <span class="k">import</span> <span class="n">Pipeline</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">imblearn.pipeline</span>       <span class="k">import</span> <span class="n">Pipeline</span> 
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">cross_validate</span>
-<span class="kn">from</span> <span class="nn">imblearn.over_sampling</span> <span class="k">import</span> <span class="n">RandomOverSampler</span>
+<span class="kn">from</span> <span class="nn">imblearn.over_sampling</span>  <span class="k">import</span> <span class="n">RandomOverSampler</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">pipe</span>  <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span>    <span class="n">CountVectorizer</span><span class="p">()),</span>
@@ -14571,7 +14572,7 @@ weighted f1 score: 0.8434891897950954
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is pretty good!  Lets get a classification report on the test set.  Let's make a function to do this since we will be doing this same process over and over again:</p>
+<p>This a big improvement!  Lets get a classification report on the test set. Since we will be doing the same process of evaluating the model pipeline on the same test set let's make a function to do this:</p>
 
 </div>
 </div>
@@ -14642,7 +14643,7 @@ weighted f1 score: 0.8434891897950954
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can evaluate the oversampling model pipeline</p>
+<p>Now we can evaluate the oversampling model pipeline,</p>
 
 </div>
 </div>
@@ -14753,7 +14754,7 @@ weighted f1 score: 0.50680612240804
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Downsampling the majority class didnt really help. Imbalance-Learn is quite powerful and has other methods for working with imbalanced data. I tried a few others which didn't improve the results, so instead let's try some preprocessing techniques with random undersampling to see if the precesion in for programming lanuages.</p>
+<p>Downsampling the majority class didnt really help. Imbalance-Learn is quite powerful and has other methods for working with imbalanced data. I tried a few others which didn't improve the results, so instead let's try some preprocessing techniques with random oversampling of the minority class to see if the precesion in for programming lanuages.</p>
 
 </div>
 </div>
@@ -14762,7 +14763,7 @@ weighted f1 score: 0.50680612240804
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="NLTK:-Stop-Words-&amp;-Lemmatization-">NLTK: Stop Words &amp; Lemmatization <a class="anchor" id="sixth-bullet" /><a class="anchor-link" href="#NLTK:-Stop-Words-&amp;-Lemmatization-">&#182;</a></h2><hr>
-<h3 id="Stop-Words">Stop Words<a class="anchor-link" href="#Stop-Words">&#182;</a></h3><p>We can look to improve our model by removing <a href="https://en.wikipedia.org/wiki/Stop_words">stop words</a> which are common words in the english language and do not add any information into the text. These includes words such as, "the", "at", "is", etc.  Let's look at an example using the Natural Language Toolkit (<a href="https://www.nltk.org/#">NLTK</a>).  First we get an example document,</p>
+<h3 id="Stop-Words">Stop Words<a class="anchor-link" href="#Stop-Words">&#182;</a></h3><p>We can look to improve our model by removing <a href="https://en.wikipedia.org/wiki/Stop_words">stop words</a> which are common words in the english language and do not add any information into the text. These includes words such as, "the", "at", "is", etc.  Let's look at an example using the Natural Language Toolkit (<a href="https://www.nltk.org/#">NLTK</a>).  First we get an example document that we can show the effect of what removing stop words from a document does.</p>
 
 </div>
 </div>
@@ -14979,8 +14980,8 @@ weighted f1 score: 0.9626509505234786
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Lemmatization">Lemmatization<a class="anchor-link" href="#Lemmatization">&#182;</a></h3><p>Now let's try using <a href="https://nlp.stanford.edu/IR-book/html/htmledition/stemming-and-lemmatization-1.html">Lemmaitization</a> to improve the models performance. Stemming and Lemmatization are two processes that reduce words down to a simplier form, i.e. their root.  This reduces the variations in words and hence the dimensionality in our model. You can see some of work with Stemming <a href="http://michael-harmon.com/blog/SentimentAnalysisP2.html">here</a>. Stemming is rather rudimentary looking at and acting on individual words.  Lemmatization on the otherhand depends on correctly identifying the intended part of speech and meaning of a word in a sentence, as well as within the larger context surrounding that sentence, such as neighboring sentences or even an entire document. I went with Lemmatization as it seemed to perform the best and later found out stemming is known to <a href="https://en.wikipedia.org/wiki/Lemmatisation">degrade model precision</a>, which is what we are trying to improve.</p>
-<p>We use the <a href="https://www.nltk.org/_modules/nltk/stem/wordnet.html">WordNetLemmatizer</a> from the NLTK and show how effects are texts with an example:</p>
+<h3 id="Lemmatization">Lemmatization<a class="anchor-link" href="#Lemmatization">&#182;</a></h3><p>Now let's try using <a href="https://nlp.stanford.edu/IR-book/html/htmledition/stemming-and-lemmatization-1.html">Lemmaitization</a> to improve the models performance. Stemming and Lemmatization are two processes that reduce words down to a simplier form, i.e. their "root".  This reduces the variations in words and hence the dimensionality in our model. You can see some of my work with Stemming <a href="http://michael-harmon.com/blog/SentimentAnalysisP2.html">here</a>. Stemming is rather rudimentary and only looks at and acts on individual words. Lemmatization on the otherhand depends on correctly identifying the intended part of speech and meaning of a word in a sentence, as well as within the larger context surrounding that sentence, such as neighboring sentences or even an entire document. I went with Lemmatization as it seemed to perform the best and later found out stemming is known to <a href="https://en.wikipedia.org/wiki/Lemmatisation">improve recall and degrade precision</a>.</p>
+<p>We use the <a href="https://www.nltk.org/_modules/nltk/stem/wordnet.html">WordNetLemmatizer</a> from the NLTK and show what it does to the previous example document:</p>
 
 </div>
 </div>
@@ -15056,10 +15057,10 @@ we address problem development representation relationship environment . we stud
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_words</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span> <span class="o">=</span> <span class="n">stop_words</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">wnl</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
         
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">articles</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> 
                 <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">articles</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_words</span><span class="p">]</span>
 </pre></div>
 
@@ -15363,7 +15364,7 @@ weighted f1 score: 0.964992591797203
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusions-">Conclusions <a class="anchor" id="eigth-bullet" /><a class="anchor-link" href="#Conclusions-">&#182;</a></h2><p>In this blogpost we covered document classification using Scikit-learn, Imbalance-learn and NLTK on summaries of papers from arxiv.org.  We went over the basics of term frequency-inverse document frequency, pipelines and the Naive Bayes classifier.  While we were able to improve the balanced accuracy of the basic Naive Bayes classifier from 72.8% to 97% and weighted f1 score from 84.3% to 96.5%. There are much more sophisticated models like a <a href="http://scikit-learn.org/stable/modules/svm.html#svm">support vector classifiers</a> that may achieve higher performance, but they take substantially more time to train and therefore decided against using for this blogpost.</p>
+<h2 id="Conclusions-">Conclusions <a class="anchor" id="eigth-bullet" /><a class="anchor-link" href="#Conclusions-">&#182;</a></h2><p>In this blogpost we covered document classification using Scikit-learn, Imbalance-learn and NLTK on summaries of papers from arxiv.org.  We went over the basics of term frequency-inverse document frequency, pipelines and the Naive Bayes classifier. We were also able to improve the balanced accuracy of the basic Naive Bayes classifier from 72.8% to 97% and weighted f1 score from 84.3% to 96.5%. There are much more sophisticated models like a <a href="http://scikit-learn.org/stable/modules/svm.html#svm">support vector classifiers</a> that may achieve higher performance, but they take substantially more time to train and therefore decided against using for this blogpost.</p>
 
 </div>
 </div>
