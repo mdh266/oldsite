@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
 
 <header>
-<div class="nav">
-  <ul>
-    <li class="home"><a href="http://michael-harmon.com">Home</a></li>
-    <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
-    <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
-    <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
-  </ul>
-</div>
-  </header>
+  <div class="nav">
+    <ul>
+      <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+      <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
+      <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
+      <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
+    </ul>
+  </div>
+</header>
+  
+<head><meta charset="utf-8" />
 
 <title>NLP-Part1</title>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -14956,7 +14959,7 @@ $$
 \max_{\textbf{w},b} M \quad \text{s.t.} \quad \Vert \textbf{w} \Vert^{2} = 1 , \; \text{ and } \;  y_{i} \, (\textbf{w}^{T} \textbf{x}_i + b ) \, \geq \, M(1- \xi_{i}) , \quad \forall i = 1, \ldots, n \quad \text{and} \, \sum_{i=1}^{n} \xi_{i} \, \leq \, C
 $$<p>where $C$ is our tolerance for missclassification. Dividing by $M$, this becomes the same as minimizing $ \Vert \textbf{w} \Vert^{2}$ (i.e. maximizing $M$ is the same as minimizing $1/M$) as well as minimizing $C \sum_{i}^{n} \xi_i$ (we recycled the term $C$ since its just a constant). Rearranging terms leads to the equation,</p>
 $$ \min_{\textbf{w},b} \, \frac{1}{2} \Vert \textbf{w} \Vert^{2} + C \sum_{i=1}^{n} \xi_i , \quad  \text{s.t.} \quad y_{i} \, (\textbf{w}^{T} \textbf{x}_i + b ) \, \geq \, (1- \xi_{i}) \quad \text{and} \quad \xi_{i} \, \geq \, 0 \qquad \forall i = 1, \ldots, n$$<p>To handle imbalance with support vector machines we can introduce weights $Q_i$ into our formulation such that the problem we want to optimize is</p>
-$$ \min_{\textbf{w},b} \, \frac{1}{2} \Vert \textbf{w} \Vert^{2} + C \sum_{i=1}^{n} Q_i \, \xi_i , \quad  \text{s.t.} \quad y_{i} \, (\textbf{w}^{T} \textbf{x}_i + b ) \, \geq \, (1- \xi_{i}) \quad \text{and} \quad \xi_{i} \, \geq \, 0 \qquad \forall i = 1, \ldots, n$$<p>The values for the weights, $Q_i$, will then be inversely proprotional to the class size. This adds an additional "cost" to being wrong for the missifying a minority as a majority class. See this <a href="https://www.researchgate.net/publication/4202393_Weighted_support_vector_machine_for_data_classification">article</a> for more details. I suspect that this will force the model to have much higher precision, as the number of false positives is minimized. To sovle the above optimization problem we introduce Lagrange multiplies $\lambda_i$ and $alpha_i$ to form the Lagrangian:</p>
+$$ \min_{\textbf{w},b} \, \frac{1}{2} \Vert \textbf{w} \Vert^{2} + C \sum_{i=1}^{n} Q_i \, \xi_i , \quad  \text{s.t.} \quad y_{i} \, (\textbf{w}^{T} \textbf{x}_i + b ) \, \geq \, (1- \xi_{i}) \quad \text{and} \quad \xi_{i} \, \geq \, 0 \qquad \forall i = 1, \ldots, n$$<p>The values for the weights, $Q_i$, will then be inversely proprotional to the class size. This adds an additional "cost" to being wrong for the missifying a minority as a majority class. See this <a href="https://www.researchgate.net/publication/4202393_Weighted_support_vector_machine_for_data_classification">article</a> for more details. I suspect that this will force the model to have much higher precision, as the number of false positives is minimized. To sovle the above optimization problem we introduce Lagrange multiplies $\lambda_i$ and $\alpha_i$ to form the Lagrangian:</p>
 \begin{equation}
 \min_{\textbf{w},b} \max_{\lambda_{i},\, \alpha_i} \mathcal{L}(\boldsymbol \lambda, \textbf{w}, b) \; = \;
 \frac{1}{2} \Vert \textbf{w} \Vert^{2} \, + \, C \sum_{i=1}^{n} Q_i \, \xi_i \, - \, \sum_{i=1}^{n}  \lambda_i \, \left[  \underbrace{y_{i} \, (\textbf{w}^{T} \textbf{x}_i + b ) - 1 + \xi_i}_{\geq 0 \text{ when classified correctly} } \right] \, - \, \sum_{i=1}^{n} \alpha_i \, \xi_i 
