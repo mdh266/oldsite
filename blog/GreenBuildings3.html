@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-<header>
-  <div class="nav">
-    <ul>
-      <li class="home"><a href="http://michael-harmon.com">Home</a></li>
-      <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
-      <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
-      <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
-    </ul>
-  </div>
-</header>
 <head><meta charset="utf-8" />
+
+<header>
+<div class="nav">
+  <ul>
+    <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+    <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
+    <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
+    <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
+  </ul>
+</div>
+</header>
 
 <title>GreenBuildings3</title>
 
@@ -13307,8 +13308,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="kn">import</span> <span class="n">service_account</span>
-<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">bigquery</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="k">import</span> <span class="n">service_account</span>
+<span class="kn">from</span> <span class="nn">google.cloud</span> <span class="k">import</span> <span class="n">bigquery</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">pandas_gbq</span> 
 
@@ -13461,7 +13462,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 
 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">93</span>
 
@@ -13486,10 +13487,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span>   <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span>        <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span>    <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span>         <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span>   <span class="k">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span>        <span class="k">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span>    <span class="k">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span>         <span class="k">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
 
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span><span class="n">StandardScaler</span><span class="p">()),</span> 
                  <span class="p">(</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">())])</span>
@@ -13607,7 +13608,7 @@ MSE: 2.2264594213905994e-06
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">f_regression</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">f_regression</span>
 
 <span class="n">f_stats</span><span class="p">,</span> <span class="n">pvals</span> <span class="o">=</span> <span class="n">f_regression</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -13747,7 +13748,7 @@ Residential&#39;s p-value : 6.7888853905324595e-28
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">Plotting_Functions</span> <span class="kn">import</span> <span class="n">plot_residuals</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">Plotting_Functions</span> <span class="k">import</span> <span class="n">plot_residuals</span>
 
 <span class="n">f</span> <span class="o">=</span> <span class="n">plot_residuals</span><span class="p">(</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">,</span>
                    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">,</span>
@@ -13860,8 +13861,8 @@ Residential&#39;s p-value : 6.7888853905324595e-28
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
 
 <span class="c1"># define the parameter values</span>
 <span class="n">paramters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_estimators&quot;</span>   <span class="p">:[</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">],</span>
@@ -14100,6 +14101,16 @@ MSE 1.4144935977206672e-06
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see the different parameters used in each of the runs, the $R^2$ value for that model as well as the ranking of that model. Notice that the first model and the last of the models with rank 1 are the same. However, their $R^2$ values are different. This is because the one is the model perfomance on the test set, while the other is the average model of the model performances in the 5-fold cross validation.</p>
+<p>Another nice feature of MLflow is the ability to compare model runs, to see the effect of say a hyper-parameter on model performance. You can select the model runs from the drop down and click the "compare" button displayed in the pictures above. I took a sample from the grid search above to see the effect of <code>max_depth</code> on the model with 100 estimators and <code>ls</code> for its log function:</p>
+<p><img src="images/Compare.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that the $R^{2}$ decreases as the <code>max_depth</code> increases. This makes sense as taking larger values of the <code>max_depth</code> generally leads to overfitting.</p>
 
 </div>
 </div>
