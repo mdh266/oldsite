@@ -13204,7 +13204,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -13305,7 +13305,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="k">import</span> <span class="n">service_account</span>
@@ -13328,7 +13328,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pandas_gbq</span><span class="o">.</span><span class="n">read_gbq</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -13358,7 +13358,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Downloading: 100%|██████████| 9542/9542 [00:01&lt;00:00, 5514.63rows/s]
+<pre>Downloading: 100%|██████████| 9542/9542 [00:01&lt;00:00, 6988.90rows/s]
 </pre>
 </div>
 </div>
@@ -13377,7 +13377,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;GHGI&quot;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -13459,7 +13459,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
@@ -13484,7 +13484,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span>   <span class="k">import</span> <span class="n">StandardScaler</span>
@@ -13513,7 +13513,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
@@ -13536,8 +13536,8 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>R2 score: 0.6476491751039196
-MSE: 2.2264594213905994e-06
+<pre>R2 score: 0.6476491751039197
+MSE: 2.226459421390599e-06
 </pre>
 </div>
 </div>
@@ -13556,7 +13556,7 @@ MSE: 2.2264594213905994e-06
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get the last stage of the pipeline which is the model</span>
@@ -13581,11 +13581,11 @@ MSE: 2.2264594213905994e-06
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(&#39;Energy_Star&#39;, -0.00012438019591537333)
-(&#39;Site_EUI&#39;, 0.00163961529817878)
-(&#39;NGI&#39;, 0.0002444723997324787)
-(&#39;EI&#39;, 0.001016531188328767)
-(&#39;Residential&#39;, 8.968370025022292e-05)
+<pre>(&#39;Energy_Star&#39;, -0.0001243801959153703)
+(&#39;Site_EUI&#39;, 0.0016396152981787812)
+(&#39;NGI&#39;, 0.00024447239973247783)
+(&#39;EI&#39;, 0.0010165311883287658)
+(&#39;Residential&#39;, 8.968370025022311e-05)
 </pre>
 </div>
 </div>
@@ -13605,7 +13605,7 @@ MSE: 2.2264594213905994e-06
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">f_regression</span>
@@ -13632,7 +13632,7 @@ MSE: 2.2264594213905994e-06
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Energy_Star&#39;s p-value : 0.0
 Site_EUI&#39;s p-value : 0.0
-NGI&#39;s p-value : 1.9403675290317854e-183
+NGI&#39;s p-value : 1.940367529032778e-183
 EI&#39;s p-value : 0.0
 Residential&#39;s p-value : 6.7888853905324595e-28
 </pre>
@@ -13858,27 +13858,27 @@ Residential&#39;s p-value : 6.7888853905324595e-28
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">xgboost</span> <span class="k">import</span> <span class="n">XGBRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
 
-<span class="c1"># define the parameter values</span>
-<span class="n">paramters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;n_estimators&quot;</span>   <span class="p">:[</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">],</span>
-             <span class="s2">&quot;max_depth&quot;</span>      <span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span>
-             <span class="s2">&quot;loss&quot;</span>           <span class="p">:[</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span> <span class="s2">&quot;lad&quot;</span><span class="p">]</span>
-<span class="p">}</span>
+<span class="c1"># # define the parameter values</span>
+<span class="c1"># paramters = {&quot;n_estimators&quot;   :[10,15,25,50,100,150],</span>
+<span class="c1">#              &quot;max_depth&quot;      :[3,5,7,10],</span>
+<span class="c1">#              &quot;loss&quot;           :[&quot;ls&quot;, &quot;lad&quot;]</span>
+<span class="c1"># }</span>
 
-<span class="c1"># define the grid search and optimization metric</span>
-<span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">XGBRegressor</span><span class="p">(),</span>
-                    <span class="n">param_grid</span><span class="o">=</span><span class="n">paramters</span><span class="p">,</span>
-                    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span>
-                    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># # define the grid search and optimization metric</span>
+<span class="c1"># grid = GridSearchCV(estimator=XGBRegressor(),</span>
+<span class="c1">#                     param_grid=paramters,</span>
+<span class="c1">#                     scoring=&quot;r2&quot;,</span>
+<span class="c1">#                     cv=5,</span>
+<span class="c1">#                     n_jobs=-1)</span>
 
-<span class="c1"># perform the grid search</span>
-<span class="n">xgb_model</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1"># # perform the grid search</span>
+<span class="c1"># xgb_model = grid.fit(X_train, y_train)</span>
 </pre></div>
 
     </div>
@@ -14126,12 +14126,27 @@ MSE 1.4144935977206672e-06
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">mlflow.xgboost</span>
 
-<span class="n">mlflow</span><span class="o">.</span><span class="n">xgboost</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">xgb_model</span><span class="p">,</span> <span class="s2">&quot;XGBModel&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">xgboost</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;XGBModel&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">joblib</span>
+
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;x model.joblib&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14158,7 +14173,7 @@ MSE 1.4144935977206672e-06
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If everything builds properly we will then see the following:</p>
 <p><img src="images/XGBoostServe1_P2.png" alt="image.png"></p>
-<p>Notice the "Listening at: <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>", this is the url for our webserver. We will make requests to get model predictions at the url. We have built a REST API that uses <a href="https://flask.palletsprojects.com/en/1.1.x/">flask</a> and <a href="https://gunicorn.org/">gunicorn</a> with a one line command using MLflow! To see how difficult this be to do by hand see this <a href="https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04">write up</a>.</p>
+<p>Notice the "Listening at: <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>", this is the url for our webserver. We will make requests to get model predictions at the url. We have built a REST API that uses <a href="https://flask.palletsprojects.com/en/1.1.x/">flask</a> and <a href="https://gunicorn.org/">gunicorn</a> with a one line command using MLflow! To see how difficult this be to do by hand see my other <a href="https://github.com/mdh266/DockerMLRestAPI">github repo</a>.</p>
 <p>Let's get some test data to try out model REST API:</p>
 
 </div>
@@ -14540,7 +14555,7 @@ env_variables:
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It worked! That's enough for this post!</p>
+<p>It worked! To see how difficult this be to do by hand see my other <a href="https://github.com/mdh266/DockerMLRestAPI">github repo</a>.  That's enough for this post!</p>
 <hr>
 <h2 id="Conclusions-">Conclusions <a class="anchor" id="fifth-bullet" /><a class="anchor-link" href="#Conclusions-">&#182;</a></h2><hr>
 <p>This blog post ends the series of blog posts that starts with a real life dataset on building energy usage and green house gas emissions. In previous posts we covered cleaning the dataset, but in this blog post we covered using the cleaned dataset and building a model with $R^2 \, = \, 0.776$ and deploying it to Google App Engine as an API using Docker. This process was made signifcantly easier using the MLflow library for model development and serving. This project was a lot of fun and I learned a ton workng on it.  I hope you found this useful!</p>
