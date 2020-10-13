@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
+
+
 <header>
   <div class="nav">
     <ul>
@@ -12,7 +14,10 @@
   </div>
 </header>
 
+
 <title>NLP-Part2</title>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13218,8 +13223,8 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="p">(</span><span class="n">CountVectorizer</span><span class="p">,</span>
                                              <span class="n">TfidfTransformer</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span>         <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
-<span class="kn">from</span> <span class="nn">imblearn.pipeline</span>       <span class="kn">import</span> <span class="n">Pipeline</span> 
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span>        <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span>       <span class="kn">import</span> <span class="n">Pipeline</span> 
 
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
 
@@ -13359,7 +13364,7 @@ balanced_accuracy 0.8636666666666667
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example document</span>
@@ -13415,7 +13420,7 @@ for planning.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
@@ -13442,11 +13447,11 @@ for planning.
 
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>[nltk_data] Downloading package stopwords to /home/jovyan/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data]   Unzipping corpora/stopwords.zip.
 [nltk_data] Downloading package punkt to /home/jovyan/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
+[nltk_data]   Unzipping tokenizers/punkt.zip.
 [nltk_data] Downloading package wordnet to /home/jovyan/nltk_data...
-[nltk_data]   Package wordnet is already up-to-date!
+[nltk_data]   Unzipping corpora/wordnet.zip.
 </pre>
 </div>
 </div>
@@ -13465,7 +13470,7 @@ for planning.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># collect the stopwords</span>
@@ -13517,7 +13522,7 @@ for planning.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">StopWordTokenizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -13552,7 +13557,7 @@ for planning.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_pipe2</span>  <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span>    <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">StopWordTokenizer</span><span class="p">(</span><span class="n">stop_words</span><span class="p">))),</span>
@@ -14561,7 +14566,7 @@ if (outputEl) {{
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It's a little weird that the test set accuracy grows so quickly, but overall we can see the test set accuracy and training set accuracy converge to a little over 90%. It's a little hard to say if our problem is high bias or high variance. On the one hand we have a little over 90% accuracy which isn't bad. This leads me to believe the problem is high variance and we should look to reduce the variance in our model. On the other hand the training accuracy is never above 95% which is lower than I would expect. This makes it seem there is still some bias in the model that we need to address, though this is a multi-class classification problem with imbalanced classes which may also cause the low training accuracy.</p>
+<p>It's a little weird that the test set accuracy grows so quickly, but overall we can see the test set accuracy and training set accuracy converge to a little over 90%. It's straightforward to say if our problem is high bias or high variance. On the one hand we have a little over 90% accuracy which isn't bad and the test set accuracy improves rapidly with increasine training set. This leads me to believe the problem is high variance and we should look to reduce the variance in our model. On the other hand the training accuracy is never above 95% which is lower than I would expect. This makes it seem there is still some bias in the model that we need to address, though this is a multi-class classification problem with imbalanced classes which may also cause the low training accuracy.</p>
 <p>In general to improve the model performance we could,</p>
 <ol>
 <li>Get more data (especially if we can balance the classes)</li>
