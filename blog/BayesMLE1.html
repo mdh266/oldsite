@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html>
+<header>
+  <div class="nav">
+    <ul>
+      <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+      <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
+      <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
+      <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
+    </ul>
+  </div>
+</header>
 <head><meta charset="utf-8" />
 
 <title>BayesMLE1</title>
@@ -13080,28 +13090,29 @@ div#notebook {
 <h1 id="Frequentist-&amp;-Bayesian-Statistics-With-Py4J-&amp;-PyMC3">Frequentist &amp; Bayesian Statistics With Py4J &amp; PyMC3<a class="anchor-link" href="#Frequentist-&amp;-Bayesian-Statistics-With-Py4J-&amp;-PyMC3">&#182;</a></h1><hr>
 <p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
 <p><strong><a href="#second-bullet">2. Sampling A Distribution Written In Scala Using Py4J</a></strong></p>
-<p><strong><a href="#third-bullet">3. The Maximum Likelyhood Estimator</a></strong></p>
+<p><strong><a href="#third-bullet">3. The Maximum Likelihood Estimator</a></strong></p>
 <p><strong><a href="#fourth-bullet">4. Confidence Intervals From Fisher Information</a></strong></p>
 <p><strong><a href="#fifth-bullet">5. Bayesian Esimatators &amp; Credible Intervals With PyMC3</a></strong></p>
 <p><strong><a href="#sixth-bullet">6. Connecting The Two Methods</a></strong></p>
+<p><strong><a href="#seventh-bullet">7. Conclusions</a></strong></p>
 <h2 id="1.-Introduction-">1. Introduction <a class="anchor" id="first-bullet" /><a class="anchor-link" href="#1.-Introduction-">&#182;</a></h2><hr>
 <p>In this post I want to go back to the basics of statistics, but with an advanced spin on things. By "advanced spin" I mean, both from in terms of mathematics and computational techniques. The topic I'll dive into is:</p>
 
 <pre><code>Estimating a single parameter value from a distribution and then quantifying the uncertantity in the estimate.
 
 </code></pre>
-<p>In general I will take two approaches to quantitfying the uncertainity in the estimate, the first of which is <a href="https://en.wikipedia.org/wiki/Frequentist_inference">frequentist</a> and second that is <a href="https://en.wikipedia.org/wiki/Bayesian_statistics">Bayesian</a>. I was originally inspired by <a href="http://jakevdp.github.io/blog/2014/03/11/frequentism-and-bayesianism-a-practical-intro/">Jake VanderPlas' post</a> and admit, I am not very seasoned using Bayesian methods. That's why I'll be sticking to a simple example of estimating the mean rate or 𝜆 in a <a href="https://en.wikipedia.org/wiki/Poisson_distribution#">Poisson distribution</a> from sampled data.</p>
+<p>In general I will take two approaches to quantitfying the uncertainity in the estimate, the first of which is <a href="https://en.wikipedia.org/wiki/Frequentist_inference">frequentist</a> and second that is <a href="https://en.wikipedia.org/wiki/Bayesian_statistics">Bayesian</a>. I was originally inspired by <a href="http://jakevdp.github.io/blog/2014/03/11/frequentism-and-bayesianism-a-practical-intro/">Jake VanderPlas' post</a> and admit that I am not very seasoned with Bayesian methods. That's why I'll be sticking to a simple example of estimating the mean rate or 𝜆 in a <a href="https://en.wikipedia.org/wiki/Poisson_distribution#">Poisson distribution</a> from sampled data.</p>
 <p>From the computational perspective, I wanted to do something different and decided to write the probability distribution for generating the data in <a href="https://www.scala-lang.org/">Scala</a>, but then use it with Python. Why did I do this? Well, I like Scala and enjoyed the challenge of writing a Poisson distribution using a functional approach. I also wanted to learn more about how to use <a href="https://www.py4j.org/">Py4J</a> which can be used to work with functions and objects in the <a href="https://en.wikipedia.org/wiki/Java_virtual_machine">JVM</a> from Python. <a href="https://spark.apache.org/">Apache Spark</a> actually uses Py4J in PySpark to write Python wrappers for their Scala API. I've used both PySpark and Spark in Scala extensively in the past and doing this project gave me an opportunity to understand how PySpark works better.</p>
 <p>The source code for this project can be found <a href="https://github.com/mdh266/BayesMLE">here</a>.</p>
 <p>Let's get into how I wrote the Poisson distribution in Scala and used it from Python to sample data.</p>
 <h2 id="2.-Sampling-A-Distribution-Written-In-Scala-Using-Py4J-">2. Sampling A Distribution Written In Scala Using Py4J <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#2.-Sampling-A-Distribution-Written-In-Scala-Using-Py4J-">&#182;</a></h2><hr>
-<p>I wrote a <a href="https://github.com/mdh266/PoissonDistributionInScala">Poisson distribution in Scala</a> so that I could sample data from it to estimate the mean rate $\lambda$ of that distribution. The Poisson distribution is a probability distribution for a random variable $y \, \in \, \mathbb{Z}_{+}$ that represents some count phenomena, i.e. a number of non-negative integer occurences in some fixed time frame.  For example the number of trains passing through a station per day or the number of customers that visit a website per hour can be modeled with Poisson distribution. The mathematical form of the distribution is,</p>
-$$ p(y \, = \, k)  \; = \; \frac{\lambda^{k} e^{-\lambda} }{k!} $$<p>The parameter $\lambda \, \in \, \mathbb{R}_{+}$ is the rate variable, i.e. the true number of customers that visit the website per hour and can be any non-negative real valued number.</p>
-<p>The first step in this project was to create the Poisson class. I did this in a previous <a href="https://github.com/mdh266/PoissonDistributionInScala">project</a>, however, one key difference is for Py4J the return value of any public function needs to be Java object. Specifically the <a href="https://github.com/mdh266/BayesBootstrapMLE/blob/main/src/main/scala/Poisson.scala">sample</a> method needs to return a Java List (<a href="https://www.javatpoint.com/java-list">java.util.List[Int]</a>) of integers. I originally tried returning a <a href="https://www.scala-lang.org/api/current/scala/collection/immutable/List.html">Scala List</a> which worked fine in pure Scala, but when returning the list to Python I got a generic "Java Object" and realized Py4J was only able to serialize specific datatypes between Python and the JVM.</p>
-<p>In order to use this class from Python with Py4J I needed to do three things to the Scala code:</p>
+<p>I wrote a <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/PoissonDistribution.scala">Poisson distribution in Scala</a> so that I could sample data from it to estimate the mean rate $\lambda$ of that distribution. The Poisson distribution is a probability distribution for a random variable $y \, \in \, \mathbb{Z}^{+}$ that represents some count phenomena, i.e. a number of non-negative integer occurences in some fixed time frame.  For example the number of trains passing through a station per day or the number of customers that visit a website per hour can be modeled with Poisson distribution. The mathematical form of the distribution is,</p>
+$$ p(y \, = \, k)  \; = \; \frac{\lambda^{k} e^{-\lambda} }{k!} $$<p>The parameter $\lambda \, \in \, \mathbb{R}^{+}$ is the rate variable, i.e. the true number of customers that visit the website per hour and can be any non-negative real valued number.</p>
+<p>The first step in this project was to create the Poisson class. I did this in a previous <a href="https://github.com/mdh266/PoissonDistributionInScala">project</a>, however, one key difference is for that Py4J the return value of any public function in Scala/Java needs to be a Java object. Specifically for me the <a href="https://github.com/mdh266/BayesBootstrapMLE/blob/main/src/main/scala/Poisson.scala">sample</a> method needs to return a Java List  of integers (<a href="https://www.javatpoint.com/java-list">java.util.List[Int]</a>). I originally tried returning a <a href="https://www.scala-lang.org/api/current/scala/collection/immutable/List.html">Scala List</a> which worked fine in pure Scala, but when returning the list to Python I got a generic "Java Object" and realized Py4J was only able to serialize specific datatypes between Python and the JVM.</p>
+<p>In order to use <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/PoissonDistribution.scala">this class</a> from Python with Py4J I needed to do three things:</p>
 <ol>
-<li>Create a <a href="https://www.py4j.org/_static/javadoc/index.html?py4j/GatewayServer.html">Gateway Server</a></li>
-<li>Create a class entrypoint to allow for setting object attributes outside of the constructor</li>
+<li>Create a <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/Main.scala">Gateway Server</a></li>
+<li>Create a <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/PoissonEntryPoint.scala">class entrypoint</a> to allow for setting the Poisson attributes</li>
 <li>Package the code as a jar using a build tool such as <a href="https://maven.apache.org/">Maven</a> or <a href="https://www.scala-sbt.org/">SBT</a></li>
 </ol>
 <p>The first step is pretty straight forward to from the <a href="https://www.py4j.org/getting_started.html">Py4J Documentation</a> and is in the <a href="https://github.com/mdh266/BayesBootstrapMLE/blob/main/src/main/scala/Main.scala">Main.Scala</a> object. However, in order to accommodate the use of <a href="">Docker</a> I had to adapt the address for the <a href="https://www.py4j.org/_static/javadoc/index.html?py4j/GatewayServer.html">GatewayServer</a> based on this <a href="https://github.com/bartdag/py4j/issues/360">discussion on GitHub</a>:</p>
@@ -13162,13 +13173,13 @@ pom.xml
 <pre><code>nc -vz 0.0.0.0 25333
 
 </code></pre>
-<p>You should see,</p>
+<p>and you should see,</p>
 
 <pre><code>Connection to 0.0.0.0 port 25333 [tcp/*] succeeded!
 
 </code></pre>
-<p>Now we can start up our Jupyter notebook and connect Python to the JVM with the following code taken directly from <a href="https://www.py4j.org/index.html#">Py4J's</a> home page. This involves setting up the <a href="https://www.py4j.org/py4j_java_gateway.html">JavaGatway</a> which is the <em>main interaction point between a Python VM and a JVM</em>. When running on your local machine this is simple, however, in order to use the my Poisson Distribution and Jupyter Lab within <a href="https://docs.docker.com/compose/">Docker Compose</a> I had to pass the appropriate <a href="https://www.py4j.org/py4j_java_gateway.html#py4j.java_gateway.GatewayParameters">GatewayParameters</a> which specify the address for the Scala <a href="https://www.py4j.org/_static/javadoc/py4j/GatewayServer.html">GatewayServer</a> (the <code>py4jserver</code> service in Docker compose) and the port it uses. In addition I had to pass the <a href="https://www.py4j.org/py4j_java_gateway.html#py4j.java_gateway.CallbackServerParameters">CallbackServerParameters</a> which specify the address for this notebook (the <code>jupyter</code> service in Docker compose) as well as the port it uses.</p>
-<p>The callback server allows the JVM to call back Python objects as discussed <a href="https://www.py4j.org/advanced_topics.html#implementing-java-interfaces-from-python-callback">here</a>.  I definitely had to have an friend that knows DevOps help figure this one out, but it doesnt add too much complexity to the basic Py4J example:</p>
+<p>Now we can start up our Jupyter notebook and connect Python to the JVM with the following code taken directly from <a href="https://www.py4j.org/index.html#">Py4J's</a> home page. This involves setting up the <a href="https://www.py4j.org/py4j_java_gateway.html">JavaGatway</a> which is the <em>main interaction point between a Python VM and a JVM</em>. When running on your local machine this is simple, however, in order to use the my Poisson Distribution and Jupyter Lab within <a href="https://docs.docker.com/compose/">Docker Compose</a> I had to pass the appropriate <a href="https://www.py4j.org/py4j_java_gateway.html#py4j.java_gateway.GatewayParameters">GatewayParameters</a> which specify the address for the Scala <a href="https://www.py4j.org/_static/javadoc/py4j/GatewayServer.html">GatewayServer</a> (the <code>py4jserver</code> service in Docker compose) and the port it uses. In addition, I had to pass the <a href="https://www.py4j.org/py4j_java_gateway.html#py4j.java_gateway.CallbackServerParameters">CallbackServerParameters</a> which specify the address for this notebook (the <code>jupyter</code> service in Docker compose) as well as the port it uses.</p>
+<p>The callback server allows the JVM to call back Python objects as discussed <a href="https://www.py4j.org/advanced_topics.html#implementing-java-interfaces-from-python-callback">here</a>.  I definitely had to have a friend that knows DevOps to help figure this one out, but it doesnt add too much complexity to the basic Py4J example:</p>
 
 </div>
 </div>
@@ -13196,7 +13207,7 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The app is now the instantiated <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/PoissonEntryPoint.scala">PoissonEntryPoint class</a>.  We can see the class type in Python</p>
+<p>The app is now the instantiated <a href="https://github.com/mdh266/BayesMLE/blob/main/src/main/scala/PoissonEntryPoint.scala">PoissonEntryPoint</a> class.  We can see the class type in Python</p>
 
 </div>
 </div>
@@ -13294,7 +13305,7 @@ pom.xml
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see <code>Poisson</code> class method! Since PoissonEntryPoint is a <a href="https://docs.scala-lang.org/tour/case-classes.html">case class</a> it comes with a number of default methods just like a <a href="https://realpython.com/python-data-classes/">data class</a> in Python.</p>
-<p>We can then create a Poisson class instance and see that the value of $\lambda$ is 3.0:</p>
+<p>We can then create a Poisson class instance and see that the value of $\lambda$ is 1.0:</p>
 
 </div>
 </div>
@@ -13474,7 +13485,7 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can then just use the methods in the <a href="https://github.com/mdh266/BayesBootstrapMLE/blob/main/src/main/scala/PoissonDistribution.scala">PoissonDistribution</a> object just like they would be used directly in Scala. For instance we can get the probability of $y=1$ when $\lambda = 3$:</p>
+<p>We can then just use the methods in the <a href="https://github.com/mdh266/BayesBootstrapMLE/blob/main/src/main/scala/PoissonDistribution.scala">PoissonDistribution</a> object just like they would be used directly in Scala. For instance we can get the probability of $y=1$ when $\lambda = 1$:</p>
 
 </div>
 </div>
@@ -13651,7 +13662,7 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Py4J can only serialize specific Java objects back to Python, but I think that's still awesome!  This is also why I needed to convert to from a Scala <code>List[Int]</code> to a <code>java.util.List[Int]</code>, without it the returned object would just be a generic <code>Java Object</code> and I wouldnt be able to access its contents.</p>
+<p>As mentioned previously, Py4J can only serialize specific Java objects back to Python, but I think that's still awesome!  This is also why I needed to convert to from a Scala <code>List[Int]</code> to a <code>java.util.List[Int]</code>; without it the returned object would just be a generic <code>Java Object</code> and I wouldnt be able to access its contents.</p>
 <p>Now let's visualize the Poission distribution for different values of $\lambda$</p>
 
 </div>
@@ -13723,7 +13734,7 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Note that the negative values are not real and an artifact caused by interpolation with <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel Density Esimation</a>, same with the wiggles.</p>
+<p>Note that the negative values are not real, but an artifact caused by interpolation with <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel Density Esimation</a>. The same is true with the wiggles in the distribution.</p>
 <p>We can verify this the former,</p>
 
 </div>
@@ -13789,7 +13800,7 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now let's get into the Maximum Likelyhood Estimator for $\lambda$ using the distribution <code>p1</code>.</p>
+<p>Now let's get into the Maximum Likelihood Estimator for $\lambda$ using the distribution <code>p1</code>.</p>
 
 </div>
 </div>
@@ -13797,9 +13808,9 @@ pom.xml
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-The-Maximum-Likelyhood-Estimator-">3. The Maximum Likelyhood Estimator <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#3.-The-Maximum-Likelyhood-Estimator-">&#182;</a></h2><hr>
-<p>First what is the difference between a statistic and an estimator?  A <strong>statistic</strong> is any function of a sample.  An <strong>estimator</strong> is any function of a sample that is used to estimate a population parameter.  The <strong>maximum likelyhood estimator</strong> is the value of a population distribution $\lambda$ that maximizes the probability of observing the sample.</p>
-<p>We can find the MLE from a random sample $y_1, y_2, \, \ldots \,, y_{n}$ from $f(y \, \vert \, \lambda)$ by defining the <strong>likelyhood function</strong>,</p>
+<h2 id="3.-The-Maximum-Likelihood-Estimator-">3. The Maximum Likelihood Estimator <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#3.-The-Maximum-Likelihood-Estimator-">&#182;</a></h2><hr>
+<p>First what is the difference between a statistic and an estimator?  A <strong>statistic</strong> is any function of a sample.  An <strong>estimator</strong> is any function of a sample that is used to estimate a population parameter.  The <strong>maximum likelihood estimator</strong> is the value of a population distribution $\lambda$ that maximizes the probability of observing the sample.</p>
+<p>We can find the MLE from a independent, identically distributed sample $y_1, y_2, \, \ldots \,, y_{n}$ from $f(y \, \vert \, \lambda)$ by defining the <strong>likelihood function</strong>,</p>
 $$ L(\lambda  \, \vert \, y_1, \, y_2, \, \ldots, \, y_n)  \; = \; \prod_{i=1}^{n}f(y_{i} \, \vert \, \lambda) $$<p>Then we can find the MLE $\widehat{\lambda}$ such that,</p>
 $$ 
 \hat{\lambda}_{n} \; = \; \max_{\lambda} \, L(\lambda \, \vert \, y_1, y_2, \ldots, \, y_n)
@@ -13815,9 +13826,9 @@ $$<p>for $\lambda$.  The MLE has many important properties, the most important i
 <p>To explain the first property we, must note that since an estimator is a function of the sample space, it is also a <a href="https://en.wikipedia.org/wiki/Random_variable">random variable</a>.  Let $X_1, \, \ldots, \, X_n$ be a sequence of random variables then $X_{i} \; \xrightarrow{\mathcal{P}} \; X$ if,</p>
 $$\forall \epsilon &gt; 0, \; \lim\limits_{n \rightarrow \infty} P(\vert X_i - X \vert &gt; \epsilon ) \; = \; 0$$<p></p>
 <p>then we say the random variable <a href="https://en.wikipedia.org/wiki/Convergence_of_random_variables">converges in probability</a>. For an estimator this property of convergence is called <strong>consistency</strong>. Consistency is a necessary condition of any estimator in statistics and basically signifies that estimator eventually settles down to constant or some distribution of values.</p>
-<p>The second property of the MLE allows us to transform our likelyhood function into one that is often easier to calculate the MLE with, i.e. the log-likelyhood function. That is the MLE, $\hat{\lambda}$ will satisfy,</p>
+<p>The second property of the MLE allows us to transform our likelihood function into one that is often easier to calculate the MLE with, i.e. the log-likelihood function. That is the MLE, $\hat{\lambda}$ will satisfy,</p>
 $$ \frac{\partial \log(L(\lambda \, \vert y_1, \, \ldots, y_n ))}{\partial \lambda}  \; = \; 0 $$<p>The third property of the MLE, of asymptotic normality, is helpful in modeling since your standardized residuals are normal. Hence the sum of squares of the residuals are $\chi^2$ distributed.  This allows us to define confidence intervals around of estimates. The term $\mathcal{I}$ is the <a href="https://en.wikipedia.org/wiki/Fisher_information">Fisher Information</a> and will be discussed in the next section.</p>
-<p>For the Poisson distribution the likelyhood function is,</p>
+<p>For the Poisson distribution the likelihood function is,</p>
 $$
 \begin{align} L(\lambda  \, \vert y_1, \, y_2, \, \ldots, \, y_n)  
 \; &amp;= \; 
@@ -13977,7 +13988,7 @@ $$ \hat{\lambda} _{n}\, = \, \bar{y}_{n} \; \xrightarrow{\mathcal{D}} \; N(\lamb
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.-Confidence-Intervals-From-Fisher-Information-">4. Confidence Intervals From Fisher Information <a class="anchor" id="fourth-bullet" /><a class="anchor-link" href="#4.-Confidence-Intervals-From-Fisher-Information-">&#182;</a></h2><hr>
-<p>Given a distribution $y_{i} \, \sim \, f(y \, \vert \, \alpha)$ for $i \, = \, 1, \ldots , n$ and the likelyhood function,</p>
+<p>Given a distribution $y_{i} \, \sim \, f(y \, \vert \, \alpha)$ for $i \, = \, 1, \ldots , n$ and the likelihood function,</p>
 $$ L(\alpha \, \vert \, y_1, y_2, \ldots, y_n) \; = \; \prod_{i=1}^{n} \,  f(y_i \, \vert \, \alpha) $$<p>We define the <a href="https://en.wikipedia.org/wiki/Score_(statistics">score statistic</a>) $S(\alpha)$ to be,</p>
 $$
 S(\alpha) \; = \; \frac{d\log \left(L(\alpha \, \vert  \, y_1, y_2, \ldots, y_n) \right)}{d\alpha} 
@@ -13993,14 +14004,14 @@ $$ S(\widehat{\alpha})  \; = \; 0$$<p>for the MLE $\widehat{\alpha}$.  This prop
 &amp; = \; E_y[ - S'] \\
  &amp;= \; - E_{y} \left[ \frac{d^{2}\log \left(L(\alpha \, | \, y_1, y_2, \ldots, y_n) \right)}{d\alpha^{2}}  \right] 
 \end{align}<p>One can show that the standard error for the maximum likelihood estimate $(\widehat{\alpha})$ will then be,</p>
-$$ \text{S.E.}(\widehat{\alpha}) \; = \; \mathcal{I}^{-1/2}$$<p>The curvature of the log-likelyhood at the MLE dictated by the Fisher information. If $L$ flat then the $\mathcal{I}$ is small, so the MLE is not stable or well-defined.  Larger Fisher information tells us the MLE is well defined and stable.</p>
-<p>Asymptotic normality for the MLE implies,</p>
+$$ \text{S.E.}(\widehat{\alpha}) \; = \; \mathcal{I}^{-1/2}$$<p>The curvature of the log-likelihood at the MLE is dictated by the Fisher information. If $L$ flat at the MLE then the $\mathcal{I}$ is small and the MLE is not stable or well-defined. Higher Fisher information at the MLE means the distribution is highly peaked and implies the MLE is well defined and stable.</p>
+<p>As previously mentioned the MLE asymptotically normal which tells us mathematically that,</p>
 \begin{equation}
  \widehat{\alpha} \; \sim \; N(\alpha, \, \mathcal{I}^{-1})
 \end{equation}<p>These facts can be used to calculate confidence intervals for the MLE,</p>
 $$\text{CI}_{\alpha} \, = \, [ \widehat{\alpha} - Z_{\alpha/2} \, \mathcal{I}^{-1}/\sqrt{n}, \, \widehat{\alpha} + Z_{\alpha/2} \, \mathcal{I}^{-1} /\sqrt{n}]$$<p>The Fisher information for a Poisson distribution is,</p>
 $$ \mathcal{I} \, = \, 1/\lambda $$<p>This means for our MLE of the Poisson distribution the confidence interval will be:</p>
-$$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y}_{n} / n}, \, \bar{y}_{n} + Z_{\alpha/2} \, \sqrt{\bar{y}_{n}/ n}]$$<p>We can then come up with a functin to compute the 94% confidence interval (most people choose 95%, but to be consistent with PyMC we use 94%) for the sample:</p>
+$$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y}_{n} / n}, \, \bar{y}_{n} + Z_{\alpha/2} \, \sqrt{\bar{y}_{n}/ n}]$$<p>We can then come up with a functin to compute the 94% confidence interval (most people choose 95%, but to be consistent with <a href="https://docs.pymc.io/">PyMC3</a> we use 94%) for the sample:</p>
 
 </div>
 </div>
@@ -14031,7 +14042,7 @@ $$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can then get the MLE for the sampled data from Poisson(1.0)</p>
+<p>We can then get the MLE for the sampled data from <code>Poisson(1.0)</code>,</p>
 
 </div>
 </div>
@@ -14113,9 +14124,9 @@ $$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see that the confidence interval does contain the true $\lambda \, = \, 1$. Many people think a 94% confidence interval, $\text{CI}_{94}$, can be used to say that there is a 94% probability that the true $\lambda$ is in the confidence interval $\text{CI}_{94}$.  This interpetation is wrong, in frequentist methods, the parameter $\lambda$ is assumed to be a fixed, but unknown value. One cannot make probability statements about fixed values.</p>
-<p>The confidence interval is a function of the sample space and therefore a random variable. One can make probability statements about the confidence intervals. Indeed the correct interpretation is that if you are able to repeatedly re-sample the population distribution $f(y \, \vert \, \lambda)$ to form many confidence intervals $\text{CI}_{94}$, 94% of them would contain the true population parameter $\lambda$.</p>
-<p>We can test this by creating a function which returns a boolean indicating whether or not the parameter <code>lam</code> is contained in the 94% confidence interval from the data <code>sample</code>:</p>
+<p>We can see that the confidence interval does contain the true $\lambda \, = \, 1$. <em>Many people think a 94% confidence interval, $\text{CI}_{94}$, can be used to say that there is a 94% probability that the true $\lambda$ is in the confidence interval $\text{CI}_{94}$.  This interpetation is wrong, in frequentist methods, the parameter $\lambda$ is assumed to be an unknown fixed value. One cannot make probability statements about fixed values.</em></p>
+<p><em>The confidence interval is a function of the sample space and therefore a random variable. One can make probability statements about the confidence intervals. Indeed the correct interpretation is that if you are able to repeatedly re-sample the population distribution $f(y \, \vert \, \lambda)$ to form many confidence intervals $\text{CI}_{94}$, 94% of them would contain the true population parameter $\lambda$.</em></p>
+<p>We can test this by creating a function which returns a boolean indicating whether or not the parameter <code>lam</code> for $\lambda$ is contained in the 94% confidence interval from the data <code>sample</code>:</p>
 
 </div>
 </div>
@@ -14138,7 +14149,7 @@ $$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can then test this function:</p>
+<p>We can then test this function,</p>
 
 </div>
 </div>
@@ -14212,7 +14223,7 @@ $$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Then we can loop over 1,000 confidence interval to see how many times they capture the true rate parameter:</p>
+<p>We can loop over 1,000 confidence intervals to see how many times they capture the true rate parameter,</p>
 
 </div>
 </div>
@@ -14254,19 +14265,19 @@ $$\text{CI}_{\hat{\lambda}} \, = \, [ \bar{y}_{n} - Z_{\alpha/2} \, \sqrt{\bar{y
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is nearly spot on to what the theory says!  Let's now move on to Bayesian methods!</p>
 <h2 id="5.-Bayesian-Esimatators-&amp;-Credible-Intervals-With-PyMC3-">5. Bayesian Esimatators &amp; Credible Intervals With PyMC3 <a class="anchor" id="fifth-bullet" /><a class="anchor-link" href="#5.-Bayesian-Esimatators-&amp;-Credible-Intervals-With-PyMC3-">&#182;</a></h2><hr>
-<p>In the frequentist approach the parameter we wish to estimation $\lambda$ is fixed, but unknown.  The observed data $\left\{ y_1, y_2, \ldots, y_n \right\}$ is assumed to be from a population $f(y \, \vert \, \lambda)$ and estimates about the value of the population paremeter $\lambda$ is obtained by using the maximum likelyhood. As we discussed above, probability statements about the unknown rate constant $\lambda$ don't make sense as its a fixed value and not random variable.  However, probability statements can be made about a confidence interval for $\lambda$. In the maximum likelyhood method, asympotic normality allows us to use confidence intervals as a way to quantify the uncertaintity in our estimator which was calculated from the data.</p>
-<p>In contrast, in Bayesian statistics, $\lambda$ is not a fixed value, but assumed to have values coming from a probability distribution called the <a href="https://en.wikipedia.org/wiki/Prior_probability">prior</a> $P(\lambda)$. This is often subjective and the choice of distribution for the prior often comes from domain knowledge.  The observed data $\left\{ y_1, y_2, \ldots, y_n \right\}$ is a sample taken from a population and used to update the prior distribution, now called the <a href="https://en.wikipedia.org/wiki/Posterior_distribution">posterior distribution</a>, $P(\lambda \, \vert \, y_1, y_2, \ldots, y_n )$. <strong>Now we can formulate estimators for $\lambda$ and quanitify the uncertaintity in those esimates by directly using the posterior distribution.</strong></p>
+<p>In the frequentist approach the parameter we wish to estimation $\lambda$ is fixed, but unknown.  The observed data $\left\{ y_1, y_2, \ldots, y_n \right\}$ is assumed to be from a population $f(y \, \vert \, \lambda)$ and estimates about the value of the population paremeter $\lambda$ is obtained by using the maximum likelihood. As we discussed above, probability statements about the unknown rate constant $\lambda$ don't make sense as its a fixed value and not a random variable.  However, probability statements can be made about a confidence interval for $\lambda$. In the maximum likelihood method, asympotic normality allows us to use confidence intervals as a way to quantify the uncertaintity in our estimator.</p>
+<p>In contrast, in Bayesian statistics, $\lambda$ is not a fixed value, but assumed to have values coming from a probability distribution called the <a href="https://en.wikipedia.org/wiki/Prior_probability">prior</a> $P(\lambda)$. This is often subjective and the choice of distribution for the prior often comes from domain knowledge.  The observed data $\left\{ y_1, y_2, \ldots, y_n \right\}$ and samples from the prior taken to evaluate the likelihood of the  <a href="https://en.wikipedia.org/wiki/Posterior_distribution">posterior distribution</a> model, $P(\lambda \, \vert \, y_1, y_2, \ldots, y_n )$. <strong>Now we can formulate estimators for $\lambda$ and quanitify the uncertaintity in those esimates by directly using the posterior distribution.</strong></p>
 <p>Let $P(y_1, y_2, \ldots, y_n \, \vert \, \lambda )$ be the sampling distribution then <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Baye's theorem</a> states,</p>
 $$ P(\lambda \, \vert \, y_1, y_2, \ldots, y_n)
  \; = \; 
 \frac{ P ( y_1, y_2, \ldots, y_n \, \vert \, \lambda) \, P(\lambda)}{m(y_1, y_2, \ldots, y_n)}, \quad \text{and} \qquad m(y_1, y_2, \ldots, y_n) \; = \; \int P ( y_1, y_2, \ldots, y_n\, \vert \, \lambda) \, P(\lambda) \, d\lambda
-$$<p>Where $m(y_1, y_2, \ldots, y_n)$ is called the marginal distribution and used for normalization. Bayes rule can also be rewritten as using the joint distibution $P(\lambda,\, y_1, y_2, \ldots, y_n)$:</p>
+$$<p>Where $m(y_1, y_2, \ldots, y_n)$ is called the marginal distribution and used for normalization. Another way to rewrite Baye's formula is in terms of the Likelihood functions, $L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n)$</p>
 $$ P(\lambda \, \vert \, y_1, y_2, \ldots, y_n)
  \; = \; 
-\frac{ P(\lambda , y_1, y_2, \ldots, y_n)}{m(y_1, y_2, \ldots, y_n)}
-$$<p>The <a href="https://en.wikipedia.org/wiki/Bayes_estimator">Bayesian estimator</a> (often called the posterior mean) is taken the be the expected value over the the random variable $y$:</p>
-$$ \widehat{\lambda} \; = \; E_{\lambda \, \vert \, y}(\lambda \, \vert \, y_1, y_2, \ldots, y_n)$$<p>Until the advant of computers, statisticians were stuck with using <a href="https://en.wikipedia.org/wiki/Conjugate_prior">conjugate priors</a> in Bayesian methods since there are analytic solutions for the posterior distribution.</p>
-<p>The conjugate prior for a Poisson distribution is a <a href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma distributed</a> which for $\alpha, \beta &gt; 0$ takes the form:</p>
+\frac{ L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n) \, P(\lambda)}{m(y_1, y_2, \ldots, y_n)}
+$$<p>The <a href="https://en.wikipedia.org/wiki/Bayes_estimator">Bayesian estimator</a> (often called the posterior mean) is taken the be the expected value over the the random variable $y$,</p>
+$$ \widehat{\lambda} \; = \; E_{\lambda \, \vert \, y}(\lambda \, \vert \, y_1, y_2, \ldots, y_n)$$<p>Until the advant of computers, statisticians were stuck with using <a href="https://en.wikipedia.org/wiki/Conjugate_prior">conjugate priors</a> with Bayesian methods since there are analytic solutions for the posterior distribution.</p>
+<p>The conjugate prior for a Poisson distribution is a <a href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma distributed</a> which for $\alpha, \beta &gt; 0$ takes the form,</p>
 $$
 P(\lambda \, \vert \, \alpha, \beta ) \; = \; \frac{\beta^{\alpha }}{(\alpha-1)! }  \, x^{\alpha-1} \, e^{-\beta y}
 $$<p>A depiction of the Gamma distribution for various values of $\alpha$ and $\beta$ can be seen from <a href="https://docs.pymc.io/api/distributions/continuous.html#pymc3.distributions.continuous.Gamma">PyMC3's website</a>.</p>
@@ -14401,7 +14412,7 @@ $$\hat{\lambda} \; = \; \frac{\alpha}{\beta \, + \, n}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now let's talk about the confidence of this estimate. The anology of confidence in Bayesian esimation is called the <a href="https://en.wikipedia.org/wiki/Credible_interval">credible Interval</a> which requires the full posterior. I wrote a function to plot the posterior for the sample from <code>p1</code> below:</p>
+<p>Now let's talk about the confidence of this estimate. The anology of confidence in Bayesian esimation is called the <a href="https://en.wikipedia.org/wiki/Credible_interval">credible Interval</a> which requires the full posterior. I wrote a function to plot the posterior for the sample from <code>p1</code> below,</p>
 
 </div>
 </div>
@@ -14447,7 +14458,11 @@ $$\hat{\lambda} \; = \; \frac{\alpha}{\beta \, + \, n}
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As we saw the Bayesian estimator requires the full posterior distribution. Without a conjugate prior Bayesian methods requires numerical approximation to the posterior which computationally expenisve. Despite the added complexity, Bayesian methods allow us to handle situations where we might not have much data and can often lead us to estimates with smaller variance.</p>
-<p>One approach to approximating the posterior distribution is to randomly sample the the prior distribution and then evaluate the joint distribution of the data. Once we have the posterior distribution we can then evaluate the expected value of $\lambda$.  One common method for random sampling is <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo Methods</a> and Bayesian-MCMC methods can be used easily with <a href="https://docs.pymc.io/">PyMC</a>!</p>
+<p>One approach to approximating the posterior distribution is to randomly sample the the prior distribution and then evaluate the likelihood of that prior value and the data using Bayes rule,</p>
+$$ P(\lambda \, \vert \, y_1, y_2, \ldots, y_n)
+ \; = \; 
+\frac{ L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n) \, P(\lambda)}{m(y_1, y_2, \ldots, y_n)}
+$$<p>Repeatedly sampling the prior and evaluating the likelihood multiple times gives us a good approximation to the posterior distribution. Once we have the posterior distribution we can then evaluate the expected value of $\lambda$. A common method for generating the random samples of the prior above is through <a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo Methods</a>. Bayesian methods with MCMC can be used easily with <a href="https://docs.pymc.io/">PyMC</a>!</p>
 <p>We begin by importing the library</p>
 
 </div>
@@ -14583,7 +14598,7 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can then view the poserior distribution using the <a href="https://arviz-devs.github.io/arviz/">ArviZ</a> library:</p>
+<p>We can then view the posterior distribution using the <a href="https://arviz-devs.github.io/arviz/">ArviZ</a> library,</p>
 
 </div>
 </div>
@@ -14640,9 +14655,9 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Same as before with the analytical posterior.</p>
-<p>We should note that <strong>Bayesian estimators are ALWAYS biased due to their choice of prior</strong>, however, they can reduce the variance in our estimators.  This is will become evident in the next example where we show that another area where Bayesian method shine is when you have a limited amount of data, but a lot of domain knowledge.</p>
-<p>Say we only have 20 sample points, we can calculate the MLE:</p>
+<p>The results are the same as before with the analytical posterior.</p>
+<p><em>We should note that <strong>Bayesian estimators are ALWAYS biased due to their choice of prior</strong>, however, they can reduce the variance in our estimators.</em>  This is will become evident in the next example where we show another area where Bayesian method shine is when you have a limited amount of data, but a lot of domain knowledge.</p>
+<p>Say we only have 20 sample points, we can calculate the MLE,</p>
 
 </div>
 </div>
@@ -14652,7 +14667,7 @@ NUTS: [λ]
 <div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mle</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mle</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span>
 </pre></div>
 
     </div>
@@ -14693,7 +14708,7 @@ NUTS: [λ]
 <div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ci</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ci</span><span class="p">(</span><span class="n">sample</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span>
 </pre></div>
 
     </div>
@@ -14724,9 +14739,9 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's define our model to be a Poisson-Exponential model where the prior distribution is an <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential distribution</a> pictured below from PyMC3 site:</p>
+<p>Let's define our model to be a Poisson-Exponential model where the prior distribution is an <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential distribution</a> pictured below from <a href="https://docs.pymc.io/api/distributions/continuous.html#pymc3.distributions.continuous.Exponential">PyMC3's site</a>:</p>
 <p><img src="https://docs.pymc.io/api/distributions/continuous-5.png" alt=""></p>
-<p>Inconventially, these distributons both use $\lambda$ for their paramaters. Using a larger $\lambda$ in a prior gives us a larger sample space while a smaller $\lambda$ in the prior gives us a smaller sampling space. Let's choose a define the prior $\exp(-1)$ and sample it using MCMC methods 500 times.  We can then plot the posterior and the sampling space using the <a href="https://arviz-devs.github.io/arviz/api/generated/arviz.plot_trace.html">plot_trace</a> method:</p>
+<p>It's unfortunate that these two distributions both use $\lambda$ for their paramaters, but I will do my best to make it clear which $\lambda$ I refer to.  Using a larger $\lambda$ in the exponential prior gives us a smaller sample space while a smaller $\lambda$ in the exponential prior gives us a larger sampling space. Let's choose a define the prior $\exp(-1)$ and sample it using MCMC methods 500 times.  We can then plot the posterior and the sampling space using the <a href="https://arviz-devs.github.io/arviz/api/generated/arviz.plot_trace.html">plot_trace</a> method,</p>
 
 </div>
 </div>
@@ -14842,7 +14857,7 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can then calculate the credible region and expected value</p>
+<p>We can then calculate the expected value of the posterior and the credible region,</p>
 
 </div>
 </div>
@@ -14916,7 +14931,8 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Nearly the same as MLE, but we can see that the posterior isn't very well defined using only 500 MCMC steps. We can see that there seems to be some <a href="https://www.coursera.org/lecture/introduction-to-pymc3/autocorrelation-and-effective-sample-size-YSW3x">autocorrelation in the sample space</a>.</p>
+<p>The values are nearly the same as MLE.</p>
+<p>One thing to note is that we can see that the posterior isn't very well defined using only 500 MCMC steps. We can see that there seems to be some <a href="https://www.coursera.org/lecture/introduction-to-pymc3/autocorrelation-and-effective-sample-size-YSW3x">autocorrelation in the sample space</a>.</p>
 
 </div>
 </div>
@@ -14973,7 +14989,7 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's bump that up to 10,000 to see how the distribution looks,</p>
+<p>Let's bump the number of samples up to 10,000 to see how the posterior distribution looks,</p>
 
 </div>
 </div>
@@ -15087,7 +15103,7 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can see the posterior is pretty well defined, with a little skew right. Let's get the expected mean and credible interval:</p>
+<p>We can see the posterior is pretty well defined, with a little skew right. Let's get the expected mean and credible interval,</p>
 
 </div>
 </div>
@@ -15162,8 +15178,8 @@ NUTS: [λ]
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The Bayesian in method in this case isnt much better than the MLE, but credible interval is more narrow than the confidence interval.</p>
-<p>We can also see the mode of the posterior distribution is pretty much over 1.0 which is the correct value for our parameter.</p>
-<p>Using the posterior mode is called the <a href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation">Maximum A-Posteriori (MAP)</a> and we can see the calculated value below,</p>
+<p>We can also see the mode of the posterior distribution is nearly directly over 1.0, which is the correct value for our parameter.</p>
+<p>Using the posterior mode as an estimator is called the <a href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation">Maximum A-Posteriori (MAP)</a> and we can see the calculated value below,</p>
 
 </div>
 </div>
@@ -15252,16 +15268,12 @@ NUTS: [λ]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.-Connecting-The-Two-Methods-">6. Connecting The Two Methods <a class="anchor" id="sixth-bullet" /><a class="anchor-link" href="#6.-Connecting-The-Two-Methods-">&#182;</a></h2><hr>
-<p>Another way to rewrite Baye's formula is in terms of the Likelyhood functions, $L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n)$</p>
-$$ P(\lambda \, \vert \, y_1, y_2, \ldots, y_n)
- \; = \; 
-\frac{ L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n) \, P(\lambda)}{m(y_1, y_2, \ldots, y_n)}
-$$<p>Choosing a constant prior $C$ or uniform ($U(\theta)$ so long $\theta \, \geq \, \lambda$) the MAP is the same as the MLE:</p>
+<h2 id="6.-Connecting-The-Two-Methods--">6. Connecting The Two Methods  <a class="anchor" id="sixth-bullet" /><a class="anchor-link" href="#6.-Connecting-The-Two-Methods--">&#182;</a></h2><hr>
+<p>One way we can connect Bayesian methods with the MLE is by choosing a constant prior $C$ or uniform ($U(\theta)$ so long $\theta \, \geq \, \lambda$). Then MAP is the same as the MLE:</p>
 $$ \max_{\lambda} \, P(\lambda \, \vert \, y_1, y_2, \ldots, y_n)
  \; = \; 
 \frac{1}{m(y_1, y_2, \ldots, y_n)} \, \max_{\lambda} \, L(\lambda \, \vert \,  y_1, y_2, \ldots, y_n)
-$$<p>We can show this by choosing the prior as a $U(10)$:</p>
+$$<p>We can show with PyMC3 by choosing the prior as a $U(10)$:</p>
 
 </div>
 </div>
@@ -15347,12 +15359,25 @@ $$<p>We can show this by choosing the prior as a $U(10)$:</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This the the same value as the MLE!</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93von_Mises_theorem">Bernstein-von Miss Theorem</a> shows that in the limit of large data Bayesian estimators and Maximum Likelyhood estimators converge to the same thing.</p>
-<p>In this post I covered maximum likelyhood estimators and Bayesian point estimators on data that was sampled using a Poisson distribution writen in Scala using <a href="https://www.py4j.org/">Py4J</a>.</p>
-<p>I hope you enjoyed it!</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93von_Mises_theorem">Bernstein-von Miss Theorem</a> shows rigorously that in the limit of large data Bayesian estimators and Maximum Likelihood estimators converge to the same thing.</p>
+<h2 id="7.-Conclusions--">7. Conclusions  <a class="anchor" id="seventh-bullet" /><a class="anchor-link" href="#7.-Conclusions--">&#182;</a></h2><p>In this post I discussed frequentist and Bayesian estimation techniques applied to data from a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a> and covered how to quantity the uncertaintity in each method. I showed how to sample a probability distribution written in Scala from Python using <a href="https://www.py4j.org/">Py4J</a>. For frequentist methods I covered <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">maximum likelihood estimation</a>, its convergence and quantifying uncertaintity with confidence intervals using the <a href="https://en.wikipedia.org/wiki/Fisher_information">Fisher information</a>. I also covered using Bayesian estimators using <a href="https://docs.pymc.io/">PyMC3</a> and quantifying their uncertaintity with <a href="https://en.wikipedia.org/wiki/Credible_interval">credible intervals</a> using <a href="https://arviz-devs.github.io/arviz/">ArviZ</a>. Finally we showed the connection between the maximum likelihood esimators and Bayesian estimators by choosing a <a href="https://stats.stackexchange.com/questions/124753/what-are-examples-of-flat-priors#:~:text=The%20term%20%22flat%22%20in%20reference,c%20over%20the%20real%20line.">flat prior</a></p>
+<p>I leared a lot in creating this post and hope you enjoyed it!</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
