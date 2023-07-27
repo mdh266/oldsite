@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-
 <header>
-<div class="nav">
-  <ul>
-    <li class="home"><a href="http://michael-harmon.com">Home</a></li>
-    <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
-    <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
-    <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
-  </ul>
-</div>
+  <div class="nav">
+    <ul>
+      <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+      <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
+      <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
+      <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
+    </ul>
+  </div>
 </header>
 
-<title>PolarsDuckDB</title>
+<title>notebook</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13119,7 +13118,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13137,7 +13136,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[1]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -13351,7 +13350,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># or pd_df.value_counts()</span>
@@ -13367,7 +13366,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -13398,7 +13397,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s2">&quot;counts&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;counts &gt; 0&quot;</span><span class="p">)</span>
@@ -13414,7 +13413,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -13482,8 +13481,8 @@ dtype: int64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Furthermore, <strong>in Pandas there are too many ways to do the same thing.</strong>  In my opinion, in a well designed API this shouldn't be the case. Lastly, in Pandas, window functions, which are incredibly import in SQL are just awkward to write.</p>
-<p>For years I have beening using Spark for large datasets, but for smaller ones sticking with Pandas and making do. Recently though, I heard lots of hype about <a href="https://www.pola.rs/">Polars</a> and <a href="https://duckdb.org/">DuckDB</a> and decide to try them myself and was immediately impressed. In my opinion, Polars is not 100% mature yet, but I still  has a lot of potential, many because for me the API is much more similar to Spark's than Pandas is.</p>
-<p>In this blog post I go over my first interactions with both librarys and call out things I like and dont like, but first let's get set up to run this notebook on an AWS EC2 instance using <a href="https://www.docker.com/">Docker</a>.</p>
+<p>For years I have been using Spark for large datasets, but for smaller ones sticking with Pandas and making do. Recently though, I heard lots of hype about <a href="https://www.pola.rs/">Polars</a> and <a href="https://duckdb.org/">DuckDB</a> and decide to try them myself and was immediately impressed. In my opinion, Polars is not 100% mature yet, but I still  has a lot of potential, many because for me the API is much more similar to Spark's than Pandas is.</p>
+<p>In this blog post I go over my first interactions with both libraries and call out things I like and do not like, but first let's get set up to run this notebook on an AWS EC2 instance using <a href="https://www.docker.com/">Docker</a>.</p>
 
 </div>
 </div>
@@ -13492,7 +13491,7 @@ dtype: int64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Getting-Set-Up-On-AWS-with-Docker-">Getting Set Up On AWS with Docker <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Getting-Set-Up-On-AWS-with-Docker-">&#182;</a></h2><p>I have mostly used <a href="https://cloud.google.com/">Google Cloud</a> for my prior personal projects, but for this project I wanted to use <a href="https://aws.com/">Amazon Web Services</a>. The first thing I do is create an <a href="https://aws.amazon.com/ec2/">Elastic Comppute Cloud 
-(EC2) Instance</a> instance. I do this from the console by signign on to <a href="aws.com">aws.com</a> clicking on ec2, scrolling down and clicking the orange <code>Launch instance</code> button,</p>
+(EC2) Instance</a> instance. I do this from the console by signing on to <a href="aws.com">aws.com</a> clicking on ec2, scrolling down and clicking the orange <code>Launch instance</code> button,</p>
 <p><img src="images/launch.png" alt="images/launch.png"></p>
 <p>Next I have to make sure I create a <code>keypair</code> file called "mikeskey.pem" that I download.</p>
 <p><img src="images/keypair.png" alt="images/keypair.png"></p>
@@ -13522,7 +13521,7 @@ dtype: int64</pre>
 <pre><code>ssh -i &lt;path-to-key&gt;/mikeskey.pem -L 8888:localhost:8888 ec2-user@&lt;dns-address&gt;.compute-1.amazonaws.com
 
 </code></pre>
-<p>Now I can reload the notebook address in my webrowser and viola it works!</p>
+<p>Now I can reload the notebook address in my webbrowser and viola it works!</p>
 
 </div>
 </div>
@@ -13530,7 +13529,7 @@ dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Intro-To-Polars-">Intro To Polars <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#Intro-To-Polars-">&#182;</a></h2><p>Now that we're set up with a notebook on an EC2 isntance we can start to discuss <a href="https://www.pola.rs/">Polars</a> dataframes. The Polars library is written in Rust with Python bindings. Polars uses multi-core processing making it fast and the authors smartly used <a href="https://arrow.apache.org/">Apache Arrow</a> making it efficent for cross-language in-memory dataframes as there is no serialization between the Rust and Python. According to the website the Philosphy of Polars is,</p>
+<h2 id="Intro-To-Polars-">Intro To Polars <a class="anchor" id="third-bullet" /><a class="anchor-link" href="#Intro-To-Polars-">&#182;</a></h2><p>Now that we're set up with a notebook on an EC2 isntance we can start to discuss <a href="https://www.pola.rs/">Polars</a> dataframes. The Polars library is written in Rust with Python bindings. Polars uses multi-core processing making it fast and the authors smartly used <a href="https://arrow.apache.org/">Apache Arrow</a> making it efficient for cross-language in-memory dataframes as there is no serialization between the Rust and Python. According to the website the philosophy of Polars is,</p>
 <p>The goal of Polars is to provide a lightning fast DataFrame library that:</p>
 <ul>
 <li>Utilizes all available cores on your machine.</li>
@@ -13539,14 +13538,14 @@ dtype: int64</pre>
 <li>Has an API that is consistent and predictable.</li>
 <li>Has a strict schema (data-types should be known before running the query).</li>
 </ul>
-<p>Let's get started! We can import polars and read in a dataset from <a href="https://opendata.cityofnewyork.us/">NY Open Data</a> on <a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95">Motor Vechicle Collisions</a> using the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/api/polars.read_csv.html">read_csv</a> function:</p>
+<p>Let's get started! We can import polars and read in a dataset from <a href="https://opendata.cityofnewyork.us/">NY Open Data</a> on <a href="https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95">Motor Vehicle Collisions</a> using the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/api/polars.read_csv.html">read_csv</a> function:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
@@ -13564,7 +13563,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[1]:</div>
 
 
 
@@ -13595,7 +13594,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">schema</span>
@@ -13611,7 +13610,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -13750,7 +13749,7 @@ dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is exactly what I want! I dont want a series (even though Polars does have <a href="https://pola-rs.github.io/polars/py-polars/html/reference/series/index.html">Series</a> data structures). You can even print the dataframes:</p>
+<p>This is exactly what I want! I don't want a series (even though Polars does have <a href="https://pola-rs.github.io/polars/py-polars/html/reference/series/index.html">Series</a> data structures). You can even print the dataframes:</p>
 
 </div>
 </div>
@@ -13802,7 +13801,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">crash_date</span>
@@ -13825,7 +13824,7 @@ dtype: int64</pre>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
+Cell <span class="ansi-green-fg">In[6], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">df</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">crash_date</span>
 
 <span class="ansi-red-fg">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;crash_date&#39;</pre>
@@ -13847,7 +13846,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;crash_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">is_null</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
@@ -13863,7 +13862,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13888,7 +13887,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;crash_date&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># the .loc method doesnt exist!</span>
@@ -13904,7 +13903,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13927,7 +13926,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 <li>The first query extracts the year-month-day and writes it as a string in the format YYYY-MM-DD</li>
 <li>The second query converts the YYYY-MM-DD strings into timestamp objects</li>
 </ol>
-<p>For the first query I can extract the year-month-day from the string and assign that to a new column named <code>crash_date_str</code>. Note the synatx to create a new column in Polars is <a href="https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/api/polars.DataFrame.with_columns.html">with_columns</a> (similar to <a href="https://sparkbyexamples.com/pyspark/pyspark-withcolumn/">withColumn</a> in Spark) and I have to use the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.col.html">col</a> function similar to Spark! I can get the first 10 characters of the stirng using the vectorized <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.html">str method</a> similar to Pandas. Finally, I rename the new column <code>crash_data_str</code> using the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.Expr.alias.html">alias</a> function (again just like Spark). The default for the <code>with_column</code> is to label the new column name the same as the old column name, so we use alias to rename it.</p>
+<p>For the first query I can extract the year-month-day from the string and assign that to a new column named <code>crash_date_str</code>. Note the syntax to create a new column in Polars is <a href="https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/api/polars.DataFrame.with_columns.html">with_columns</a> (similar to <a href="https://sparkbyexamples.com/pyspark/pyspark-withcolumn/">withColumn</a> in Spark) and I have to use the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.col.html">col</a> function similar to Spark! I can get the first 10 characters of the string using the vectorized <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.html">str method</a> similar to Pandas. Finally, I rename the new column <code>crash_data_str</code> using the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.Expr.alias.html">alias</a> function (again just like Spark). The default for the <code>with_column</code> is to label the new column name the same as the old column name, so we use alias to rename it.</p>
 <p>In the second query I use the vectorized string method <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.Expr.str.strptime.html">strptime</a> to convert the <code>crash_date_str</code> column to a PyArrow datetime object and rename that column <code>crash_date</code> (overriding the old column with this name).</p>
 <p>These two queries are chained together and the results are shown below.</p>
 
@@ -13936,7 +13935,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
@@ -13946,7 +13945,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
                 <span class="n">pl</span><span class="o">.</span><span class="n">Datetime</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;crash_date&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">&quot;crash_date&quot;</span><span class="p">,</span> <span class="s2">&quot;crash_date_str&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13959,7 +13958,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13970,11 +13969,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
   text-align: right;
 }
 </style>
-<small>shape: (5, 30)</small><table border="1" class="dataframe"><thead><tr><th>crash_date</th><th>crash_time</th><th>borough</th><th>zip_code</th><th>latitude</th><th>longitude</th><th>location</th><th>on_street_name</th><th>off_street_name</th><th>cross_street_name</th><th>number_of_persons_injured</th><th>number_of_persons_killed</th><th>number_of_pedestrians_injured</th><th>number_of_pedestrians_killed</th><th>number_of_cyclist_injured</th><th>number_of_cyclist_killed</th><th>number_of_motorist_injured</th><th>number_of_motorist_killed</th><th>contributing_factor_vehicle_1</th><th>contributing_factor_vehicle_2</th><th>contributing_factor_vehicle_3</th><th>contributing_factor_vehicle_4</th><th>contributing_factor_vehicle_5</th><th>collision_id</th><th>vehicle_type_code1</th><th>vehicle_type_code2</th><th>vehicle_type_code_3</th><th>vehicle_type_code_4</th><th>vehicle_type_code_5</th><th>crash_date_str</th></tr><tr><td>datetime[μs]</td><td>str</td><td>str</td><td>i64</td><td>f64</td><td>f64</td><td>str</td><td>str</td><td>str</td><td>str</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>str</td><td>str</td><td>str</td><td>str</td><td>str</td><td>i64</td><td>str</td><td>str</td><td>str</td><td>str</td><td>str</td><td>str</td></tr></thead><tbody><tr><td>2021-09-11 00:00:00</td><td>&quot;2:39&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;WHITESTONE EXP…</td><td>&quot;20 AVENUE&quot;</td><td>null</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>&quot;Aggressive Dri…</td><td>&quot;Unspecified&quot;</td><td>null</td><td>null</td><td>null</td><td>4455765</td><td>&quot;Sedan&quot;</td><td>&quot;Sedan&quot;</td><td>null</td><td>null</td><td>null</td><td>&quot;2021-09-11&quot;</td></tr><tr><td>2022-03-26 00:00:00</td><td>&quot;11:45&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;QUEENSBORO BRI…</td><td>null</td><td>null</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>&quot;Pavement Slipp…</td><td>null</td><td>null</td><td>null</td><td>null</td><td>4513547</td><td>&quot;Sedan&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;2022-03-26&quot;</td></tr><tr><td>2022-06-29 00:00:00</td><td>&quot;6:55&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;THROGS NECK BR…</td><td>null</td><td>null</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>&quot;Following Too …</td><td>&quot;Unspecified&quot;</td><td>null</td><td>null</td><td>null</td><td>4541903</td><td>&quot;Sedan&quot;</td><td>&quot;Pick-up Truck&quot;</td><td>null</td><td>null</td><td>null</td><td>&quot;2022-06-29&quot;</td></tr><tr><td>2021-09-11 00:00:00</td><td>&quot;9:35&quot;</td><td>&quot;BROOKLYN&quot;</td><td>11208</td><td>40.667202</td><td>-73.8665</td><td>&quot;
-,  
-(40.66720…</td><td>null</td><td>null</td><td>&quot;1211      LORI…</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>&quot;Unspecified&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>4456314</td><td>&quot;Sedan&quot;</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;2021-09-11&quot;</td></tr><tr><td>2021-12-14 00:00:00</td><td>&quot;8:13&quot;</td><td>&quot;BROOKLYN&quot;</td><td>11233</td><td>40.683304</td><td>-73.917274</td><td>&quot;
-,  
-(40.68330…</td><td>&quot;SARATOGA AVENU…</td><td>&quot;DECATUR STREET…</td><td>null</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>4486609</td><td>null</td><td>null</td><td>null</td><td>null</td><td>null</td><td>&quot;2021-12-14&quot;</td></tr></tbody></table></div>
+<small>shape: (5, 2)</small><table border="1" class="dataframe"><thead><tr><th>crash_date</th><th>crash_date_str</th></tr><tr><td>datetime[μs]</td><td>str</td></tr></thead><tbody><tr><td>2021-09-11 00:00:00</td><td>&quot;2021-09-11&quot;</td></tr><tr><td>2022-03-26 00:00:00</td><td>&quot;2022-03-26&quot;</td></tr><tr><td>2022-06-29 00:00:00</td><td>&quot;2022-06-29&quot;</td></tr><tr><td>2021-09-11 00:00:00</td><td>&quot;2021-09-11&quot;</td></tr><tr><td>2021-12-14 00:00:00</td><td>&quot;2021-12-14&quot;</td></tr></tbody></table></div>
 </div>
 
 </div>
@@ -13998,10 +13993,10 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14014,20 +14009,25 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (6, 2)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>count</th></tr><tr><td>str</td><td>u32</td></tr></thead><tbody><tr><td>&quot;BROOKLYN&quot;</td><td>247</td></tr><tr><td>&quot;MANHATTAN&quot;</td><td>98</td></tr><tr><td>null</td><td>367</td></tr><tr><td>&quot;QUEENS&quot;</td><td>154</td></tr><tr><td>&quot;STATEN ISLAND&quot;</td><td>27</td></tr><tr><td>&quot;BRONX&quot;</td><td>107</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (6, 2)
+┌───────────────┬───────┐
+│ borough       ┆ count │
+│ ---           ┆ ---   │
+│ str           ┆ u32   │
+╞═══════════════╪═══════╡
+│ MANHATTAN     ┆ 98    │
+│ STATEN ISLAND ┆ 27    │
+│ BROOKLYN      ┆ 247   │
+│ BRONX         ┆ 107   │
+│ null          ┆ 367   │
+│ QUEENS        ┆ 154   │
+└───────────────┴───────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14044,7 +14044,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">nn_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
@@ -14065,10 +14065,12 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
+        <span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14081,20 +14083,24 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 1)</small><table border="1" class="dataframe"><thead><tr><th>borough</th></tr><tr><td>str</td></tr></thead><tbody><tr><td>&quot;BRONX&quot;</td></tr><tr><td>&quot;BROOKLYN&quot;</td></tr><tr><td>&quot;QUEENS&quot;</td></tr><tr><td>&quot;MANHATTAN&quot;</td></tr><tr><td>&quot;STATEN ISLAND&quot;</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (5, 1)
+┌───────────────┐
+│ borough       │
+│ ---           │
+│ str           │
+╞═══════════════╡
+│ STATEN ISLAND │
+│ MANHATTAN     │
+│ QUEENS        │
+│ BRONX         │
+│ BROOKLYN      │
+└───────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14111,10 +14117,11 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+ <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
    <span class="o">.</span><span class="n">select</span><span class="p">([</span>
        <span class="s2">&quot;borough&quot;</span><span class="p">,</span> 
        <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;number_of_persons_injured&quot;</span><span class="p">)</span>  <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;number_of_persons_injured_plus1&quot;</span><span class="p">)</span>
@@ -14132,20 +14139,24 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 2)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>number_of_persons_injured_plus1</th></tr><tr><td>str</td><td>i64</td></tr></thead><tbody><tr><td>&quot;BROOKLYN&quot;</td><td>1</td></tr><tr><td>&quot;BROOKLYN&quot;</td><td>1</td></tr><tr><td>&quot;BRONX&quot;</td><td>3</td></tr><tr><td>&quot;BROOKLYN&quot;</td><td>1</td></tr><tr><td>&quot;MANHATTAN&quot;</td><td>1</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (5, 2)
+┌───────────┬─────────────────────────────────┐
+│ borough   ┆ number_of_persons_injured_plus1 │
+│ ---       ┆ ---                             │
+│ str       ┆ i64                             │
+╞═══════════╪═════════════════════════════════╡
+│ BROOKLYN  ┆ 1                               │
+│ BROOKLYN  ┆ 1                               │
+│ BRONX     ┆ 3                               │
+│ BROOKLYN  ┆ 1                               │
+│ MANHATTAN ┆ 1                               │
+└───────────┴─────────────────────────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14162,7 +14173,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">pd_df</span><span class="p">[</span><span class="o">~</span><span class="n">pd_df</span><span class="p">[</span><span class="s2">&quot;borough&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
@@ -14182,7 +14193,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -14264,7 +14275,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">borough_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -14325,10 +14336,11 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+ <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not_null</span><span class="p">())</span>
    <span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">&quot;borough&quot;</span><span class="p">,</span> <span class="s2">&quot;number_of_persons_injured&quot;</span><span class="p">])</span>
    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span>
    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -14351,20 +14363,24 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 2)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>injuries_per_population</th></tr><tr><td>str</td><td>f64</td></tr></thead><tbody><tr><td>&quot;BRONX&quot;</td><td>0.000033</td></tr><tr><td>&quot;BROOKLYN&quot;</td><td>0.000045</td></tr><tr><td>&quot;MANHATTAN&quot;</td><td>0.000025</td></tr><tr><td>&quot;QUEENS&quot;</td><td>0.000193</td></tr><tr><td>&quot;STATEN ISLAND&quot;</td><td>0.000007</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (5, 2)
+┌───────────────┬─────────────────────────┐
+│ borough       ┆ injuries_per_population │
+│ ---           ┆ ---                     │
+│ str           ┆ f64                     │
+╞═══════════════╪═════════════════════════╡
+│ BRONX         ┆ 0.000033                │
+│ BROOKLYN      ┆ 0.000045                │
+│ MANHATTAN     ┆ 0.000025                │
+│ QUEENS        ┆ 0.000193                │
+│ STATEN ISLAND ┆ 0.000007                │
+└───────────────┴─────────────────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14383,7 +14399,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ctx</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">SQLContext</span><span class="p">(</span><span class="n">crashes</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
@@ -14404,7 +14420,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">daily_df</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -14422,7 +14438,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 <span class="s2">        borough, day</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
 
-<span class="n">daily_df</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">daily_df</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14435,20 +14451,24 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 3)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>day</th><th>number_of_persons_injured</th></tr><tr><td>str</td><td>datetime[μs]</td><td>i64</td></tr></thead><tbody><tr><td>&quot;BRONX&quot;</td><td>2021-02-26 00:00:00</td><td>0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-06 00:00:00</td><td>0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-08 00:00:00</td><td>0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-10 00:00:00</td><td>4</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-11 00:00:00</td><td>0</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (5, 3)
+┌─────────┬─────────────────────┬───────────────────────────┐
+│ borough ┆ day                 ┆ number_of_persons_injured │
+│ ---     ┆ ---                 ┆ ---                       │
+│ str     ┆ datetime[μs]        ┆ i64                       │
+╞═════════╪═════════════════════╪═══════════════════════════╡
+│ BRONX   ┆ 2021-02-26 00:00:00 ┆ 0                         │
+│ BRONX   ┆ 2021-04-06 00:00:00 ┆ 0                         │
+│ BRONX   ┆ 2021-04-08 00:00:00 ┆ 0                         │
+│ BRONX   ┆ 2021-04-10 00:00:00 ┆ 4                         │
+│ BRONX   ┆ 2021-04-11 00:00:00 ┆ 0                         │
+└─────────┴─────────────────────┴───────────────────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14466,7 +14486,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">daily_df</span><span class="p">)</span>
@@ -14505,7 +14525,7 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To get back a Polars dataframe from this result I would have to use the <code>eager=True</code> paramater in the execute method.</p>
+<p>To get back a Polars dataframe from this result I would have to use the <code>eager=True</code> parameter in the execute method.</p>
 <p>I can register this new dataframe as a table called <code>daily_crashes</code> in the SQLContext:</p>
 
 </div>
@@ -14513,7 +14533,7 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;daily_crashes&quot;</span><span class="p">,</span> <span class="n">daily_df</span><span class="p">)</span>
@@ -14534,7 +14554,7 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ctx</span><span class="o">.</span><span class="n">tables</span><span class="p">()</span>
@@ -14550,7 +14570,7 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[32]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -14568,14 +14588,14 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now say I want to get the current day's number of injuried people and the prior days; I could use the <a href="https://www.sqlshack.com/sql-lag-function-overview-and-examples/">lag</a> function in SQL to do so:</p>
+<p>Now say I want to get the current day's number of injured people and the prior days; I could use the <a href="https://www.sqlshack.com/sql-lag-function-overview-and-examples/">lag</a> function in SQL to do so:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ctx</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -14613,7 +14633,7 @@ SORT BY [col(&#34;borough&#34;), col(&#34;day&#34;)]
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">InvalidOperationError</span>                     Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[48], line 1</span>
+Cell <span class="ansi-green-fg">In[26], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">ctx</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">execute</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-yellow-bg" style="color: rgb(175,0,0)">    SELECT</span>
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-yellow-bg" style="color: rgb(175,0,0)">        borough,</span>
@@ -14653,7 +14673,219 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I finally hit snag in Polars: their doesnt seem to be a lot of support for Window functions. This was dissapointing since the library was so promising!</p>
+<p>I finally hit snag in Polars: their doesnt seem to be a lot of support for Window functions. This was initially disappointing since the library was so promising!</p>
+<p>Upon further research I found window functions are supported, infact they are <a href="https://pola-rs.github.io/polars-book/user-guide/expressions/window/"><strong>VERY WELL supported!</strong></a>. The query I was trying to turns out to be fairly easy to write as dataframe operations using the <a href="https://pola-rs.github.io/polars/py-polars/html/reference/expressions/api/polars.Expr.over.html">over</a> expression. This is exactly the same as SQL where the column names within the <code>over(...)</code> operator are the columns you partition by. You can the sort within each partition (or group as they say in Polars) and use shift instead of LAG:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">daily_df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;number_of_persons_injured&quot;</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">sort_by</span><span class="p">(</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;prior_day_injured&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (8, 4)
+┌─────────┬─────────────────────┬───────────────────────────┬───────────────────┐
+│ borough ┆ day                 ┆ number_of_persons_injured ┆ prior_day_injured │
+│ ---     ┆ ---                 ┆ ---                       ┆ ---               │
+│ str     ┆ datetime[μs]        ┆ i64                       ┆ i64               │
+╞═════════╪═════════════════════╪═══════════════════════════╪═══════════════════╡
+│ BRONX   ┆ 2021-02-26 00:00:00 ┆ 0                         ┆ null              │
+│ BRONX   ┆ 2021-04-06 00:00:00 ┆ 0                         ┆ 0                 │
+│ BRONX   ┆ 2021-04-08 00:00:00 ┆ 0                         ┆ 0                 │
+│ BRONX   ┆ 2021-04-10 00:00:00 ┆ 4                         ┆ 0                 │
+│ BRONX   ┆ 2021-04-11 00:00:00 ┆ 0                         ┆ 4                 │
+│ BRONX   ┆ 2021-04-12 00:00:00 ┆ 0                         ┆ 0                 │
+│ BRONX   ┆ 2021-04-13 00:00:00 ┆ 3                         ┆ 0                 │
+│ BRONX   ┆ 2021-04-14 00:00:00 ┆ 3                         ┆ 3                 │
+└─────────┴─────────────────────┴───────────────────────────┴───────────────────┘
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It turns out you can do the same thing with Pandas as shown below.</p>
+<p>Note that I have to collect the lazy datafame and convert it to Pandas first:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_daily_df</span> <span class="o">=</span> <span class="n">daily_df</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_daily_df</span> <span class="o">=</span> <span class="n">pd_daily_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">prior_day_injured</span><span class="o">=</span>
+                        <span class="n">pd_daily_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                          <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;borough&#39;</span><span class="p">])</span>
+                          <span class="p">[</span><span class="s1">&#39;number_of_persons_injured&#39;</span><span class="p">]</span>
+                          <span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">pd_daily_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[54]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>borough</th>
+      <th>day</th>
+      <th>number_of_persons_injured</th>
+      <th>prior_day_injured</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>BRONX</td>
+      <td>2021-02-26</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRONX</td>
+      <td>2021-04-06</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>BRONX</td>
+      <td>2021-04-08</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>BRONX</td>
+      <td>2021-04-10</td>
+      <td>4</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>BRONX</td>
+      <td>2021-04-11</td>
+      <td>0</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>BRONX</td>
+      <td>2021-04-12</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>BRONX</td>
+      <td>2021-04-13</td>
+      <td>3</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>BRONX</td>
+      <td>2021-04-14</td>
+      <td>3</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Syntactically, I still perfer the Polars to Pandas.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But let's I really want to use SQL and not do things in the dataframe, atleast to me, it doesnt seem possible with Polars.</p>
 <p>Luckily there is another library that support blazingly fast SQL queries and integrates with Polars (and Pandas) directly: DuckDB.</p>
 
 </div>
@@ -14684,7 +14916,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">duckdb</span>
@@ -14723,7 +14955,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span>
@@ -14739,7 +14971,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[50]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -14773,11 +15005,11 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">day_prior_df</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">pl</span><span class="p">()</span>
-<span class="n">day_prior_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">day_prior_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -14790,20 +15022,24 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[51]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 4)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>day</th><th>number_of_persons_injured</th><th>prior_day_injured</th></tr><tr><td>str</td><td>datetime[μs]</td><td>i64</td><td>i32</td></tr></thead><tbody><tr><td>&quot;BRONX&quot;</td><td>2022-04-24 00:00:00</td><td>0</td><td>1</td></tr><tr><td>&quot;BRONX&quot;</td><td>2022-03-26 00:00:00</td><td>7</td><td>1</td></tr><tr><td>&quot;BRONX&quot;</td><td>2022-03-25 00:00:00</td><td>1</td><td>1</td></tr><tr><td>&quot;BRONX&quot;</td><td>2022-03-24 00:00:00</td><td>1</td><td>1</td></tr><tr><td>&quot;BRONX&quot;</td><td>2022-03-22 00:00:00</td><td>1</td><td>1</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (5, 4)
+┌─────────┬─────────────────────┬───────────────────────────┬───────────────────┐
+│ borough ┆ day                 ┆ number_of_persons_injured ┆ prior_day_injured │
+│ ---     ┆ ---                 ┆ ---                       ┆ ---               │
+│ str     ┆ datetime[μs]        ┆ i64                       ┆ i32               │
+╞═════════╪═════════════════════╪═══════════════════════════╪═══════════════════╡
+│ BRONX   ┆ 2022-04-24 00:00:00 ┆ 0                         ┆ 1                 │
+│ BRONX   ┆ 2022-03-26 00:00:00 ┆ 7                         ┆ 1                 │
+│ BRONX   ┆ 2022-03-25 00:00:00 ┆ 1                         ┆ 1                 │
+│ BRONX   ┆ 2022-03-24 00:00:00 ┆ 1                         ┆ 1                 │
+│ BRONX   ┆ 2022-03-22 00:00:00 ┆ 1                         ┆ 1                 │
+└─────────┴─────────────────────┴───────────────────────────┴───────────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -14821,7 +15057,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">daily_df</span>
@@ -14837,7 +15073,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[52]:</div>
+    <div class="prompt output_prompt">Out[29]:</div>
 
 
 
@@ -14863,7 +15099,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">daily_df</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span><span class="o">.</span><span class="n">write_parquet</span><span class="p">(</span><span class="s2">&quot;daily_crashes.parquet&quot;</span><span class="p">)</span>
@@ -14877,14 +15113,14 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://parquet.apache.org/">Apache Parquet</a> is a compressed columnar-stored file format that is great for analytical queries. Column-based formats are particuarly good for <a href="https://aws.amazon.com/what-is/olap/">OLAP</a> queries since  columns can subsetted and be read in continuously allowing for aggregrations to be easily performed on them. The datatypes for each column in Parquet are known which allows the format to be compressed. Since the columns and datatypes are known metadata we can read them in with the following query:</p>
+<p><a href="https://parquet.apache.org/">Apache Parquet</a> is a compressed columnar-stored file format that is great for analytical queries. Column-based formats are particularly good for <a href="https://aws.amazon.com/what-is/olap/">OLAP</a> queries since columns can subsetted and be read in continuously allowing for aggregations to be easily performed on them. The datatypes for each column in Parquet are known which allows the format to be compressed. Since the columns and datatypes are known metadata we can read them in with the following query:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">duckdb</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM parquet_schema(daily_crashes.parquet)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pl</span><span class="p">()</span>
@@ -14900,7 +15136,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[65]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -14930,7 +15166,7 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
@@ -14958,10 +15194,10 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query</span><span class="o">.</span><span class="n">pl</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">pl</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -14974,20 +15210,27 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[73]:</div>
+    <div class="prompt"></div>
 
 
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (10, 4)</small><table border="1" class="dataframe"><thead><tr><th>borough</th><th>day</th><th>number_of_persons_injured</th><th>cumulative_injuried</th></tr><tr><td>str</td><td>datetime[μs]</td><td>i64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;BRONX&quot;</td><td>2021-02-26 00:00:00</td><td>0</td><td>0.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-06 00:00:00</td><td>0</td><td>0.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-08 00:00:00</td><td>0</td><td>0.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-10 00:00:00</td><td>4</td><td>4.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-11 00:00:00</td><td>0</td><td>4.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-12 00:00:00</td><td>0</td><td>4.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-13 00:00:00</td><td>3</td><td>7.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-14 00:00:00</td><td>3</td><td>10.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-15 00:00:00</td><td>4</td><td>14.0</td></tr><tr><td>&quot;BRONX&quot;</td><td>2021-04-16 00:00:00</td><td>6</td><td>20.0</td></tr></tbody></table></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>shape: (8, 4)
+┌─────────┬─────────────────────────┬───────────────────────────┬─────────────────────┐
+│ borough ┆ day                     ┆ number_of_persons_injured ┆ cumulative_injuried │
+│ ---     ┆ ---                     ┆ ---                       ┆ ---                 │
+│ str     ┆ str                     ┆ i64                       ┆ f64                 │
+╞═════════╪═════════════════════════╪═══════════════════════════╪═════════════════════╡
+│ BRONX   ┆ 2021-02-26T00:00:00.000 ┆ 0                         ┆ 0.0                 │
+│ BRONX   ┆ 2021-04-06T00:00:00.000 ┆ 0                         ┆ 0.0                 │
+│ BRONX   ┆ 2021-04-08T00:00:00.000 ┆ 0                         ┆ 0.0                 │
+│ BRONX   ┆ 2021-04-10T00:00:00.000 ┆ 4                         ┆ 4.0                 │
+│ BRONX   ┆ 2021-04-11T00:00:00.000 ┆ 0                         ┆ 4.0                 │
+│ BRONX   ┆ 2021-04-12T00:00:00.000 ┆ 0                         ┆ 4.0                 │
+│ BRONX   ┆ 2021-04-13T00:00:00.000 ┆ 3                         ┆ 7.0                 │
+│ BRONX   ┆ 2021-04-14T00:00:00.000 ┆ 3                         ┆ 10.0                │
+└─────────┴─────────────────────────┴───────────────────────────┴─────────────────────┘
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -15013,12 +15256,12 @@ File <span class="ansi-green-fg">/opt/conda/lib/python3.10/site-packages/polars/
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this post I quickly covered what I view as the limitations of Pandas library. Next I covered how to get set up in with 
-Juptyer lab using <a href="https://www.docker.com/">Docker</a> on <a href="https://aws.amazon.com/">AWS</a> and covered some basics of <a href="https://www.pola.rs/">Polars</a>, <a href="https://duckdb.org/">DuckDB</a> and how to use the two in combination. The benefits of Polars is that,</p>
+Jupyter lab using <a href="https://www.docker.com/">Docker</a> on <a href="https://aws.amazon.com/">AWS</a> and covered some basics of <a href="https://www.pola.rs/">Polars</a>, <a href="https://duckdb.org/">DuckDB</a> and how to use the two in combination. The benefits of Polars is that,</p>
 <ul>
 <li>It allows for fast parallel querying on dataframes.</li>
 <li>It uses Apache Arrow for backend datatypes making it memory efficient.</li>
 <li>It has both lazy and eager execution mode.</li>
-<li>It allows for SQL queries direcly on dataframes.</li>
+<li>It allows for SQL queries directly on dataframes.</li>
 <li>Its API is similar to Spark's API and allows for highly readable queries using method chaining.</li>
 </ul>
 <p>I am still new to both libraries, but looking forward to learning more about them.</p>
