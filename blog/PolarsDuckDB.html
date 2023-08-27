@@ -11,8 +11,7 @@
     </ul>
   </div>
 </header>
-
-<title>notebook</title>
+<title>PolarsDuckDB</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13118,7 +13117,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -13136,7 +13135,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[1]:</div>
 
 
 
@@ -13350,7 +13349,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># or pd_df.value_counts()</span>
@@ -13366,7 +13365,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -13397,7 +13396,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s2">&quot;counts&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;counts &gt; 0&quot;</span><span class="p">)</span>
@@ -13413,7 +13412,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13490,22 +13489,40 @@ dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Getting-Set-Up-On-AWS-with-Docker-">Getting Set Up On AWS with Docker <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Getting-Set-Up-On-AWS-with-Docker-">&#182;</a></h2><p>I have mostly used <a href="https://cloud.google.com/">Google Cloud</a> for my prior personal projects, but for this project I wanted to use <a href="https://aws.com/">Amazon Web Services</a>. The first thing I do is create an <a href="https://aws.amazon.com/ec2/">Elastic Comppute Cloud 
-(EC2) Instance</a> instance. I do this from the console by signing on to <a href="aws.com">aws.com</a> clicking on ec2, scrolling down and clicking the orange <code>Launch instance</code> button,</p>
+<h2 id="Getting-Set-Up-On-AWS-with-Docker-">Getting Set Up On AWS with Docker <a class="anchor" id="second-bullet" /><a class="anchor-link" href="#Getting-Set-Up-On-AWS-with-Docker-">&#182;</a></h2><p>I have mostly used <a href="https://cloud.google.com/">Google Cloud</a> for my prior personal projects, but for this project I wanted to use <a href="https://aws.com/">Amazon Web Services</a>. The first thing I do is create a <a href="https://aws.amazon.com/s3/">S3 bucket</a>. I do this from the console by signing on to <a href="aws.com">aws.com</a> and going to the S3 page:</p>
+<p><img src="images/s3.png" alt="images/s3.png"></p>
+<p>I can click the <code>Create bucket</code> button and create a bucket called <code>harmonskis</code> (for funskis) with all the default settings and click the<code>Create bucket</code> button on the bottom right side.</p>
+<p>Next I need to have access to read and write to and from the S3 bucket so I create an <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html">IAM role</a> to do so. Going to the signin dashboard I can search for "IAM" and click on the link. This takes me to another site where selecting the "Roles" link in the the "Access Management" drop down on the left hand side takes me to the following:</p>
+<p><img src="images/IAM.png" alt="IAM.png"></p>
+<p>I can click create the <code>Create role</code> button on the top right that takes me to the page:</p>
+<p><img src="images/ec2-role.png" alt="create_role"></p>
+<p>I keep the selection of "AWS Service", select the "ec2" option and then click the <code>Next</code> button on the bottom right. This takes me to a page where I can create a policy. Searching for "s3" I select the following policy that gives me read/write access:</p>
+<p><img src="images/create_policy.png" alt="create_policy.png"></p>
+<p>I then click the <code>Next</code> button in the bottom right which takes me to the final page:</p>
+<p><img src="images/role.png" alt="final_role.png"></p>
+<p>I give the role the name "s3acess" (spelling isnt my best skill) and then click <code>Create role</code> in the bottom right.</p>
+<p>Next I will create my <a href="https://aws.amazon.com/ec2/">Elastic Compute Cloud 
+(EC2) Instance</a> instance by going to the console again and clicking on ec2, scrolling down and clicking the orange <code>Launch instance</code> button,</p>
 <p><img src="images/launch.png" alt="images/launch.png"></p>
 <p>Next I have to make sure I create a <code>keypair</code> file called "mikeskey.pem" that I download.</p>
 <p><img src="images/keypair.png" alt="images/keypair.png"></p>
-<p>Notice that in the security group I use allows SSH traffic from "Anywhere".</p>
+<p>Notice that in the security group I use allows SSH traffic from "Anywhere". Finally, under the "Advanced details" drop down I select "s3acess" (I'm living with my spelling mistake) from the "IAM instance policy":</p>
+<p><img src="images/s3access.png" alt="images/s3acess.png"></p>
 <p>Once I launch the EC2 instance I can see the instance running and click on <code>Instance ID</code> as shown below:</p>
 <p><img src="images/instance.png" alt="images/instance.png"></p>
 <p>I can then click on the pop up choice of <code>Connect</code>. This takes me to another page where I get the command at the bottom of the page to SSH onto my machine using the keypair I created:</p>
 <p><img src="images/connect.png" alt="images/connect.png"></p>
-<p>Next I can open up a terminal from my Macbook and run:</p>
+<p>I could ssh onto the server with the following command:</p>
 
 <pre><code>ssh -i &lt;path-to-key&gt;/mikeskey.pem ec2-user@&lt;dns-address&gt;.compute-1.amazonaws.com
 
 </code></pre>
 <p>Note that I didnt create a user name so it defaulted to <code>ec2-user</code>.</p>
+<p>However, since I'll be running jupyter lab on a remote EC2 server I need to set up <a href="https://linuxize.com/post/how-to-setup-ssh-tunneling/">ssh-tunneling</a> as described <a href="https://towardsdatascience.com/setting-up-and-using-jupyter-notebooks-on-aws-61a9648db6c5">here</a> so that I can access it from the web browser on my laptop. I can do this by running the command:</p>
+
+<pre><code>ssh -i &lt;path-to-key&gt;/mikeskey.pem -L 8888:localhost:8888 ec2-user@&lt;dns-address&gt;.compute-1.amazonaws.com
+
+</code></pre>
 <p>Next I set up git ssh-keys so I could develop on the instance as described <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a> and clone the repo. I can then set up Docker as discussed <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-container-image.html">here</a>. Then I build the image and call it <code>polars_nb</code>:</p>
 
 <pre><code>sudo docker build -t polars_nb . 
@@ -13516,12 +13533,7 @@ dtype: int64</pre>
 <pre><code>sudo docker run -ip 8888:8888 -v `pwd`:/home/jovyan/ -t polars_nb
 
 </code></pre>
-<p>The terminal shows a link that I can copy and paste into my webbrowser, but at this stage it wont work. Since Jupyter is running on a remote EC2 server I need to set up <a href="https://linuxize.com/post/how-to-setup-ssh-tunneling/">ssh-tunneling</a> as described <a href="https://towardsdatascience.com/setting-up-and-using-jupyter-notebooks-on-aws-61a9648db6c5">here</a>. I can do this using by opening a new terminal on my Mac and running the command:</p>
-
-<pre><code>ssh -i &lt;path-to-key&gt;/mikeskey.pem -L 8888:localhost:8888 ec2-user@&lt;dns-address&gt;.compute-1.amazonaws.com
-
-</code></pre>
-<p>Now I can reload the notebook address in my webbrowser and viola it works!</p>
+<p>The terminal shows a link that I can copy and paste into my webbrowser, I make sure to copy the one with the 127 in it and viola it works!</p>
 
 </div>
 </div>
@@ -13545,7 +13557,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
@@ -13563,7 +13575,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[1]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13594,7 +13606,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">schema</span>
@@ -13610,7 +13622,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13664,7 +13676,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;collision_id&quot;</span><span class="p">)</span>
@@ -13684,7 +13696,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13715,7 +13727,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -13731,7 +13743,7 @@ dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13756,7 +13768,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -13801,7 +13813,7 @@ dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">crash_date</span>
@@ -13824,7 +13836,7 @@ dtype: int64</pre>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[6], line 1</span>
+Cell <span class="ansi-green-fg">In[8], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">df</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">crash_date</span>
 
 <span class="ansi-red-fg">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;crash_date&#39;</pre>
@@ -14275,7 +14287,7 @@ Cell <span class="ansi-green-fg">In[6], line 1</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">borough_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -14324,7 +14336,49 @@ Cell <span class="ansi-green-fg">In[6], line 1</span>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is the population and area of the boroughs which I got from Wikipedia. We'll use it to go over a more complicated query:</p>
+<p>This is the population and area of the boroughs which I got from Wikipedia. I'll save it to s3. It was a little awkward to write to s3 with Polars directly so I'll first convert the dataframe to Pandas and then write to s3:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">borough_df</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s2">&quot;s3://harmonskis/nyc_populations.parquet&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>However, reading from s3 is just the same as with Pandas:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">borough_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;s3://harmonskis/nyc_populations.parquet&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We'll use it to go over a more complicated query:</p>
 
 <pre><code>Get the total number of injuries per borough then join that result to the borough dataframe to get the injuries by population and finally sort them by borough name.
 
