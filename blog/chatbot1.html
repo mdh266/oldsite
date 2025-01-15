@@ -2010,7 +2010,7 @@ pre {
  font-size: 12.0pt;
  line-height: 1.42857143;
  color: #cdd2e9;
- /* background-color: #252e3a; */
+ background-color: ##cdd2e9;
  border: 1px solid #252e3a;
  border-radius: 2px;
 }
@@ -11567,8 +11567,8 @@ So, x + 3 is equal to 12.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In order to make an app that an end user can chat with using speech, we need to use <a href="https://cloud.google.com/speech-to-text?hl=en">Speech-To-Text</a> to convert the end users audio into text that can be feed into the <code>ask_question</code> function above.</p>
-<p>The resulting response from the LLM can be converted into an audio reply using <a href="https://cloud.google.com/text-to-speech?hl=en">Text-To-Speech</a> and played back to the end users. There are  actually pretty straight forward using the Google Cloud API. I will just reference the code I wrote, <a href="../src/utils.py">speech_to_text</a> and <a href="../src/utils.py">text_to_speech</a> and note that there are <a href="https://cloud.google.com/text-to-speech/docs/voices">plently of languages</a> that Google supports!</p>
+<p>In order to make an app that an end user can chat with using speech, we need to use <a href="https://cloud.google.com/speech-to-text?hl=en">Speech-To-Text</a> to convert the end users audio into text that can be feed into the <a href="https://github.com/mdh266/speech-chatbot/blob/main/src/utils.py#L45">ask_question</a> function above.</p>
+<p>The resulting response from the LLM can be converted into an audio reply using <a href="https://cloud.google.com/text-to-speech?hl=en">Text-To-Speech</a> and played back to the end users. There are  actually pretty straight forward using the Google Cloud API. I will just reference the code I wrote, <a href="https://github.com/mdh266/speech-chatbot/blob/main/src/utils.py#L136">speech_to_text</a> and <a href="https://github.com/mdh266/speech-chatbot/blob/main/src/utils.py#L111">text_to_speech</a> and note that there are <a href="https://cloud.google.com/text-to-speech/docs/voices">plently of languages</a> that Google supports!</p>
 <p>The one tricky part is setting up the API keys to be able to use these capabilities. The first step is to enable the <a href="https://cloud.google.com/speech-to-text?hl=en">Speech-To-Text</a> and the <a href="https://cloud.google.com/text-to-speech?hl=en">Text-To-Speech</a> services on your account. Next you will need to create an API key that you can use to access them. You can go to your console then select "APIs &amp; Services" -&gt; "Enabled APIs &amp; services" as shown below:</p>
 <p><img alt="drawing" src="images/gcp_api_1.png" width="500"/></p>
 <p>Then on the left sidebar select the "Credentials" tab, then on the top click "Create Credentials" and select "API key" from the drop down,</p>
@@ -11599,7 +11599,7 @@ So, x + 3 is equal to 12.
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Now in order to make an app that people can interact with we need to create a front end. In the past I have done this more or less by hand using <a href="http://michael-harmon.com/CrimeTime/">Flask</a> and <a href="https://github.com/mdh266/TextClassificationApp">FastAPI</a>. Nowdays many people use <a href="https://streamlit.io/">Streamlit</a> to create apps which is <em>MUCH</em> easier!</p>
-<p>My Streamlit app is written module <a href="../src/main.py">main.py</a> and uses the <a href="https://docs.streamlit.io/develop/api-reference/widgets/st.audio_input">audio_input</a> function to capture the end users questions and uses the <code>speech_to_text</code> function to convert the audio to text. Before the question is sent to the <code>ask_question</code> function above I use the following function to convert the history of chats into list of tuples as shown above,</p>
+<p>My Streamlit app is written module <a href="https://github.com/mdh266/speech-chatbot/blob/main/src/main.py">main.py</a> and uses the <a href="https://docs.streamlit.io/develop/api-reference/widgets/st.audio_input">audio_input</a> function to capture the end users questions and uses the <code>speech_to_text</code> function to convert the audio to text. Before the question is sent to the <code>ask_question</code> function above I use the following function to convert the history of chats into list of tuples as shown above,</p>
 </div>
 </div>
 </div>
