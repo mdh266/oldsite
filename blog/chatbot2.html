@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 
-<header>
-  <div class="nav">
-    <ul>
-      <li class="home"><a href="http://michael-harmon.com">Home</a></li>
-      <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
-      <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
-      <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
-    </ul>
-  </div>
+<div class="nav">
+  <ul>
+    <li class="home"><a href="http://michael-harmon.com">Home</a></li>
+    <li class="blog"><a href="http://michael-harmon.com/blog/index.html">Blog</a></li>
+    <li class="LinkedIn"><a href="https://linkedin.com/in/michaeldavidharmon">LinkedIn</a></li>
+    <li class="GitHub"><a href="https://github.com/mdh266/">GitHub</a></li>
+  </ul>
+</div>
 </header>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
@@ -10881,7 +10880,7 @@ ENTRYPOINT ["/app/entrypoint.sh"]</code></pre>
     .github/workflows/docker-build.yaml</code></pre>
 <p>This action will run on the any push to the main branch. On action kicks off a job that is defined as,</p>
 <pre><code>jobs:
-    docker:
+    build-docker:
         runs-on: ubuntu-latest
         steps:
         - name: checkout
@@ -10934,6 +10933,32 @@ ENTRYPOINT ["/app/entrypoint.sh"]</code></pre>
 <p><img alt="images/8_API_KEYS.png" src="images/8_API_KEYS.png"/></p>
 <p>We can finally hit "Create" at the very bottom and we are done!</p>
 <p>One extra is that if I wanted to create an actual website url for this app I can use <a href="https://cloud.google.com/appengine/docs/legacy/standard/python/mapping-custom-domains">Domain NameSpace (DNS) Mapping</a>. In order to do so I followed the steps laid out in <a href="https://www.youtube.com/watch?v=lDtvpUYAFzA">this youtube video</a>.</p>
+<p>Lastly I can fully automate the building and deploying of this app by adding Google Cloud Run deployment to GitHub Actions. To learn how to do this I used this <a href="https://www.youtube.com/watch?v=kZYsoav104w">YouTube video</a> and its associated <a href="https://github.com/thaddavis/how-to-deploy-a-dockerized-fastapi-to-google-cloud-run/blob/main/.github/workflows/cicd.yaml">GitHub</a>. The first step was to create a Service Account as shown below,</p>
+<p><img alt="images/create_sa1.png" src="images/create_sa1.png"/></p>
+<p>Then give the service a name,</p>
+<p><img alt="drawing" src="images/create_sa2.png" width="500"/></p>
+<p>Then add these roles (I was stuck at this part until I found this <a href="https://stackoverflow.com/questions/55788714/deploying-to-cloud-run-with-a-custom-service-account-failed-with-iam-serviceacco">stackoverflow post</a> ),</p>
+<p><img alt="drawing" src="images/roles.png" width="500"/></p>
+<p>Now you can click Continue. After you create the account you create a new key associated with it and download the json credentials,</p>
+<p><img alt="drawing" src="images/keys.png" width="500"/></p>
+<p>I added this json file to GitHub sercrets as <code>GOOGLE_CREDENTIALS</code>. I also added <code>GOOGLE_PROJECT_ID</code>, my <code>GROQ_API_KEY</code> and my <code>GOOGLE_API_KEY</code> to GitHub secrets as well. I then added the following to steps to my GitHub Actions YAML:</p>
+<pre><code>  - name: Google Cloud Auth
+    uses: 'google-github-actions/auth@v2'
+    with:
+      credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+  - name: Set up Cloud SDK
+    uses: 'google-github-actions/setup-gcloud@v2'
+
+  - name: Deploy to Cloud Run
+    run: |
+        gcloud run deploy $SERVICE_NAME \
+        --image=${{ env.DOCKER_IMAGE }}:cloudrun \
+        --set-env-vars=GROQ_API_KEY=${{ secrets.GROQ_API_KEY }},GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
+        --region=us-central1 \
+        --project=${{ secrets.GOOGLE_PROJECT_ID }} </code></pre>
+<p>The environment variables <code>$SERVICE_NAME</code> and <code>DOCKER_IMAGE</code> were set to <code>mikegpt</code> and <code>mdh266/thirdapp</code> respectively earlier in my <a href="https://github.com/mdh266/speech-chatbot/blob/main/.github/workflows/docker-build.yaml#L4">YAML file</a>.</p>
+<p>Now I am done! Every time I push to the main branch on GitHub the Docker image will be built, pushed to Docker Hub then pulled from Docker Hub and re-deployed on Google Cloud Run!</p>
 </div>
 </div>
 </div>
@@ -10955,7 +10980,7 @@ ENTRYPOINT ["/app/entrypoint.sh"]</code></pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In this post I went over a lot, but the steps are pretty straight forward. I covered how to build Docker images and containers. Next I covered how to set up GitHub actions to automatically build and push the Docker image to Docker Hub. Lastly, I showed how to pull that image and run it as a container on Google Cloud Run.</p>
+<p>In this post I went over a lot, but the steps are pretty straight forward. I covered how to build Docker images and containers. Next I covered how to set up GitHub actions to automatically build and push the Docker image to Docker Hub. Lastly, I showed how to pull that image and run it as a container on Google Cloud Run and automate the whole process as a GitHub Action.</p>
 <p>I hope you enjoyed this!</p>
 </div>
 </div>
