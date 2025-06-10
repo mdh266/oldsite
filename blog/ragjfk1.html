@@ -10,14 +10,10 @@
   </div>
 </header>
 
-<!-- Custom stylesheet, it must be in the same directory as the html file -->
-<link rel="stylesheet" href="custom.css">
-
-
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>rag_jfk1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>RAG JFK 1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -2010,7 +2006,7 @@ pre {
  font-size: 12.0pt;
  line-height: 1.42857143;
  color: #cdd2e9;
- background-color: #cdd2e9;
+ background-color: #c5cae9;
  border: 1px solid #252e3a;
  border-radius: 2px;
 }
@@ -10786,7 +10782,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Retrieval-Augmented-Generation-On-JFK-Speeches:-Part-1">Retrieval Augmented Generation On JFK Speeches: Part 1<a class="anchor-link" href="#Retrieval-Augmented-Generation-On-JFK-Speeches:-Part-1">¶</a></h1><hr/>
+<h1 id="Retrievial-Augmented-Generation-On-JFK-Speeches:-Part-1">Retrievial Augmented Generation On JFK Speeches: Part 1<a class="anchor-link" href="#Retrievial-Augmented-Generation-On-JFK-Speeches:-Part-1">¶</a></h1><hr/>
 <p><strong><a href="#first-bullet">1. Introduction</a></strong></p>
 <p><strong><a href="#second-bullet">2. Scraping JFK Speeches using Asyncio</a></strong></p>
 <p><strong><a href="#third-bullet">3. Loading and Embedding Speeches</a></strong></p>
@@ -10822,7 +10818,7 @@ a.anchor-link {
 <span class="kn">from</span> <span class="nn">langchain_google_community.gcs_directory</span> <span class="kn">import</span> <span class="n">GCSDirectoryLoader</span>
 <span class="kn">from</span> <span class="nn">langchain.document_loaders</span> <span class="kn">import</span> <span class="n">JSONLoader</span>
 <span class="kn">from</span> <span class="nn">langchain.text_splitter</span> <span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
-<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain_nvidia_ai_endpoints</span> <span class="kn">import</span> <span class="n">NVIDIAEmbeddings</span>
 <span class="kn">from</span> <span class="nn">langchain_pinecone.vectorstores</span> <span class="kn">import</span> <span class="n">PineconeVectorStore</span>
 
 <span class="c1"># Google Cloud</span>
@@ -10849,14 +10845,6 @@ a.anchor-link {
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/Users/mikeharmon/miniconda3/envs/llm_env/lib/python3.11/site-packages/pinecone/data/index.py:1: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from tqdm.autonotebook import tqdm
-</pre>
-</div>
-</div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
@@ -10895,7 +10883,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
@@ -10938,7 +10926,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span>    
@@ -10983,7 +10971,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">GCSFileLoader</span><span class="p">(</span><span class="n">project_name</span><span class="o">=</span><span class="n">credentials</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span>
@@ -11180,7 +11168,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Notice the metadata is the same for each of the documents since they all come from the same original json file.</p>
-<p>Now that we have data that is loaded, well go over how to use <a href="https://platform.openai.com/docs/guides/embeddings">embeddings</a> to convert the text into vectors. I have covered embeddings in <a href="http://michael-harmon.com/blog/jfk2.html">prior posts</a>, so I won't go over it in much detail here. Instead I will focus on the LangChain commands needed to use embeddings. We can instantiate the LangChain <a href="https://python.langchain.com/docs/integrations/text_embedding/openai/">OpenAIEmbeddings</a> class, which uses <a href="https://openai.com">OpenAI's embeddings</a>, and then use the <a href="https://python.langchain.com/docs/integrations/text_embedding/openai/#direct-usage">embedd_query</a> method to embed a single document as shown:</p>
+<p>Now that we have data that is loaded, well go over how to use <a href="https://platform.openai.com/docs/guides/embeddings">embeddings</a> to convert the text into vectors. I have covered embeddings in <a href="http://michael-harmon.com/blog/jfk2.html">prior posts</a>, so I won't go over it in much detail here. Instead I will focus on the LangChain commands needed to use embeddings. We can instantiate the LangChain <a href="https://python.langchain.com/api_reference/nvidia_ai_endpoints/embeddings/langchain_nvidia_ai_endpoints.embeddings.NVIDIAEmbeddings.html/">NVIDIAEmbeddings</a> class, which uses <a href="https://build.nvidia.com/nvidia/llama-3_2-nv-embedqa-1b-v2">Nvidia's Llama 3.2 embeddings</a>, and then use the <a href="https://python.langchain.com/docs/integrations/text_embedding/openai/#direct-usage">embed_query</a> method to embed a single document as shown:</p>
 </div>
 </div>
 </div>
@@ -11189,10 +11177,14 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'text-embedding-ada-002'</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding</span> <span class="o">=</span> <span class="n">NVIDIAEmbeddings</span><span class="p">(</span>
+                            <span class="n">model</span><span class="o">=</span><span class="s2">"nvidia/llama-3.2-nv-embedqa-1b-v2"</span><span class="p">,</span>
+                            <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"NVIDIA_API_KEY"</span><span class="p">),</span>
+                            <span class="n">dimension</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+                            <span class="n">truncate</span><span class="o">=</span><span class="s2">"NONE"</span><span class="p">)</span>
 
 <span class="n">query</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="n">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">page_content</span><span class="p">)</span>
 </pre></div>
@@ -11216,7 +11208,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"First 5 entries in embedded document:"</span><span class="p">,</span> <span class="n">query</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
@@ -11232,7 +11224,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>First 5 entries in embedded document: [-0.012023020535707474, 0.0033119581639766693, -0.005604343023151159, -0.03061368130147457, 0.013492794707417488]
+<pre>First 5 entries in embedded document: [-0.00730133056640625, 0.01448822021484375, 0.01450347900390625, 0.00974273681640625, 0.0265350341796875]
 </pre>
 </div>
 </div>
@@ -11254,7 +11246,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Vector size:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
@@ -11270,7 +11262,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Vector size: 1536
+<pre>Vector size: 2048
 </pre>
 </div>
 </div>
@@ -11314,7 +11306,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">credentials</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span>
@@ -11358,7 +11350,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">speeches</span>
@@ -11372,7 +11364,7 @@ Doc 2:  Printing Office, 1961.]
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>['american-newspaper-publishers-association-19610427.json',
  'american-society-of-newspaper-editors-19610420.json',
@@ -11411,12 +11403,12 @@ Doc 2:  Printing Office, 1961.]
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">loader</span> <span class="o">=</span> <span class="n">GCSDirectoryLoader</span><span class="p">(</span>
@@ -11430,6 +11422,19 @@ Doc 2:  Printing Office, 1961.]
 <span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_and_split</span><span class="p">(</span><span class="n">text_splitter</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents"</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>There are 180 documents
+</pre>
 </div>
 </div>
 </div>
@@ -11450,7 +11455,7 @@ Doc 2:  Printing Office, 1961.]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">Pinecone</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"PINECONE_API_KEY"</span><span class="p">))</span>
@@ -11485,11 +11490,11 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">index_name</span> <span class="o">=</span> <span class="s2">"prez-speeches"</span>
-<span class="n">dim</span> <span class="o">=</span> <span class="mi">1536</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">2048</span>
 </pre></div>
 </div>
 </div>
@@ -11511,7 +11516,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># delete the index if it exists</span>
@@ -11533,12 +11538,12 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># create the index</span>
@@ -11556,57 +11561,32 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Notice we have to declare a metric that is useful for the search. I can list the available indexes,</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">pc</span><span class="o">.</span><span class="n">list_indexes</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[21]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[
-    {
-        "name": "prez-speeches",
-        "dimension": 1536,
-        "metric": "cosine",
-        "host": "prez-speeches-2307pwa.svc.aped-4627-b74a.pinecone.io",
-        "spec": {
-            "serverless": {
-                "cloud": "aws",
-                "region": "us-east-1"
-            }
-        },
-        "status": {
-            "ready": true,
-            "state": "Ready"
-        },
-        "deletion_protection": "disabled"
-    }
-]</pre>
+<pre>{
+    "name": "prez-speeches",
+    "metric": "cosine",
+    "host": "prez-speeches-2307pwa.svc.aped-4627-b74a.pinecone.io",
+    "spec": {
+        "serverless": {
+            "cloud": "aws",
+            "region": "us-east-1"
+        }
+    },
+    "status": {
+        "ready": true,
+        "state": "Ready"
+    },
+    "vector_type": "dense",
+    "dimension": 2048,
+    "deletion_protection": "disabled",
+    "tags": null
+}</pre>
 </div>
 </div>
 </div>
@@ -11618,7 +11598,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We can then get the statistics on the index we created,</p>
+<p>Notice we have to declare a metric that is useful for the search. We can then get the statistics on the index we created,</p>
 </div>
 </div>
 </div>
@@ -11627,7 +11607,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span><span class="o">.</span><span class="n">describe_index_stats</span><span class="p">())</span>
@@ -11642,11 +11622,21 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>/Users/mikeharmon/miniconda3/envs/llm_env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'dimension': 1536,
+<pre>{'dimension': 2048,
  'index_fullness': 0.0,
+ 'metric': 'cosine',
  'namespaces': {},
- 'total_vector_count': 0}
+ 'total_vector_count': 0,
+ 'vector_type': 'dense'}
 </pre>
 </div>
 </div>
@@ -11659,7 +11649,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>It shows us that we can hold vectors of size 1,536 dimensions and that we have a total of 0 vectors currently in the index.</p>
+<p>It shows us that we can hold vectors of size 2,048 dimensions and that we have a total of 0 vectors currently in the index.</p>
 <p>To ingest documents into the database as vectors we instantiate the <a href="https://python.langchain.com/api_reference/pinecone/vectorstores/langchain_pinecone.vectorstores.PineconeVectorStore.html">PineconeVectorStore</a> object, connect it to the index and pass the embedding object,</p>
 </div>
 </div>
@@ -11669,7 +11659,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">vectordb</span> <span class="o">=</span> <span class="n">PineconeVectorStore</span><span class="p">(</span>
@@ -11698,7 +11688,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">vectordb</span> <span class="o">=</span> <span class="n">vectordb</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span>
@@ -11729,7 +11719,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span><span class="o">.</span><span class="n">describe_index_stats</span><span class="p">())</span>
@@ -11745,10 +11735,12 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'dimension': 1536,
+<pre>{'dimension': 2048,
  'index_fullness': 0.0,
+ 'metric': 'cosine',
  'namespaces': {'': {'vector_count': 180}},
- 'total_vector_count': 180}
+ 'total_vector_count': 180,
+ 'vector_type': 'dense'}
 </pre>
 </div>
 </div>
@@ -11771,7 +11763,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">index_name</span><span class="p">)</span>
@@ -11796,7 +11788,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">"How did Kennedy feel about the Berlin Wall?"</span>
@@ -11821,7 +11813,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">embed_query</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
@@ -11846,7 +11838,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">matches</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">vector</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -11861,22 +11853,22 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'matches': [{'id': '64fc63a1-79fd-4b40-bf8c-09f0617b9f0f',
-              'score': 0.857092857,
+<pre>{'matches': [{'id': 'b9e573a6-d9f9-4306-a6e3-72ac769643dd',
+              'score': 0.436862975,
               'values': []},
-             {'id': '0fa5431f-a374-429e-a622-a1ed1c2b0a21',
-              'score': 0.851538301,
+             {'id': 'd0245e9a-b4f2-46e6-a6d0-07ee3afbad16',
+              'score': 0.422326,
               'values': []},
-             {'id': '121366d4-9f46-4f52-8e56-2523bf1c9c8f',
-              'score': 0.848420858,
+             {'id': 'a6bcd4fa-90a3-46b2-a48d-105115ccaed7',
+              'score': 0.394667208,
               'values': []},
-             {'id': '99fb84ef-f4b8-4503-9c76-2ae748703c44',
-              'score': 0.829222679,
+             {'id': 'ffe2db4a-6983-4cde-a853-658080619575',
+              'score': 0.35799697,
               'values': []},
-             {'id': '55e41b5a-c209-4f18-826e-baac4653f085',
-              'score': 0.828864217,
+             {'id': 'b7c5ebca-1886-4670-9acd-55ce4e402c2c',
+              'score': 0.352600902,
               'values': []}],
  'namespace': '',
  'usage': {'read_units': 5}}</pre>
@@ -11900,7 +11892,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">id</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="s2">"matches"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'id'</span><span class="p">)</span>
@@ -11925,11 +11917,11 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">fetch</span><span class="p">([</span><span class="nb">id</span><span class="p">])</span>
-<span class="n">result</span><span class="p">[</span><span class="s1">'vectors'</span><span class="p">][</span><span class="nb">id</span><span class="p">][</span><span class="s2">"metadata"</span><span class="p">]</span>
+<span class="n">result</span><span class="o">.</span><span class="n">vectors</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s2">"metadata"</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -11940,14 +11932,14 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[49]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'filename': 'berlin-crisis-19610725',
+<pre>{'filename': 'berlin-w-germany-rudolph-wilde-platz-19630626',
  'seq_num': 1.0,
- 'source': 'gs://prezkennedyspeches/berlin-crisis-19610725.json',
- 'text': 'Listen to the speech. \xa0\xa0 View related documents. \nPresident John F. Kennedy\nThe White House\nJuly 25, 1961\nGood evening:\nSeven weeks ago tonight I returned from Europe to report on my meeting with Premier Khrushchev and the others. His grim warnings about the future of the world, his aide memoire on Berlin, his subsequent speeches and threats which he and his agents have launched, and the increase in the Soviet military budget that he has announced, have all prompted a series of decisions by the Administration and a series of consultations with the members of the NATO organization. In Berlin, as you recall, he intends to bring to an end, through a stroke of the pen, first our legal rights to be in West Berlin --and secondly our ability to make good on our commitment to the two million free people of that city. That we cannot permit.\nWe are clear about what must be done--and we intend to do it. I want to talk frankly with you tonight about the first steps that we shall take. These actions will require sacrifice on the part of many of our citizens. More will be required in the future. They will require, from all of us, courage and perseverance in the years to come. But if we and our allies act out of strength and unity of purpose--with calm determination and steady nerves--using restraint in our words as well as our weapons--I am hopeful that both peace and freedom will be sustained.\nThe immediate threat to free men is in West Berlin. But that isolated outpost is not an isolated problem. The threat is worldwide. Our effort must be equally wide and strong, and not be obsessed by any single manufactured crisis. We face a challenge in Berlin, but there is also a challenge in Southeast Asia, where the borders are less guarded, the enemy harder to find, and the dangers of communism less apparent to those who have so little. We face a challenge in our own hemisphere, and indeed wherever else the freedom of human beings is at stake.',
- 'title': 'Radio and Television Report to the American People on the Berlin Crisis, July 25, 1961',
- 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-crisis-19610725'}</pre>
+ 'source': 'gs://prezkennedyspeches/berlin-w-germany-rudolph-wilde-platz-19630626.json',
+ 'text': 'Freedom has many difficulties and democracy is not perfect, but we have never had to put a wall up to keep our people in, to prevent them from leaving us. I want to say, on behalf of my countrymen, who live many miles away on the other side of the Atlantic, who are far distant from you, that they take the greatest pride that they have been able to share with you, even from a distance, the story of the last 18 years. I know of no town, no city, that has been besieged for 18 years that still lives with the vitality and the force, and the hope and the determination of the city of West Berlin. While the wall is the most obvious and vivid demonstration of the failures of the Communist system, for all the world to see, we take no satisfaction in it, for it is, as your Mayor has said, an offense not only against history but an offense against humanity, separating families, dividing husbands and wives and brothers and sisters, and dividing a people who wish to be joined together.\nWhat is true of this city is true of Germany--real, lasting peace in Europe can never be assured as long as one German out of four is denied the elementary right of free men, and that is to make a free choice. In 18 years of peace and good faith, this generation of Germans has earned the right to be free, including the right to unite their families and their nation in lasting peace, with good will to all people. You live in a defended island of freedom, but your life is part of the main. So let me ask you as I close, to lift your eyes beyond the dangers of today, to the hopes of tomorrow, beyond the freedom merely of this city of Berlin, or your country of Germany, to the advance of freedom everywhere, beyond the wall to the day of peace with justice, beyond yourselves and ourselves to all mankind.',
+ 'title': 'Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963',
+ 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'}</pre>
 </div>
 </div>
 </div>
@@ -11968,7 +11960,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">vectordb</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">question</span><span class="p">,</span> <span class="n">search_type</span><span class="o">=</span><span class="s2">"similarity"</span><span class="p">)</span>
@@ -11982,7 +11974,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span>
@@ -11996,13 +11988,13 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[46]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'filename': 'berlin-crisis-19610725',
+<pre>{'filename': 'berlin-w-germany-rudolph-wilde-platz-19630626',
  'seq_num': 1.0,
- 'source': 'gs://prezkennedyspeches/berlin-crisis-19610725.json',
- 'title': 'Radio and Television Report to the American People on the Berlin Crisis, July 25, 1961',
- 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-crisis-19610725'}</pre>
+ 'source': 'gs://prezkennedyspeches/berlin-w-germany-rudolph-wilde-platz-19630626.json',
+ 'title': 'Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963',
+ 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'}</pre>
 </div>
 </div>
 </div>
@@ -12016,7 +12008,7 @@ Source: https://medium.com/@hari4om/word-embedding-d816f643140
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The results are the same which is to be expected!</p>
 <h3 id="5.-Next-Steps-">5. Next Steps <a class="anchor" id="fifth-bullet"></a><a class="anchor-link" href="#5.-Next-Steps-">¶</a></h3><hr/>
-<p>In this post I covered how to scape websites using the <a href="https://docs.python.org/3/library/asyncio.html">aysncio</a> and write them to <a href="https://cloud.google.com/storage?hl=en">Google Cloud Storage</a>. After that we covered how to use <a href="https://www.langchain.com/">LangChain</a> to load text from cloud storage, chunk and embedded it using <a href="https://openai.com/%5D">OpenAI</a> Embeddings. Then we coved how to store the embedded documents as vectors in a Pinecone vector database and perform semantic search. In the next blog post I will build off using semantic search with Pinecone to build and deploy a RAG application that can answer questions on President Kennedy's speeches.</p>
+<p>In this post I covered how to scape websites using the <a href="https://docs.python.org/3/library/asyncio.html">aysncio</a> and write them to <a href="https://cloud.google.com/storage?hl=en">Google Cloud Storage</a>. After that we covered how to use <a href="https://www.langchain.com/">LangChain</a> to load text from cloud storage, chunk and embedded it using <a href="https://build.nvidia.com/nvidia/llama-3_2-nv-embedqa-1b-v2">Nvidia Embeddings</a>. Then we coved how to store the embedded documents as vectors in a <a href="https://pinecone.io/">Pinecone vector database</a> and perform semantic search. In the next blog post I will build off using semantic search with Pinecone to build and deploy a RAG application that can answer questions on President Kennedy's speeches. I actually rewrote the notebook as a script that uses Langchain's async frameworks to load all 800+ JFK speeches into the Pinecone database and it is <a href="https://github.com/mdh266/rag-jfk/blob/main/scripts/load.py">here</a> if you are interested.</p>
 </div>
 </div>
 </div>

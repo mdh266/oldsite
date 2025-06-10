@@ -10,13 +10,10 @@
   </div>
 </header>
 
-<!-- Custom stylesheet, it must be in the same directory as the html file -->
-<link rel="stylesheet" href="custom.css">
-
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>rag_jfk2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>RAG JFK 2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -10819,7 +10816,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># LangChain</span>
@@ -10827,7 +10824,8 @@ a.anchor-link {
 <span class="kn">from</span> <span class="nn">langchain.chains.combine_documents</span> <span class="kn">import</span> <span class="n">create_stuff_documents_chain</span>
 <span class="kn">from</span> <span class="nn">langchain_core.documents</span> <span class="kn">import</span> <span class="n">Document</span>
 <span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
-<span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">OpenAIEmbeddings</span><span class="p">,</span> <span class="n">ChatOpenAI</span>
+<span class="kn">from</span> <span class="nn">langchain_nvidia_ai_endpoints</span> <span class="kn">import</span> <span class="n">NVIDIAEmbeddings</span>
+<span class="kn">from</span> <span class="nn">langchain_groq</span> <span class="kn">import</span> <span class="n">ChatGroq</span>
 <span class="kn">from</span> <span class="nn">langchain_pinecone</span> <span class="kn">import</span> <span class="n">PineconeVectorStore</span>
 
 <span class="c1"># Pinecone VectorDB</span>
@@ -10849,7 +10847,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>True</pre>
 </div>
@@ -10884,7 +10882,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">index_name</span> <span class="o">=</span> <span class="s2">"prez-speeches"</span>
@@ -10901,15 +10899,48 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'indexes': [{'deletion_protection': 'disabled',
-              'dimension': 1536,
-              'host': 'prez-speeches-2307pwa.svc.aped-4627-b74a.pinecone.io',
-              'metric': 'cosine',
-              'name': 'prez-speeches',
-              'spec': {'serverless': {'cloud': 'aws', 'region': 'us-east-1'}},
-              'status': {'ready': True, 'state': 'Ready'}}]}</pre>
+<pre>[
+    {
+        "name": "prez-speeches",
+        "metric": "cosine",
+        "host": "prez-speeches-2307pwa.svc.aped-4627-b74a.pinecone.io",
+        "spec": {
+            "serverless": {
+                "cloud": "aws",
+                "region": "us-east-1"
+            }
+        },
+        "status": {
+            "ready": true,
+            "state": "Ready"
+        },
+        "vector_type": "dense",
+        "dimension": 2048,
+        "deletion_protection": "disabled",
+        "tags": null
+    },
+    {
+        "name": "jfk-speeches",
+        "metric": "cosine",
+        "host": "jfk-speeches-2307pwa.svc.aped-4627-b74a.pinecone.io",
+        "spec": {
+            "serverless": {
+                "cloud": "aws",
+                "region": "us-east-1"
+            }
+        },
+        "status": {
+            "ready": true,
+            "state": "Ready"
+        },
+        "vector_type": "dense",
+        "dimension": 2048,
+        "deletion_protection": "disabled",
+        "tags": null
+    }
+]</pre>
 </div>
 </div>
 </div>
@@ -10925,15 +10956,19 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'text-embedding-ada-002'</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding</span> <span class="o">=</span> <span class="n">NVIDIAEmbeddings</span><span class="p">(</span>
+                            <span class="n">model</span><span class="o">=</span><span class="s2">"nvidia/llama-3.2-nv-embedqa-1b-v2"</span><span class="p">,</span>
+                            <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"NVIDIA_API_KEY"</span><span class="p">),</span>
+                            <span class="n">dimension</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+                            <span class="n">truncate</span><span class="o">=</span><span class="s2">"NONE"</span><span class="p">)</span>
 
 <span class="n">vectordb</span> <span class="o">=</span> <span class="n">PineconeVectorStore</span><span class="p">(</span>
                     <span class="n">pinecone_api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"PINECONE_API_KEY"</span><span class="p">),</span>
@@ -10941,6 +10976,20 @@ a.anchor-link {
                     <span class="n">index_name</span><span class="o">=</span><span class="n">index_name</span>
 <span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>/Users/mikeharmon/miniconda3/envs/llm_env/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre>
 </div>
 </div>
 </div>
@@ -10966,7 +11015,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s2">"How did President Kennedy feel about the Berlin Wall?"</span>
@@ -10993,7 +11042,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
@@ -11010,11 +11059,11 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Document ID: 64fc63a1-79fd-4b40-bf8c-09f0617b9f0f
-Document ID: 0fa5431f-a374-429e-a622-a1ed1c2b0a21
-Document ID: 121366d4-9f46-4f52-8e56-2523bf1c9c8f
-Document ID: 2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9
-Document ID: 4df626ad-0034-45cb-8144-88a21576785d
+<pre>Document ID: d0245e9a-b4f2-46e6-a6d0-07ee3afbad16
+Document ID: b9e573a6-d9f9-4306-a6e3-72ac769643dd
+Document ID: a6bcd4fa-90a3-46b2-a48d-105115ccaed7
+Document ID: ffe2db4a-6983-4cde-a853-658080619575
+Document ID: b909248f-495d-4819-9776-d512e7c545f1
 </pre>
 </div>
 </div>
@@ -11053,7 +11102,7 @@ Document ID: 4df626ad-0034-45cb-8144-88a21576785d
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">retriever</span> <span class="o">=</span> <span class="n">vectordb</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">()</span>
@@ -11092,7 +11141,7 @@ Document ID: 4df626ad-0034-45cb-8144-88a21576785d
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">documents</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">question</span><span class="p">)</span>
@@ -11111,10 +11160,10 @@ Document ID: 4df626ad-0034-45cb-8144-88a21576785d
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Document ID: 64fc63a1-79fd-4b40-bf8c-09f0617b9f0f
-Document ID: 0fa5431f-a374-429e-a622-a1ed1c2b0a21
-Document ID: 121366d4-9f46-4f52-8e56-2523bf1c9c8f
-Document ID: 2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9
+<pre>Document ID: d0245e9a-b4f2-46e6-a6d0-07ee3afbad16
+Document ID: b9e573a6-d9f9-4306-a6e3-72ac769643dd
+Document ID: a6bcd4fa-90a3-46b2-a48d-105115ccaed7
+Document ID: ffe2db4a-6983-4cde-a853-658080619575
 </pre>
 </div>
 </div>
@@ -11137,7 +11186,7 @@ Document ID: 2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">langchain.prompts</span> <span class="kn">import</span> <span class="n">PromptTemplate</span>
@@ -11173,7 +11222,7 @@ Document ID: 2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span>
@@ -11196,7 +11245,7 @@ Document ID: 2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
 Question: How did President Kennedy feel about the Berlin Wall? 
-Context: ['64fc63a1-79fd-4b40-bf8c-09f0617b9f0f', '0fa5431f-a374-429e-a622-a1ed1c2b0a21', '121366d4-9f46-4f52-8e56-2523bf1c9c8f', '2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9'] 
+Context: ['d0245e9a-b4f2-46e6-a6d0-07ee3afbad16', 'b9e573a6-d9f9-4306-a6e3-72ac769643dd', 'a6bcd4fa-90a3-46b2-a48d-105115ccaed7', 'ffe2db4a-6983-4cde-a853-658080619575'] 
 Answer:
 
 </pre>
@@ -11221,10 +11270,10 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">ChatGroq</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"llama-3.3-70b-versatile"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -11247,7 +11296,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">generate_chain</span> <span class="o">=</span> <span class="n">create_stuff_documents_chain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
@@ -11272,7 +11321,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">generate_chain</span><span class="p">)</span>
@@ -11292,7 +11341,7 @@ Answer:
   context: RunnableLambda(format_docs)
 }), kwargs={}, config={'run_name': 'format_inputs'}, config_factories=[])
 | PromptTemplate(input_variables=['context', 'input'], input_types={}, partial_variables={}, template="You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.\nQuestion: {input} \nContext: {context} \nAnswer:\n")
-| ChatOpenAI(client=&lt;openai.resources.chat.completions.completions.Completions object at 0x11b1cc490&gt;, async_client=&lt;openai.resources.chat.completions.completions.AsyncCompletions object at 0x11c833310&gt;, root_client=&lt;openai.OpenAI object at 0x11cd33e10&gt;, root_async_client=&lt;openai.AsyncOpenAI object at 0x11c86df90&gt;, model_name='gpt-4o-mini', temperature=0.0, model_kwargs={}, openai_api_key=SecretStr('**********'))
+| ChatGroq(client=&lt;groq.resources.chat.completions.Completions object at 0x128d7ffd0&gt;, async_client=&lt;groq.resources.chat.completions.AsyncCompletions object at 0x12fd8b990&gt;, model_name='llama-3.3-70b-versatile', temperature=1e-08, model_kwargs={}, groq_api_key=SecretStr('**********'))
 | StrOutputParser() kwargs={} config={'run_name': 'stuff_documents_chain'} config_factories=[]
 </pre>
 </div>
@@ -11316,7 +11365,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">answer</span> <span class="o">=</span> <span class="n">generate_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span>
@@ -11335,7 +11384,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
@@ -11351,7 +11400,7 @@ Answer:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>President Kennedy viewed the Berlin Wall as a significant symbol of the failures of the Communist system and an offense against humanity, as it separated families and divided people. He expressed pride in the resilience of West Berlin and emphasized the importance of freedom and the right to make choices. Kennedy's speeches reflected a commitment to supporting the people of Berlin and a broader struggle for freedom worldwide.
+<pre>President Kennedy felt strongly against the Berlin Wall, calling it "an offense not only against history but an offense against humanity" that separates families and divides a people. He saw it as a demonstration of the failures of the Communist system and a threat to freedom. Kennedy emphasized the importance of defending West Berlin and upholding the commitment to its people, stating "we shall not surrender" and seeking peace without surrendering to Communist pressures.
 </pre>
 </div>
 </div>
@@ -11374,7 +11423,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rag_chain</span> <span class="o">=</span> <span class="n">create_retrieval_chain</span><span class="p">(</span>
@@ -11401,7 +11450,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rag_chain</span><span class="p">)</span>
@@ -11419,14 +11468,14 @@ Answer:
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>bound=RunnableAssign(mapper={
   context: RunnableBinding(bound=RunnableLambda(lambda x: x['input'])
-           | VectorStoreRetriever(tags=['PineconeVectorStore', 'OpenAIEmbeddings'], vectorstore=&lt;langchain_pinecone.vectorstores.PineconeVectorStore object at 0x11c830cd0&gt;, search_kwargs={}), kwargs={}, config={'run_name': 'retrieve_documents'}, config_factories=[])
+           | VectorStoreRetriever(tags=['PineconeVectorStore', 'NVIDIAEmbeddings'], vectorstore=&lt;langchain_pinecone.vectorstores.PineconeVectorStore object at 0x11cf39e50&gt;, search_kwargs={}), kwargs={}, config={'run_name': 'retrieve_documents'}, config_factories=[])
 })
 | RunnableAssign(mapper={
     answer: RunnableBinding(bound=RunnableBinding(bound=RunnableAssign(mapper={
               context: RunnableLambda(format_docs)
             }), kwargs={}, config={'run_name': 'format_inputs'}, config_factories=[])
             | PromptTemplate(input_variables=['context', 'input'], input_types={}, partial_variables={}, template="You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.\nQuestion: {input} \nContext: {context} \nAnswer:\n")
-            | ChatOpenAI(client=&lt;openai.resources.chat.completions.completions.Completions object at 0x11b1cc490&gt;, async_client=&lt;openai.resources.chat.completions.completions.AsyncCompletions object at 0x11c833310&gt;, root_client=&lt;openai.OpenAI object at 0x11cd33e10&gt;, root_async_client=&lt;openai.AsyncOpenAI object at 0x11c86df90&gt;, model_name='gpt-4o-mini', temperature=0.0, model_kwargs={}, openai_api_key=SecretStr('**********'))
+            | ChatGroq(client=&lt;groq.resources.chat.completions.Completions object at 0x128d7ffd0&gt;, async_client=&lt;groq.resources.chat.completions.AsyncCompletions object at 0x12fd8b990&gt;, model_name='llama-3.3-70b-versatile', temperature=1e-08, model_kwargs={}, groq_api_key=SecretStr('**********'))
             | StrOutputParser(), kwargs={}, config={'run_name': 'stuff_documents_chain'}, config_factories=[])
   }) kwargs={} config={'run_name': 'retrieval_chain'} config_factories=[]
 </pre>
@@ -11450,7 +11499,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rag_chain</span><span class="o">.</span><span class="n">get_prompts</span><span class="p">()</span>
@@ -11464,7 +11513,7 @@ Answer:
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[20]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>[PromptTemplate(input_variables=['page_content'], input_types={}, partial_variables={}, template='{page_content}'),
  PromptTemplate(input_variables=['context', 'input'], input_types={}, partial_variables={}, template="You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.\nQuestion: {input} \nContext: {context} \nAnswer:\n")]</pre>
@@ -11488,7 +11537,7 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">rag_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">"input"</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
@@ -11502,10 +11551,10 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">response</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">response</span><span class="p">[</span><span class="s1">'answer'</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -11516,14 +11565,9 @@ Answer:
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>{'input': 'How did President Kennedy feel about the Berlin Wall?',
- 'context': [Document(id='64fc63a1-79fd-4b40-bf8c-09f0617b9f0f', metadata={'filename': 'berlin-crisis-19610725', 'seq_num': 1.0, 'source': 'gs://prezkennedyspeches/berlin-crisis-19610725.json', 'title': 'Radio and Television Report to the American People on the Berlin Crisis, July 25, 1961', 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-crisis-19610725'}, page_content='Listen to the speech. \xa0\xa0 View related documents. \nPresident John F. Kennedy\nThe White House\nJuly 25, 1961\nGood evening:\nSeven weeks ago tonight I returned from Europe to report on my meeting with Premier Khrushchev and the others. His grim warnings about the future of the world, his aide memoire on Berlin, his subsequent speeches and threats which he and his agents have launched, and the increase in the Soviet military budget that he has announced, have all prompted a series of decisions by the Administration and a series of consultations with the members of the NATO organization. In Berlin, as you recall, he intends to bring to an end, through a stroke of the pen, first our legal rights to be in West Berlin --and secondly our ability to make good on our commitment to the two million free people of that city. That we cannot permit.\nWe are clear about what must be done--and we intend to do it. I want to talk frankly with you tonight about the first steps that we shall take. These actions will require sacrifice on the part of many of our citizens. More will be required in the future. They will require, from all of us, courage and perseverance in the years to come. But if we and our allies act out of strength and unity of purpose--with calm determination and steady nerves--using restraint in our words as well as our weapons--I am hopeful that both peace and freedom will be sustained.\nThe immediate threat to free men is in West Berlin. But that isolated outpost is not an isolated problem. The threat is worldwide. Our effort must be equally wide and strong, and not be obsessed by any single manufactured crisis. We face a challenge in Berlin, but there is also a challenge in Southeast Asia, where the borders are less guarded, the enemy harder to find, and the dangers of communism less apparent to those who have so little. We face a challenge in our own hemisphere, and indeed wherever else the freedom of human beings is at stake.'),
-  Document(id='0fa5431f-a374-429e-a622-a1ed1c2b0a21', metadata={'filename': 'berlin-w-germany-rudolph-wilde-platz-19630626', 'seq_num': 1.0, 'source': 'gs://prezkennedyspeches/berlin-w-germany-rudolph-wilde-platz-19630626.json', 'title': 'Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963', 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'}, page_content='Listen to speech. \xa0\xa0 View related documents. \nPresident John F. Kennedy\nWest Berlin\nJune 26, 1963\n[This version is published in the Public Papers of the Presidents: John F. Kennedy, 1963. Both the text and the audio versions omit the words of the German translator. The audio file was edited by the White House Signal Agency (WHSA) shortly after the speech was recorded. The WHSA was charged with recording only the words of the President. The Kennedy Library has an audiotape of a network broadcast of the full speech, with the translator\'s words, and a journalist\'s commentary. Because of copyright restrictions, it is only available for listening at the Library.]\nI am proud to come to this city as the guest of your distinguished Mayor, who has symbolized throughout the world the fighting spirit of West Berlin. And I am proud to visit the Federal Republic with your distinguished Chancellor who for so many years has committed Germany to democracy and freedom and progress, and to come here in the company of my fellow American, General Clay, who has been in this city during its great moments of crisis and will come again if ever needed.\nTwo thousand years ago the proudest boast was "civis Romanus sum." Today, in the world of freedom, the proudest boast is "Ich bin ein Berliner."\nI appreciate my interpreter translating my German!\nThere are many people in the world who really don\'t understand, or say they don\'t, what is the great issue between the free world and the Communist world. Let them come to Berlin. There are some who say that communism is the wave of the future. Let them come to Berlin. And there are some who say in Europe and elsewhere we can work with the Communists. Let them come to Berlin. And there are even a few who say that it is true that communism is an evil system, but it permits us to make economic progress. Lass\' sie nach Berlin kommen. Let them come to Berlin.'),
-  Document(id='121366d4-9f46-4f52-8e56-2523bf1c9c8f', metadata={'filename': 'berlin-w-germany-rudolph-wilde-platz-19630626', 'seq_num': 1.0, 'source': 'gs://prezkennedyspeches/berlin-w-germany-rudolph-wilde-platz-19630626.json', 'title': 'Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963', 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'}, page_content='Freedom has many difficulties and democracy is not perfect, but we have never had to put a wall up to keep our people in, to prevent them from leaving us. I want to say, on behalf of my countrymen, who live many miles away on the other side of the Atlantic, who are far distant from you, that they take the greatest pride that they have been able to share with you, even from a distance, the story of the last 18 years. I know of no town, no city, that has been besieged for 18 years that still lives with the vitality and the force, and the hope and the determination of the city of West Berlin. While the wall is the most obvious and vivid demonstration of the failures of the Communist system, for all the world to see, we take no satisfaction in it, for it is, as your Mayor has said, an offense not only against history but an offense against humanity, separating families, dividing husbands and wives and brothers and sisters, and dividing a people who wish to be joined together.\nWhat is true of this city is true of Germany--real, lasting peace in Europe can never be assured as long as one German out of four is denied the elementary right of free men, and that is to make a free choice. In 18 years of peace and good faith, this generation of Germans has earned the right to be free, including the right to unite their families and their nation in lasting peace, with good will to all people. You live in a defended island of freedom, but your life is part of the main. So let me ask you as I close, to lift your eyes beyond the dangers of today, to the hopes of tomorrow, beyond the freedom merely of this city of Berlin, or your country of Germany, to the advance of freedom everywhere, beyond the wall to the day of peace with justice, beyond yourselves and ourselves to all mankind.'),
-  Document(id='2da0bf3a-9adc-4dd0-a697-117bc3f0d8b9', metadata={'filename': 'american-society-of-newspaper-editors-19610420', 'seq_num': 1.0, 'source': 'gs://prezkennedyspeches/american-society-of-newspaper-editors-19610420.json', 'title': 'Address before the American Society of Newspaper Editors, Washington, D.C., April 20, 1961', 'url': 'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/american-society-of-newspaper-editors-19610420'}, page_content='Listen to the speech.\xa0 \xa0 View related documents. \nPresident John F. Kennedy\nStatler Hilton Hotel, Washington, D.C.\nApril 20, 1961\nMr. Catledge, members of the American Society of Newspaper Editors, ladies and gentlemen:\nThe President of a great democracy such as ours, and the editors of great newspapers such as yours, owe a common obligation to the people: an obligation to present the facts, to present them with candor, and to present them in perspective. It is with that obligation in mind that I have decided in the last 24 hours to discuss briefly at this time the recent events in Cuba.\nOn that unhappy island, as in so many other arenas of the contest for freedom, the news has grown worse instead of better. I have emphasized before that this was a struggle of Cuban patriots against a Cuban dictator. While we could not be expected to hide our sympathies, we made it repeatedly clear that the armed forces of this country would not intervene in any way.\nAny unilateral American intervention, in the absence of an external attack upon ourselves or an ally, would have been contrary to our traditions and to our international obligations. But let the record show that our restraint is not inexhaustible. Should it ever appear that the inter-American doctrine of non-interference merely conceals or excuses a policy of nonaction-if the nations of this Hemisphere should fail to meet their commitments against outside Communist penetration-then I want it clearly understood that this Government will not hesitate in meeting its primary obligations which are to the security of our Nation!')],
- 'answer': "President Kennedy viewed the Berlin Wall as a significant symbol of the failures of the Communist system, stating that it was an offense against humanity that separated families and divided people. He expressed pride in the resilience of West Berlin and emphasized the importance of freedom and the right to make free choices. Kennedy's speeches reflected a commitment to supporting the people of Berlin and a determination to uphold democratic values in the face of Communist threats."}</pre>
+<pre>'President Kennedy felt strongly against the Berlin Wall, calling it "an offense not only against history but an offense against humanity" that separates families and divides a people. He saw it as a demonstration of the failures of the Communist system and a threat to freedom. Kennedy emphasized the importance of defending West Berlin and upholding the commitment to its people, stating "we shall not surrender" and seeking peace without surrendering to Communist pressures.'</pre>
 </div>
 </div>
 </div>
@@ -11535,8 +11579,14 @@ Answer:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The response will be a dictionary that contains the input question and the answer generated by the model. It also includes the context for which are all documents that were the most semantically related to our question and passed to the LLM to use to generate an answer.</p>
-<p>We can see the associated data with context reference documents which will be important for our deployment.</p>
+<p>The response will be a dictionary will look like,</p>
+<pre><code>{
+ 'input': -&gt; Input question
+ 'answer' -&gt; LLM answer
+ 'context': -&gt; List of documents
+}</code></pre>
+<p>and contains the input question and the answer generated by the model. It also includes the context for which are all documents that were the most semantically related to our question and passed to the LLM to use to generate an answer.</p>
+<p>We can see the associated data with context reference documents which will be important for our deployment. Note to make sure there are not duplicate sources we have to create a set of tuples containing the title and url:</p>
 </div>
 </div>
 </div>
@@ -11545,12 +11595,10 @@ Answer:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">references</span> <span class="o">=</span> <span class="p">[(</span><span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"title"</span><span class="p">],</span>
-               <span class="n">doc</span><span class="o">.</span><span class="n">page_content</span><span class="p">,</span> <span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"url"</span><span class="p">])</span> 
-               <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">'context'</span><span class="p">]]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">references</span> <span class="o">=</span> <span class="p">{(</span><span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'title'</span><span class="p">],</span> <span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'url'</span><span class="p">])</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span>  <span class="n">response</span><span class="p">[</span><span class="s1">'context'</span><span class="p">]}</span>
 
 <span class="n">references</span>
 </pre></div>
@@ -11563,20 +11611,12 @@ Answer:
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>[('Radio and Television Report to the American People on the Berlin Crisis, July 25, 1961',
-  'Listen to the speech. \xa0\xa0 View related documents. \nPresident John F. Kennedy\nThe White House\nJuly 25, 1961\nGood evening:\nSeven weeks ago tonight I returned from Europe to report on my meeting with Premier Khrushchev and the others. His grim warnings about the future of the world, his aide memoire on Berlin, his subsequent speeches and threats which he and his agents have launched, and the increase in the Soviet military budget that he has announced, have all prompted a series of decisions by the Administration and a series of consultations with the members of the NATO organization. In Berlin, as you recall, he intends to bring to an end, through a stroke of the pen, first our legal rights to be in West Berlin --and secondly our ability to make good on our commitment to the two million free people of that city. That we cannot permit.\nWe are clear about what must be done--and we intend to do it. I want to talk frankly with you tonight about the first steps that we shall take. These actions will require sacrifice on the part of many of our citizens. More will be required in the future. They will require, from all of us, courage and perseverance in the years to come. But if we and our allies act out of strength and unity of purpose--with calm determination and steady nerves--using restraint in our words as well as our weapons--I am hopeful that both peace and freedom will be sustained.\nThe immediate threat to free men is in West Berlin. But that isolated outpost is not an isolated problem. The threat is worldwide. Our effort must be equally wide and strong, and not be obsessed by any single manufactured crisis. We face a challenge in Berlin, but there is also a challenge in Southeast Asia, where the borders are less guarded, the enemy harder to find, and the dangers of communism less apparent to those who have so little. We face a challenge in our own hemisphere, and indeed wherever else the freedom of human beings is at stake.',
+<pre>{('Radio and Television Report to the American People on the Berlin Crisis, July 25, 1961',
   'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-crisis-19610725'),
  ('Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963',
-  'Listen to speech. \xa0\xa0 View related documents. \nPresident John F. Kennedy\nWest Berlin\nJune 26, 1963\n[This version is published in the Public Papers of the Presidents: John F. Kennedy, 1963. Both the text and the audio versions omit the words of the German translator. The audio file was edited by the White House Signal Agency (WHSA) shortly after the speech was recorded. The WHSA was charged with recording only the words of the President. The Kennedy Library has an audiotape of a network broadcast of the full speech, with the translator\'s words, and a journalist\'s commentary. Because of copyright restrictions, it is only available for listening at the Library.]\nI am proud to come to this city as the guest of your distinguished Mayor, who has symbolized throughout the world the fighting spirit of West Berlin. And I am proud to visit the Federal Republic with your distinguished Chancellor who for so many years has committed Germany to democracy and freedom and progress, and to come here in the company of my fellow American, General Clay, who has been in this city during its great moments of crisis and will come again if ever needed.\nTwo thousand years ago the proudest boast was "civis Romanus sum." Today, in the world of freedom, the proudest boast is "Ich bin ein Berliner."\nI appreciate my interpreter translating my German!\nThere are many people in the world who really don\'t understand, or say they don\'t, what is the great issue between the free world and the Communist world. Let them come to Berlin. There are some who say that communism is the wave of the future. Let them come to Berlin. And there are some who say in Europe and elsewhere we can work with the Communists. Let them come to Berlin. And there are even a few who say that it is true that communism is an evil system, but it permits us to make economic progress. Lass\' sie nach Berlin kommen. Let them come to Berlin.',
-  'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'),
- ('Remarks of President John F. Kennedy at the Rudolph Wilde Platz, Berlin, June 26, 1963',
-  'Freedom has many difficulties and democracy is not perfect, but we have never had to put a wall up to keep our people in, to prevent them from leaving us. I want to say, on behalf of my countrymen, who live many miles away on the other side of the Atlantic, who are far distant from you, that they take the greatest pride that they have been able to share with you, even from a distance, the story of the last 18 years. I know of no town, no city, that has been besieged for 18 years that still lives with the vitality and the force, and the hope and the determination of the city of West Berlin. While the wall is the most obvious and vivid demonstration of the failures of the Communist system, for all the world to see, we take no satisfaction in it, for it is, as your Mayor has said, an offense not only against history but an offense against humanity, separating families, dividing husbands and wives and brothers and sisters, and dividing a people who wish to be joined together.\nWhat is true of this city is true of Germany--real, lasting peace in Europe can never be assured as long as one German out of four is denied the elementary right of free men, and that is to make a free choice. In 18 years of peace and good faith, this generation of Germans has earned the right to be free, including the right to unite their families and their nation in lasting peace, with good will to all people. You live in a defended island of freedom, but your life is part of the main. So let me ask you as I close, to lift your eyes beyond the dangers of today, to the hopes of tomorrow, beyond the freedom merely of this city of Berlin, or your country of Germany, to the advance of freedom everywhere, beyond the wall to the day of peace with justice, beyond yourselves and ourselves to all mankind.',
-  'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626'),
- ('Address before the American Society of Newspaper Editors, Washington, D.C., April 20, 1961',
-  'Listen to the speech.\xa0 \xa0 View related documents. \nPresident John F. Kennedy\nStatler Hilton Hotel, Washington, D.C.\nApril 20, 1961\nMr. Catledge, members of the American Society of Newspaper Editors, ladies and gentlemen:\nThe President of a great democracy such as ours, and the editors of great newspapers such as yours, owe a common obligation to the people: an obligation to present the facts, to present them with candor, and to present them in perspective. It is with that obligation in mind that I have decided in the last 24 hours to discuss briefly at this time the recent events in Cuba.\nOn that unhappy island, as in so many other arenas of the contest for freedom, the news has grown worse instead of better. I have emphasized before that this was a struggle of Cuban patriots against a Cuban dictator. While we could not be expected to hide our sympathies, we made it repeatedly clear that the armed forces of this country would not intervene in any way.\nAny unilateral American intervention, in the absence of an external attack upon ourselves or an ally, would have been contrary to our traditions and to our international obligations. But let the record show that our restraint is not inexhaustible. Should it ever appear that the inter-American doctrine of non-interference merely conceals or excuses a policy of nonaction-if the nations of this Hemisphere should fail to meet their commitments against outside Communist penetration-then I want it clearly understood that this Government will not hesitate in meeting its primary obligations which are to the security of our Nation!',
-  'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/american-society-of-newspaper-editors-19610420')]</pre>
+  'https://www.jfklibrary.org//archives/other-resources/john-f-kennedy-speeches/berlin-w-germany-rudolph-wilde-platz-19630626')}</pre>
 </div>
 </div>
 </div>
@@ -11591,7 +11631,7 @@ Answer:
 <h2 id="4.-Deploying-A-RAG-Application-">4. Deploying A RAG Application <a class="anchor" id="fourth-bullet"></a><a class="anchor-link" href="#4.-Deploying-A-RAG-Application-">¶</a></h2><hr/>
 <p>Now in order to deploy this in a <a href="https://streamlit.io/">Streamlit App</a> I'll create a function that called <a href="https://github.com/mdh266/rag-jfk/blob/main/app/rag.py">ask_question</a> that takes in a <code>question</code> and an <code>index_name</code> for the vector database, it then runs all the logic we went through above and returns the response dictionary. I'll then print the answer from the LLM and then print out the retrieved documents as sources for the with the title as the speech and the the url as a hyperlink. The entire streamlit app with an example is shown below,</p>
 <center>
-<img alt="No description has been provided for this image" class="center" height="500" src="images/ragui.png" width="500">
+<img alt="No description has been provided for this image" class="center" height="600" src="images/ragui.png" width="600">
 </img></center>
 <p>I won't go through the process of deploying this app to <a href="https://cloud.google.com/run?hl=en">Google Cloud Run</a> as I have covered that pretty extensively in a <a href="http://michael-harmon.com/blog/chatbot2.html">prior post</a>.</p>
 <h2 id="5.-Conclusions--">5. Conclusions  <a class="anchor" id="fifth-bullet"></a><a class="anchor-link" href="#5.-Conclusions--">¶</a></h2><hr/>
